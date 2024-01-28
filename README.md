@@ -1,6 +1,6 @@
 # likelione_0x02_ticket
 
-![NFT-Ticketing-Platform](./readme_assets/DALLE_20240129_NFT ticketing platform.png)
+![NFT-Ticketing-Platform](/readme_assets/DALLE_20240129_NFT_ticketing_platform.png)
 
 
 ## Table of Contents
