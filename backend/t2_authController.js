@@ -43,8 +43,12 @@ exports.kakaoLogin = async (req, res) => {
         console.log('kakao_nickname: ', userInfoResponse.data.properties.nickname );
         console.log('kakao_image: ', userInfoResponse.data.properties.profile_image );
 
-        const userInfo = {id: userInfoResponse.data.id, name: userInfoResponse.data.properties.nickname};
-        res.redirect(`http://localhost:3000/main?userID=${userInfo.id}&userName=${userInfo.name}`);
+        const userInfo = {
+            id: userInfoResponse.data.id, 
+            name: userInfoResponse.data.properties.nickname,
+            profile: userInfoResponse.data.properties.profile_image
+        };
+        res.redirect(`http://localhost:3000/main?userID=${userInfo.id}&userName=${userInfo.name}&userImage=${userInfo.profile}`);
 
     } catch(error) {
         console.error(error);

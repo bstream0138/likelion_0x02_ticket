@@ -7,8 +7,12 @@ const LoginPage = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
     return (
-        <div>
-            <a href={KAKAO_AUTH_URL}>카카오 로그인</a>
+        <div className="flex h-screen items-center justify-center">
+            <div className="text-center mt-12">
+                <a href={KAKAO_AUTH_URL} className="bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg" >
+                    Kakao Login
+                </a>
+            </div>
         </div>
     )
 }
