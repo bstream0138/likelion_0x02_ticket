@@ -48,6 +48,10 @@ const MainPage = () => {
         navigate('/');
     }
 
+    const goToPaymentPage = () => {
+        navigate('/pay');
+    };
+
     return (
         <div className="flex flex-col items-center justify-center h-screen ">
             <div className="text-center">                
@@ -60,6 +64,12 @@ const MainPage = () => {
                             </div>
                             <li className="text-lg font-semibold">UserID: {userInfo.userID}</li>
                             <li className="text-lg font-semibold">UserName: {userInfo.userName}</li>
+                            <button
+                                className="mt-4 bg-yellow-300 text-black font-bold py-2 px-4 rounded"
+                                onClick={goToPaymentPage}
+                            >
+                                Test KakaoPay
+                            </button>
                         </div>
                     ) : (
                         <div>
@@ -74,6 +84,7 @@ const MainPage = () => {
                     )
                 }
             </div>
+            
             <button 
                 className="mt-4 bg-black text-white font-bold py-2 px-4 rounded"
                 onClick={handleLogout}
