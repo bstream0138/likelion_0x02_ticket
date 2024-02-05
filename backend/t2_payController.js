@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+
 exports.kakaoPayReady = async (req, res) => {
 
     console.log('Pay request: ', req.body);
@@ -32,7 +33,7 @@ exports.kakaoPayReady = async (req, res) => {
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
                 'Content-type': 'application/json'
-            }
+            },
         });
 
         console.log('next_redirect_pc_url: ', response.data.next_redirect_pc_url);
