@@ -48,7 +48,7 @@ exports.kakaoLogin = async (req, res) => {
             name: userInfoResponse.data.properties.nickname,
             profile: userInfoResponse.data.properties.profile_image
         };
-        res.redirect(`http://localhost:3000/main?userID=${userInfo.id}&userName=${userInfo.name}&userImage=${userInfo.profile}`);
+        res.redirect(`http://localhost:3000/home?userID=${userInfo.id}&userName=${userInfo.name}&userImage=${userInfo.profile}`);
 
     } catch(error) {
         console.error(error);

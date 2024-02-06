@@ -35,7 +35,7 @@ const LoginPage = () => {
                     localStorage.setItem('loginMethod', 'M');
                     // Metamask 로그인인 경우, 계좌 정보를 localStorage에 저장
                     localStorage.setItem('account', accounts[0]);
-                    navigate('/main');
+                    navigate('/home');
                 }                 
             } catch(error) {
                 console.error(error);
@@ -48,13 +48,15 @@ const LoginPage = () => {
     return (
         <div className="flex h-screen flex-col items-center justify-center space-y-4">
             <div className="text-center mt-12">
-                <a href={KAKAO_AUTH_URL} className="inline-block w-48 bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg" >
-                    Kakao Login
+                <a href={KAKAO_AUTH_URL} className="flex inline-block w-48 bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg" >
+                    <img src="/kakao_emblem.png" alt="M" className="w-6 h-6 mr-2" />                    
+                    Kakao
                 </a>
             </div>
             <div className="text-center mt-12">
-                <button onClick={connectMetamask} className="inline-block w-48 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg">
-                    Metamask Login
+                <button onClick={connectMetamask} className="flex inline-block w-48 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg">
+                    <img src="/metamask_emblem.png" alt="M" className="w-6 h-6 mr-2" />                    
+                    Metamask
                 </button>
             </div>
         </div>
