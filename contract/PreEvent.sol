@@ -9,16 +9,13 @@ pragma solidity >=0.8.2 <0.9.0;
 --> 총 수량을 함부로 정하는 것은 위험함. 수량은 정해놓고 하지 말것.
 
 <소비자>
-1. 충전 완료한 자체토큰으로 티켓 예매 -> 예매완료 시 '티켓 받기' 버튼 활성화 -> '티켓 받기' 클릭 시 mintTicket() 함수 실행
+1. 충전 완료한 자체토큰으로 티켓 예매 -> 예매완료 시 '티켓 받기' 버튼 활성화 -> '티켓 받기' 클릭 시 우리가 mintTicket() 함수 실행
 
-**** 괜찮은 방법인지? tokenId값을 totalSupply() 사용 안하는 방식은 없는지?
-혹은 다른 방법이 있는지?
 2. 예매 취소(환불 요청) -> '티켓 반납' 버튼 클릭 시 우리에게 티켓 전송 -> ticket owner가 우리인게 확인되면 유저에게 자체토큰 전송
     - burn()을 쓸 생각이었지만, tokenId = totalSupply() + 1; 로 해버려서 나중에 tokenId가 중복되는 상황이 발생함.
     - 그래서 반납(유저 -> 우리) 형태로 생각했음.
 3. 취소된 티켓 예매
     - 반납된 티켓들을 새로운 구매자에게 전송하는 방법으로 생각함.
-****
 --> 환불 티켓의 tokenId를 blacklist에 올려서 모든 거래를 막기.
 
 <우리>
@@ -63,13 +60,12 @@ contract PreTicket is ERC721Enumerable/*, Ownable*/ {
         }
     }
 
-    // 
-    function mintTicket() public {
+    function mintTicket(address _addr) public {
         require(totalSupply() < maxSupply, "Can't mint over maxSupply");
         uint tokenId = totalSupply() + 1;
-        _mint(msg.sender, tokenId);
+        _mint(_addr, tokenId);
 
-        tickets[tokenId] = Ticket(msg.sender);
+        // tickets[tokenId] = Ticket(msg.sender);
         users[msg.sender] = tokenId;
     }
 
