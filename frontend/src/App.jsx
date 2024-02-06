@@ -16,6 +16,8 @@ import Collection from "./pages/collection";
 import MyTicket from "./pages/myticket";
 import Wishlist from "./pages/wishlist";
 
+import CreateAddress from "./pages/createaddress";
+
 //components
 import Layout from "./components/Layout";
 
@@ -34,6 +36,7 @@ const App = () => {
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/myticket" element={<MyTicket />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/testaddr" element={<CreateAddress />} />
       </Routes>
     </BrowserRouter>      
   );
