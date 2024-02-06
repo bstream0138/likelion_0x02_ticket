@@ -1,33 +1,43 @@
 const axios = require('axios');
 
+
 exports.kakaoPayReady = async (req, res) => {
 
+    console.log('Pay request: ', req.body);
+
+    //온라인 단건 결제 
+    // 1) 결제준비 API - 결제 상세정보를 서버에 전달하고, 결제 고유 번호(tid)를 받음
+    // 2) 결제요청 API - 결제 준비 API 응답으로 받은 Redirect URL 중 접속 환경에 맞는 URL로 redirect
+    // 3) 결제승인 API - 사용자가 결제수단을 선택하고 비밀번호를 입력해 결제 인증을 완료한 뒤 결제 완료 처리
+
+    // 카카오페이 결제 서버: https://open-api.kakaopay.com
+    // 카카오페이 목업웹: https://online-pay.kakao.com/mockup/
     try {
         // 상품명, 결제금액
         const { item_name, total_amount } = req.body;
 
         // 결제 준비 요청
-        const response = await axios.post('https://kapi.kakao.com/v1/payment/ready', {
-            cid: 'TC0ONETIME', // 테스트용 CID, 실제 운영 시 변경 필요
-            partner_order_id: 'partner_order_id', // 파트너 주문번호
-            partner_user_id: 'partner_user_id', // 파트너 회원 ID
-            item_name, // 상품명
-            quantity: 1, // 상품 수량
-            total_amount, // 총 결제 금액
-            vat_amount: 0, // 부가세
-            tax_free_amount: 0, // 비과세 금액
-            approval_url: 'http://localhost:3000/pay/success', // 결제 성공 시 리다이렉트 될 URL
-            fail_url: 'http://localhost:3000/pay/fail', // 결제 실패 시 리다이렉트 될 URL
-            cancel_url: 'http://localhost:3000/pay/cancel', // 결제 취소 시 리다이렉트 될 URL
+        const response = await axios.post('https://open-api.kakaopay.com/online/v1/payment/ready', {
+            "cid": "TC0ONETIME",
+            "partner_order_id": "partner_order_id",
+            "partner_user_id": "partner_user_id",
+            "item_name": "TEST",
+            "quantity": 1,
+            "total_amount": 100,
+            "vat_amount": 0,
+            "tax_free_amount": 0,
+            "approval_url": "http://localhost:3000/pay/success",
+            "fail_url": "http://localhost:3000/pay/fail",
+            "cancel_url": "http://localhost:3000/pay/cancel",
         }, {
             headers: {
-                Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}` // 카카오 Admin 키
-            }
+                Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
+                'Content-type': 'application/json'
+            },
         });
 
         console.log('next_redirect_pc_url: ', response.data.next_redirect_pc_url);
         res.json({ next_redirect_pc_url: response.data.next_redirect_pc_url });
-        //res.redirect(`http://localhost:3000/main?userID=${userInfo.id}&userName=${userInfo.name}`);
 
     } catch(error) {
         console.error(error);
@@ -43,7 +53,7 @@ exports.kakaoPayApprove = async (req, res) => {
 
         // 결제 승인 요청
         const response = await axios.post('https://kapi.kakao.com/v1/payment/approve', {
-            cid: 'TC0ONETIME', // 테스트용 CID, 실제 운영 시 변경 필요
+            cid: 'TC0ONETIME',
             tid,
             partner_order_id: 'partner_order_id', // 파트너 주문번호
             partner_user_id: 'partner_user_id', // 파트너 회원 ID
@@ -51,7 +61,7 @@ exports.kakaoPayApprove = async (req, res) => {
             total_amount
         }, {
             headers: {
-                Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}` // 카카오 Admin 키
+                Authorization: `KakaoAK ${process.env.KAKAO_ADMIN_KEY}` // 카카오 Admin 키
             }
         });
 
