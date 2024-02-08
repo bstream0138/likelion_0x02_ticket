@@ -1,44 +1,39 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import { useEffect, useState } from "react";
 //import { Navigate } from "react-router-dom";
 //import axios from "axios";
 
-
 //pages
-import LoginPage from './pages/LoginPage';
-import PaymentPage from './pages/PaymentPage';
 
-import Home from "./pages/home";
-import Ticketing from "./pages/ticketing";
-import MyProfile from "./pages/myprofile";
-import Collection from "./pages/collection";
-import MyTicket from "./pages/myticket";
-import Wishlist from "./pages/wishlist";
+import PaymentPage from "./pages/PaymentPage";
+import Home from "./pages/Home";
+import Ticketing from "./pages/Ticketing";
+import Ticket from "./pages/Ticket";
 
 //components
 import Layout from "./components/Layout";
+import My from "./pages/My";
+import LoginPage from "./pages/LoginPage";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes element={<Layout />}>
+      <Routes>
         {/* pages using Kakao API*/}
-        <Route path="/" element={<LoginPage/>} />
-        <Route path="/pay" element={<PaymentPage/>} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/pay" element={<PaymentPage />} />
 
         {/* App */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/ticketing" element={<Ticketing />} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/myprofile" element={<MyProfile />} />
-        <Route path="/myticket" element={<MyTicket />} />
-        <Route path="/wishlist" element={<Wishlist />} />
+        <Route element={<Layout />}>
+          <Route path="/Home" element={<Home />} />
+          <Route path="/ticketing" element={<Ticketing />} />
+          <Route path="/ticket" element={<Ticket />} />
+          <Route path="/my" element={<My />} />
+        </Route>
       </Routes>
-    </BrowserRouter>      
+    </BrowserRouter>
   );
-
-
-}
+};
 
 export default App;
