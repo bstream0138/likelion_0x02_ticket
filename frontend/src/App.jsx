@@ -10,6 +10,7 @@ import PaymentPage from "./pages/PaymentPage";
 import Home from "./pages/Home";
 import Ticketing from "./pages/Ticketing";
 import Ticket from "./pages/Ticket";
+import CreateAddress from "./pages/CreateAddress";
 
 //components
 import Layout from "./components/Layout";
@@ -26,10 +27,11 @@ const App = () => {
 
         {/* App */}
         <Route element={<Layout />}>
-          <Route path="/Home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/ticketing" element={<Ticketing />} />
           <Route path="/ticket" element={<Ticket />} />
           <Route path="/my" element={<My />} />
+          <Route path="/createaddress" element={<CreateAddress />} />
         </Route>
       </Routes>
     </BrowserRouter>
