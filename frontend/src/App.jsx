@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //pages
 
-import PaymentPage from "./pages/PaymentPage";
 import Home from "./pages/Home";
 import Ticketing from "./pages/Ticketing";
 import Ticket from "./pages/Ticket";
@@ -23,7 +22,6 @@ const App = () => {
       <Routes>
         {/* pages using Kakao API*/}
         <Route path="/" element={<LoginPage />} />
-        <Route path="/pay" element={<PaymentPage />} />
 
         {/* App */}
         <Route element={<Layout />}>

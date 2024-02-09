@@ -1,66 +1,25 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import PaymentPage from "./PaymentPage";
+import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import PaymentPage from "../components/PaymentPage";
 
 const Ticketing = () => {
   // LoginPage에서 사용한 login 방법 확인
+  const { userInfo, account } = useOutletContext();
   const loginMethod = localStorage.getItem("loginMethod");
   const navigate = useNavigate();
-  const [account, setAccount] = useState("");
   const [isModal, setIsModal] = useState(false);
 
   // for Kakao Login
-  const [userInfo, setUserInfo] = useState({
-    userID: "",
-    userName: "",
-    userImage: "",
-  });
-  const current_url = useLocation();
-
-  useEffect(() => {
-    if (loginMethod === "K") {
-      // Kakao Login
-      const queryParams = new URLSearchParams(current_url.search);
-      if (queryParams.get("userID")) {
-        // backend에서 redirect된 상황이므로 값을 localStorage에 저장
-        localStorage.setItem("userID", queryParams.get("userID"));
-        localStorage.setItem("userName", queryParams.get("userName"));
-        localStorage.setItem("userImage", queryParams.get("userImage"));
-      }
-
-      //localStorage에서 userID와 userName 가져오기
-      const userID = localStorage.getItem("userID");
-      const userName = localStorage.getItem("userName");
-      const userImage = localStorage.getItem("userImage");
-      console.log("userID: ", userID);
-      console.log("userName: ", userName);
-      console.log("userImage: ", userImage);
-      setUserInfo({ userID, userName, userImage });
-    } else if (loginMethod === "M") {
-      // Metamask Login
-      const account = localStorage.getItem("account");
-      setAccount(account);
-    }
-  }, [current_url]);
-
-  // const handleLogout = () => {
-  //   //localStorage에서 item 삭제
-  //   localStorage.clear();
-
-  //   //logout 후 root로
-  //   navigate("/");
-  // };
 
   const handleGoHome = () => {
     navigate("/home");
   };
 
-  // const goToPaymentPage = () => {
-  //   navigate("/pay");
-  // };
-
   const toggleOpen = () => {
+    if (!account) {
+      alert("You need to login");
+      return;
+    }
     setIsModal(!isModal);
   };
 
@@ -107,7 +66,7 @@ const Ticketing = () => {
           alt=""
         />
       </div>
-      <ul className=" pt-2 flex justify-end px-4 pr-[45px]">
+      <ul className=" pt-4 flex justify-end px-4 pr-[60px]">
         <button
           className="border-black border rounded-md px-2 py-1 mt-[2px] font-bold text-3xl"
           onClick={toggleOpen}

@@ -39,7 +39,7 @@ const PaymentPage = ({ toggleOpen }) => {
 
   return (
     <div className="bg-opacity-40 bg-black w-full h-full top-0 left-0 fixed z-20">
-      <div className="flex flex-col items-center justify-center h-[770px] px-4 py-2 fixed top-[10px] bg-white border w-[400px] left-1/2 -translate-x-1/2 z-20 rounded-md">
+      <div className="flex flex-col items-center justify-center h-[770px] px-4 py-2 fixed top-[50px] bg-white border w-[400px] left-1/2 -translate-x-1/2 z-20 rounded-md">
         <img
           src="/golden_hour.jpg"
           alt="IU Concert"

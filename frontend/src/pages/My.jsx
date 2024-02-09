@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
+
+import Account from "../components/Account";
 
 const My = () => {
+  const { account } = useOutletContext();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -9,6 +12,12 @@ const My = () => {
     localStorage.clear();
     navigate("/");
   };
+
+  useEffect(() => {
+    if (!account) {
+      alert("You need to login");
+    }
+  }, [account]);
 
   return (
     <div className="w-[425px] min-h-screen bg-blue-200 mx-auto">
@@ -20,6 +29,7 @@ const My = () => {
           Logout
         </button>
       </ul>
+      <Account />
     </div>
   );
 };

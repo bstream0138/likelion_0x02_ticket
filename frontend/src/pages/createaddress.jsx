@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Web3 from "web3";
 
+// TEST 지갑주소 만들기
 const CreateAddress = ({ userInfo }) => {
   const [generatedAccount, setGeneratedAccount] = useState(null);
 
@@ -21,12 +22,6 @@ const CreateAddress = ({ userInfo }) => {
     console.log("web3.eth.accounts: ", web3.eth.accounts);
     console.log("addressFromPrivateKey: ", addressFromPrivateKey);
     setGeneratedAccount(addressFromPrivateKey);
-
-    // 지갑의 잔액 조회
-    const ganacheAccountAddress = "0x73e62E425D7ADbEEdD5890C514639E4f55d77f92";
-    const balanceWei = await web3.eth.getBalance(ganacheAccountAddress);
-    const balanceEther = web3.utils.fromWei(balanceWei, "ether");
-    console.log(`Balance: ${balanceEther} ETH`);
   };
 
   return (
