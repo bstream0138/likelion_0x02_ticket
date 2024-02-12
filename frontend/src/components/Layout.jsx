@@ -1,6 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
-import MenuBar from "./MenuBar";
 import { useEffect, useState } from "react";
+import Web3 from "web3";
+
+import DevInfo from "./DevInfo";
+import MenuBar from "./MenuBar";
 
 const Layout = () => {
   const loginMethod = localStorage.getItem("loginMethod");
@@ -10,6 +13,8 @@ const Layout = () => {
     userName: "",
     userImage: "",
   });
+
+  const [web3, setWeb3] = useState(null);
 
   const current_url = useLocation();
 
@@ -32,16 +37,29 @@ const Layout = () => {
       console.log("userName: ", userName);
       console.log("userImage: ", userImage);
       setUserInfo({ userID, userName, userImage });
+
     } else if (loginMethod === "M") {
       // Metamask Login
       const account = localStorage.getItem("account");
       setAccount(account);
+
+      const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA)
+      setWeb3(web3);
+    } else if (loginMethod === "G") {
+      // Ganache Login
+      const account = localStorage.getItem("account");
+      setAccount(account);
+
+      const web3 = new Web3('http://127.0.0.1:7545')
+      setWeb3(web3);
     }
-  }, [current_url]);
+
+  }, [current_url, loginMethod]);
 
   return (
     <div>
-      <Outlet context={{ account, setAccount, userInfo }} />
+      <DevInfo loginMethod={loginMethod}/>
+      <Outlet context={{ loginMethod, account, setAccount, userInfo, web3 }} />
       <MenuBar />
     </div>
   );
