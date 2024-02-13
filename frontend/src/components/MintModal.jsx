@@ -5,10 +5,16 @@ import axios from "axios";
 //구매 PaymentPage 에서 구매 버튼 눌렀을때 민팅기능
 
 const MintModal = ({ toggleOpen }) => {
-  const { account, preEventContract } = useOutletContext();
+  const { account, preEventContract, web3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
-  const [metadata, setMetadata] = useState();
+  // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+  console.log(privateKey);
+
+  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
+  // console.log(mintAccount);
 
   const onClickMint = async () => {
     try {
@@ -16,28 +22,45 @@ const MintModal = ({ toggleOpen }) => {
 
       setIsLoading(true);
 
-      //민팅하기
-      // await preEventContract.methods.mintNFT().send({ from: account });
-
-      //@ts-expect-error
       const balance = await preEventContract.methods.balanceOf(account).call();
+      const newTokenId = Number(balance);
+
+      const tx = {
+        from: mintAccount.address,
+        to: preEventContract.address,
+        gasLimit: 3000000,
+        gasPrice: 300000,
+        data: preEventContract.methods
+          .mintTicket(account, newTokenId)
+          .encodeABI(),
+      };
+
+      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+
+      const receipt = await web3.eth.sendSignedTransaction(
+        signedTx.rawTransaction
+      );
+      console.log("tx receipt:", receipt);
 
       const tokenId = await preEventContract.methods
-        //@ts-expect-error
         .tokenOfOwnerByIndex(account, Number(balance) - 1)
         .call();
 
+      //민팅하기
+      // await preEventContract.methods
+      //   .mintTicket(signPromise, tokenId)
+      //   .send({ from: account });
+
       const metadataURI = await preEventContract.methods
-        //@ts-expect-error
         .tokenURI(tokenId)
         .call();
 
       const response = await axios.get(metadataURI);
 
-      setMetadata(response.data);
+      // setMetadata(response.data);
       setMetadataArray([response.data, ...metadataArray]);
       setIsLoading(false);
-
+      console.log("metadata:", response.data);
       alert("Minting Success");
     } catch (error) {
       console.error(error);

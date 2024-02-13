@@ -21,7 +21,7 @@ const Ticket = () => {
       </div>
       <ul className="grid grid-cols-2 justify-items-center py-3">
         <button onClick={() => setIsSelect("A")}>My Ticket</button>
-        <button onClick={() => setIsSelect("B")}>Collection</button>
+        <button onClick={() => setIsSelect("B")}>(Collection)</button>
       </ul>
       {isSelect === "A" && <MyTicketCard />}
       {isSelect === "B" && <CollectionCard />}
