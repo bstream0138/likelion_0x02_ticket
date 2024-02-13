@@ -2,6 +2,8 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 /*
+<임시로 만든 파일입니다>
+
 [During-Event Ticket : 공연 중 이벤트] - 주최자와 우리의 소통
 
 <주최자>

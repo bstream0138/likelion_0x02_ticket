@@ -16,8 +16,7 @@ const CreateAddress = ({ userInfo }) => {
     //keccak 256으로 UID와 generate한 시간으로 생성
     console.log(privateKey);
 
-    const addressFromPrivateKey =
-      web3.eth.accounts.privateKeyToAccount(privateKey);
+    const addressFromPrivateKey = web3.eth.accounts.privateKeyToAccount(privateKey);
     console.log("web3.eth.accounts: ", web3.eth.accounts);
     console.log("addressFromPrivateKey: ", addressFromPrivateKey);
     setGeneratedAccount(addressFromPrivateKey);

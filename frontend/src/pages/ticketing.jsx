@@ -70,9 +70,7 @@ const Ticketing = () => {
         {loginMethod === "K" ? (
           <div>
             <li className="text-lg font-semibold">UserID: {userInfo.userID}</li>
-            <li className="text-lg font-semibold">
-              UserName: {userInfo.userName}
-            </li>
+            <li className="text-lg font-semibold">UserName: {userInfo.userName}</li>
           </div>
         ) : (
           <div>
@@ -96,7 +94,6 @@ const Ticketing = () => {
         </button>
         TICKET
       </div>
-
       <div className="header">
         <ul className="w-[425px] overflow-hidden h-[200px] object-contain header ">
           <img className=" opacity-60 blur-sm" src="/golden_hour.jpg" alt="" />
@@ -108,10 +105,7 @@ const Ticketing = () => {
         />
       </div>
       <ul className=" pt-2 flex justify-end px-4 pr-[45px]">
-        <button
-          className="border-black border rounded-md px-2 py-1 mt-[2px] font-bold text-3xl"
-          onClick={toggleOpen}
-        >
+        <button className="border-black border rounded-md px-2 py-1 mt-[2px] font-bold text-3xl" onClick={toggleOpen}>
           예매하기
         </button>
         {isModal && <PaymentPage toggleOpen={toggleOpen} />}
