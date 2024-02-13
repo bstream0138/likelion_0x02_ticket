@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyTicketCard from "../components/MyTicketCard";
 import CollectionCard from "../components/CollectionCard";
+import { useOutletContext } from "react-router-dom";
 
 const Ticket = () => {
   const [isSelect, setIsSelect] = useState("A");
+  const { account, preEventContract } = useOutletContext();
+
+  useEffect(() => {
+    if (!preEventContract) {
+      console.log("contract :", preEventContract);
+      return;
+    }
+  }, [preEventContract]);
 
   return (
     <div className="w-[425px] min-h-screen bg-blue-200 mx-auto">

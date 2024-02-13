@@ -48,7 +48,11 @@ const MyTicketCard = () => {
   };
 
   useEffect(() => {
-    if (!preEventContract) return;
+    if (!preEventContract) {
+      console.log("contract :", preEventContract);
+      return;
+    }
+
     getMyNft();
   }, [preEventContract]);
 

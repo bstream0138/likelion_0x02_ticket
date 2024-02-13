@@ -71,6 +71,9 @@ const Layout = () => {
 
       const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
       setWeb3(web3);
+      setPreEventContract(
+        new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)
+      );
     } else if (loginMethod === "G") {
       // Ganache Login
       const account = localStorage.getItem("account");
@@ -78,14 +81,11 @@ const Layout = () => {
 
       const web3 = new Web3("http://127.0.0.1:7545");
       setWeb3(web3);
+      setPreEventContract(
+        new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)
+      );
     }
   }, [current_url, loginMethod]);
-
-  useEffect(() => {
-    if (!web3) return;
-
-    setPreEventContract(new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT));
-  }, []);
 
   return (
     <div>
