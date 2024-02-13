@@ -22,6 +22,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "./CanceledTicket.sol";
+
 contract PreTicket is ERC721Enumerable, Ownable {
     string beforeURI; // 초기 발행 시 티켓 이미지 ex) 가수 사진 + 공연시간,장소 적힌 평범한 이미지
     string afterURI; // pre event용 티켓 이미지 ex) 콘서트 포스터 사진
