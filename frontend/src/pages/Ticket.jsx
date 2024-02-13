@@ -5,7 +5,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Ticket = () => {
   const [isSelect, setIsSelect] = useState("A");
-  const { account, preEventContract } = useOutletContext();
+  const { preEventContract } = useOutletContext();
 
   useEffect(() => {
     if (!preEventContract) {

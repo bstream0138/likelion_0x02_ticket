@@ -10,7 +10,7 @@ const My = () => {
   const handleLogout = () => {
     //localStorage에서 item 삭제
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {
