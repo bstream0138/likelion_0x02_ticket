@@ -2,7 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-//import Web3 from 'web3';
+// Ganache login 처리
+import Web3 from 'web3';
 
 const LoginPage = () => {
   // 2가지 Login 방식을 지원한다.
@@ -31,8 +32,16 @@ const LoginPage = () => {
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
+          // Sepolia 테스트넷으로 접속하도록 chain ID 지정
+          params: [
+            {
+              chainId: 11155111,
+
+            },
+          ],
         });
         if (accounts.length > 0) {
+          console.log("Connected to Metamask");
           localStorage.setItem("loginMethod", "M");
           // Metamask 로그인인 경우, 계좌 정보를 localStorage에 저장
           localStorage.setItem("account", accounts[0]);
@@ -45,6 +54,26 @@ const LoginPage = () => {
       console.log("You need Metamask extension");
     }
   };
+
+  // for Ganache Login
+  const connectGanache = async () => {
+    try {
+      const web3 = new Web3("http://127.0.0.1:7545")
+      const accounts = await web3.eth.getAccounts();
+
+      if(accounts.length > 0){
+        console.log("Connected to Ganache");
+        localStorage.setItem("loginMethod", "G");
+          // Ganache 로그인인 경우, 로컬 환경의 첫번째 주소를 지갑 주소로 사용
+          localStorage.setItem("account", accounts[0]);
+          navigate("/home");
+      }
+
+    } catch (error) {
+      console.error("Check Ganache: ", error);
+    }
+  }
+
 
   return (
     <div className="flex h-screen flex-col items-center justify-center space-y-4">
@@ -64,6 +93,15 @@ const LoginPage = () => {
         >
           <img src="/metamask_emblem.png" alt="M" className="w-6 h-6 mr-2" />
           Metamask
+        </button>
+      </div>
+      <div className="text-center mt-12">
+        <button
+          onClick={connectGanache}
+          className="flex inline-block w-48 bg-gray-100 text-black font-bold py-3 px-6 rounded-lg"
+        >
+          <img src="/ganache_emblem.png" alt="M" className="w-6 h-6 mr-2" />
+          Ganache
         </button>
       </div>
     </div>

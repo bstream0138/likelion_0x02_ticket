@@ -1,5 +1,4 @@
 import { useState } from "react";
-import TicketCard from "./TicketCard";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
@@ -15,7 +14,7 @@ const MyTicketCard = () => {
   };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
-  const [searchTokenId, setSearchTokenId] = useState(0);
+  const [searchTokenId, setSearchTokenId] = useState();
 
   const getBalance = async () => {
     if (!account) return;
@@ -49,9 +48,9 @@ const MyTicketCard = () => {
   };
 
   useEffect(() => {
-    if (!preEventContract || searchTokenId === 0) return;
+    if (!preEventContract) return;
     getMyNft();
-  }, [preEventContract, searchTokenId]);
+  }, [preEventContract]);
 
   useEffect(() => {
     if (!preEventContract) return;

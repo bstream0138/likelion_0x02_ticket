@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-import MenuBar from "./MenuBar";
 import { useEffect, useState } from "react";
+import DevInfo from "./DevInfo";
+import MenuBar from "./MenuBar";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import PreEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
@@ -32,9 +33,7 @@ const concert = [
 //공연정보와 account kakaoId contract 정보
 
 const Layout = () => {
-  const web3 = new Web3(
-    "https://sepolia.infura.io/v3/f8f6b9208fba4b13abec23b1ac2fc8d1"
-  );
+  const [web3, setWeb3] = useState(null);
   const [preEventContract, setPreEventContract] = useState();
   const loginMethod = localStorage.getItem("loginMethod");
   const [account, setAccount] = useState("");
@@ -43,12 +42,6 @@ const Layout = () => {
     userName: "",
     userImage: "",
   });
-
-  useEffect(() => {
-    if (!web3) return;
-
-    setPreEventContract(new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT));
-  }, []);
 
   const current_url = useLocation();
 
@@ -75,13 +68,31 @@ const Layout = () => {
       // Metamask Login
       const account = localStorage.getItem("account");
       setAccount(account);
+
+      const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
+      setWeb3(web3);
+    } else if (loginMethod === "G") {
+      // Ganache Login
+      const account = localStorage.getItem("account");
+      setAccount(account);
+
+      const web3 = new Web3("http://127.0.0.1:7545");
+      setWeb3(web3);
     }
-  }, [current_url]);
+  }, [current_url, loginMethod]);
+
+  useEffect(() => {
+    if (!web3) return;
+
+    setPreEventContract(new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT));
+  }, []);
 
   return (
     <div>
+      <DevInfo loginMethod={loginMethod} />
       <Outlet
         context={{
+          loginMethod,
           account,
           setAccount,
           userInfo,
@@ -91,6 +102,7 @@ const Layout = () => {
           concert,
         }}
       />
+
       <MenuBar />
     </div>
   );
