@@ -36,7 +36,7 @@ const LoginPage = () => {
           localStorage.setItem("loginMethod", "M");
           // Metamask 로그인인 경우, 계좌 정보를 localStorage에 저장
           localStorage.setItem("account", accounts[0]);
-          navigate("/home");
+          navigate("/");
         }
       } catch (error) {
         console.error(error);

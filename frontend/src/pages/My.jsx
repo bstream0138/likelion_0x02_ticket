@@ -16,11 +16,12 @@ const My = () => {
   useEffect(() => {
     if (!account) {
       alert("You need to login");
+      navigate("/login");
     }
-  }, [account]);
+  }, []);
 
   return (
-    <div className="w-[425px] min-h-screen bg-blue-200 mx-auto">
+    <div className="w-[425px] min-h-screen bg-blue-200 mx-auto px-4">
       <ul className="">
         <button
           className="mt-4 bg-black text-white font-bold py-2 px-4 rounded"
@@ -29,7 +30,10 @@ const My = () => {
           Logout
         </button>
       </ul>
-      <Account />
+      <ul className="mt-2">
+        <Account />
+      </ul>
+      <div className="mt-2">Purchased</div>
     </div>
   );
 };

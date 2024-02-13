@@ -21,12 +21,14 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* pages using Kakao API*/}
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
         {/* App */}
         <Route element={<Layout />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/ticketing" element={<Ticketing />} />
+          <Route path="/" element={<Home />} />
+
+          <Route path="/ticketing/:tokenId" element={<Ticketing />} />
+
           <Route path="/ticket" element={<Ticket />} />
           <Route path="/my" element={<My />} />
           <Route path="/createaddress" element={<CreateAddress />} />

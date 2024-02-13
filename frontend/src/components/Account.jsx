@@ -80,7 +80,7 @@ const Account = () => {
           <li>Balance : {getBalance}</li>
         </ul>
       )}
-      <form className="flex" onSubmit={(e) => sendEth(e)}>
+      <form className="flex mt-2" onSubmit={(e) => sendEth(e)}>
         <ul className="flex flex-col gap-2 ">
           <input
             className="input-style"

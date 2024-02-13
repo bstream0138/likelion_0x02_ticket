@@ -1,8 +1,41 @@
 import { Outlet, useLocation } from "react-router-dom";
 import MenuBar from "./MenuBar";
 import { useEffect, useState } from "react";
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+import PreEventAbi from "../abis/PreEventAbi.json";
+import Web3 from "web3";
+
+const concert = [
+  {
+    image: "bts.jpg",
+    title: "BTS",
+    content: "방탄소년단",
+    date: "2024.02.21",
+    tokenId: 1,
+  },
+
+  {
+    image: "golden_hour.jpg",
+    title: "IU",
+    content: "아이유",
+    date: "2024.02.21",
+    tokenId: 2,
+  },
+  {
+    image: "karina.jpg",
+    title: "Espa",
+    content: "에스파",
+    date: "2024.02.21",
+    tokenId: 3,
+  },
+];
+//공연정보와 account kakaoId contract 정보
 
 const Layout = () => {
+  const web3 = new Web3(
+    "https://sepolia.infura.io/v3/f8f6b9208fba4b13abec23b1ac2fc8d1"
+  );
+  const [preEventContract, setPreEventContract] = useState();
   const loginMethod = localStorage.getItem("loginMethod");
   const [account, setAccount] = useState("");
   const [userInfo, setUserInfo] = useState({
@@ -10,6 +43,12 @@ const Layout = () => {
     userName: "",
     userImage: "",
   });
+
+  useEffect(() => {
+    if (!web3) return;
+
+    setPreEventContract(new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT));
+  }, []);
 
   const current_url = useLocation();
 
@@ -41,7 +80,17 @@ const Layout = () => {
 
   return (
     <div>
-      <Outlet context={{ account, setAccount, userInfo }} />
+      <Outlet
+        context={{
+          account,
+          setAccount,
+          userInfo,
+          preEventContract,
+          setPreEventContract,
+          web3,
+          concert,
+        }}
+      />
       <MenuBar />
     </div>
   );

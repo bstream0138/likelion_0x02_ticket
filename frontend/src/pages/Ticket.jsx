@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TicketCard from "../components/TicketCard";
+import MyTicketCard from "../components/MyTicketCard";
 import CollectionCard from "../components/CollectionCard";
 
 const Ticket = () => {
@@ -14,7 +14,7 @@ const Ticket = () => {
         <button onClick={() => setIsSelect("A")}>My Ticket</button>
         <button onClick={() => setIsSelect("B")}>Collection</button>
       </ul>
-      {isSelect === "A" && <TicketCard />}
+      {isSelect === "A" && <MyTicketCard />}
       {isSelect === "B" && <CollectionCard />}
     </div>
   );
