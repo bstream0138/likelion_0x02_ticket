@@ -18,7 +18,11 @@ const TicketBanner = () => {
   return (
     <Slider {...settings}>
       {concert.map((v) => (
-        <Link to={`/ticketing/${v.tokenId}`} className="h-[280px] w-[350px] ">
+        <Link
+          key={v.tokenId}
+          to={`/ticketing/${v.tokenId}`}
+          className="h-[280px] w-[350px] "
+        >
           <div className="bg-white rounded-md">
             <img
               className="w-[350px] h-[280px] object-cover rounded-t-md"

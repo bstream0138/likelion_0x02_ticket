@@ -14,23 +14,18 @@ const MyTicketCard = () => {
   };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
-  const [searchTokenId, setSearchTokenId] = useState();
-
-  const getBalance = async () => {
-    if (!account) return;
-
-    const balance = await preEventContract.methods.balanceOf(account).call();
-
-    setSearchTokenId(Number(balance));
-  };
 
   const getMyNft = async () => {
     try {
-      if (!preEventContract || searchTokenId === 0) return;
+      if (!preEventContract) return;
+
+      const searchTokenId = await preEventContract.methods
+        .balanceOf(account)
+        .call();
 
       let temp = [];
 
-      for (let i = 0; i < searchTokenId; i++) {
+      for (let i = 0; i < Number(searchTokenId); i++) {
         const tokenId = i + 1;
         const metadataURI = await preEventContract.methods
           .tokenURI(tokenId)
@@ -41,24 +36,16 @@ const MyTicketCard = () => {
         temp.push({ ...response.data, tokenId: tokenId });
         console.log(response.data);
       }
-      setMetadataArray([...metadataArray, ...temp]);
+      setMetadataArray(temp);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    if (!preEventContract) {
-      console.log("contract :", preEventContract);
-      return;
-    }
+    if (!preEventContract) return;
 
     getMyNft();
-  }, [preEventContract]);
-
-  useEffect(() => {
-    if (!preEventContract) return;
-    getBalance();
   }, [preEventContract]);
 
   return (
@@ -72,6 +59,7 @@ const MyTicketCard = () => {
             onClick={isModalOpen}
           >
             <img src={v.image} alt={v.name} />
+            <span>{v.tokenId}</span>
           </button>
         ))}
       </div>
