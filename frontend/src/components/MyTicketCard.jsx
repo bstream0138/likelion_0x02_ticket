@@ -59,6 +59,7 @@ const MyTicketCard = () => {
             onClick={isModalOpen}
           >
             <img src={v.image} alt={v.name} />
+            <span>{v.tokenId}</span>
           </button>
         ))}
       </div>

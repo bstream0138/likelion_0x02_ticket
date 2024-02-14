@@ -22,18 +22,24 @@ const MintModal = ({ toggleOpen }) => {
 
       setIsLoading(true);
 
+      const gasPrice = await web3.eth.getGasPrice();
       const balance = await preEventContract.methods.balanceOf(account).call();
       const newTokenId = Number(balance);
 
       const tx = {
         from: mintAccount.address,
         to: preEventContract.address,
-        gasLimit: 3000000,
-        gasPrice: 300000,
+        gas: 5000000,
+        gasPrice: gasPrice,
         data: preEventContract.methods
-          .mintTicket(account, newTokenId)
+          .mintTicket(mintAccount.address, account, newTokenId)
           .encodeABI(),
+        value: 0x0,
+        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        maxFeePerGas: web3.utils.toWei("600", "gwei"),
       };
+
+      console.log(preEventContract.methods);
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
