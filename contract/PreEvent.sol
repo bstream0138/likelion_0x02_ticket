@@ -35,7 +35,7 @@ contract PreTicket is ERC721Enumerable, Ownable {
     }
 
     // 티켓 발급
-    function mintTicket(address _addr, uint i) public onlyOwner notCanceled(i){
+    function mintTicket(address _addr) public onlyOwner {
         uint tokenId = totalSupply() + 1;
         _mint(_addr, tokenId);
     }
