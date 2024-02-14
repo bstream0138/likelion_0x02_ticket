@@ -24,7 +24,7 @@ const concert = [
   },
   {
     image: "karina.jpg",
-    title: "Espa",
+    title: "aespa",
     content: "에스파",
     date: "2024.02.21",
     tokenId: 3,
