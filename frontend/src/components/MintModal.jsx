@@ -11,35 +11,43 @@ const MintModal = ({ toggleOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
-  console.log(privateKey);
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // console.log(mintAccount);
 
   const onClickMint = async () => {
     try {
-      if (!preEventContract || !account) return;
+      if (!preEventContract || !account || !mintAccount) return;
 
       setIsLoading(true);
 
       const gasPrice = await web3.eth.getGasPrice();
-      const balance = await preEventContract.methods.balanceOf(account).call();
+      const balance = await preEventContract.methods
+        .balanceOf(mintAccount.address)
+        .call();
       const newTokenId = Number(balance);
 
       const tx = {
         from: mintAccount.address,
         to: preEventContract.address,
-        gas: 5000000,
+        gas: 60000,
         gasPrice: gasPrice,
         data: preEventContract.methods
-          .mintTicket(mintAccount.address, account, newTokenId)
+          .mintTicket(account, newTokenId)
           .encodeABI(),
-        value: 0x0,
-        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        maxFeePerGas: web3.utils.toWei("600", "gwei"),
+        value: "0x0",
+        // maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        // maxFeePerGas: web3.utils.toWei("100", "gwei"),
       };
 
-      console.log(preEventContract.methods);
+      // web3.eth
+      //   .estimateGas(tx)
+      //   .then((gasAmount) => {
+      //     console.log("Estiamte Gas:", gasAmount);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
@@ -49,7 +57,7 @@ const MintModal = ({ toggleOpen }) => {
       console.log("tx receipt:", receipt);
 
       const tokenId = await preEventContract.methods
-        .tokenOfOwnerByIndex(account, Number(balance) - 1)
+        .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
         .call();
 
       //민팅하기

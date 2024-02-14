@@ -69,7 +69,7 @@ const Layout = () => {
       const account = localStorage.getItem("account");
       setAccount(account);
 
-      const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
+      const web3 = new Web3(window.ethereum);
       setWeb3(web3);
       setPreEventContract(
         new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)

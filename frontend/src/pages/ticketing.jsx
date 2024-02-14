@@ -4,7 +4,7 @@ import PaymentPage from "../components/PaymentPage";
 
 const Ticketing = () => {
   const { tokenId } = useParams();
-  console.log(tokenId);
+  console.log("현재페이지 :", tokenId);
   const { userInfo, account, concert } = useOutletContext();
   // LoginPage에서 사용한 login 방법 확인
   const loginMethod = localStorage.getItem("loginMethod");
@@ -26,6 +26,7 @@ const Ticketing = () => {
   };
 
   useEffect(() => {
+    if (!tokenId) return;
     const concertInfo = concert.find((c) => c.tokenId.toString() === tokenId);
     setConcertId(concertInfo);
   }, [tokenId, concert]);
@@ -64,7 +65,7 @@ const Ticketing = () => {
       </div>
       {/*예매하기 버튼 화면 현재 concertId는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertId && (
-        <div key={tokenId}>
+        <div key={concertId.tokenId}>
           <div className="header">
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header ">
               <img

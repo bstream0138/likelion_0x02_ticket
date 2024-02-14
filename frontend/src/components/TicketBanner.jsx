@@ -2,8 +2,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link, useOutletContext } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 const TicketBanner = () => {
+  const [page, setPage] = useState();
+  const slideRef = useRef();
+
   //카로셀 세팅
   const settings = {
     infinite: true,
@@ -15,11 +19,26 @@ const TicketBanner = () => {
   };
   const { concert } = useOutletContext();
 
+  const getCurrentPage = () =>
+    setPage(slideRef.current.innerSlider.state.currentSlide);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      getCurrentPage();
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    console.log(page);
+  }, [page]);
+
   return (
-    <Slider {...settings}>
-      {concert.map((v) => (
+    <Slider {...settings} ref={slideRef}>
+      {concert.map((v, i) => (
         <Link
-          key={v.tokenId}
+          key={i}
           to={`/ticketing/${v.tokenId}`}
           className="h-[280px] w-[350px] "
         >

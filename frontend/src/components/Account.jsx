@@ -14,6 +14,9 @@ const Account = () => {
   const [tokenIdTo, setTokenIdTo] = useState();
   const [testAmount, setTestAmount] = useState(0);
 
+  const privateKey =
+    "0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee";
+
   useEffect(() => {
     if (!account) return;
 
@@ -86,8 +89,6 @@ const Account = () => {
     }
   };
 
-  const privateKey = "개인키";
-
   const transferNFT = async (e) => {
     try {
       e.preventDefault();
@@ -101,19 +102,18 @@ const Account = () => {
 
       const tx = {
         from: account,
-        to: PRE_EVENT_CONTRACT.address,
+        to: PRE_EVENT_CONTRACT,
         nonce: nonce,
-        gas: 53948,
-        gasPrice: gasPrice,
+        gas: 93572n,
+        // gasPrice: gasPrice,
         data: preEventContract.methods
           .transferFrom(account, testTo, tokenId)
           .encodeABI(),
-        value: "0x0",
-        //maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        // maxFeePerGas: web3.utils.toWei("90", "gwei"),
-        // type: "0x2",
+        // value: "0x0",
+        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        maxFeePerGas: web3.utils.toWei("10", "gwei"),
+        type: "0x2",
       };
-      console.log(tx);
 
       web3.eth
         .estimateGas(tx)
