@@ -86,8 +86,7 @@ const Account = () => {
     }
   };
 
-  const privateKey =
-    "141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee";
+  const privateKey = "개인키";
 
   const transferNFT = async (e) => {
     try {
