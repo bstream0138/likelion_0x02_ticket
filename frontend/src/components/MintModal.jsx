@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 //구매 PaymentPage 에서 구매 버튼 눌렀을때 민팅기능
 
@@ -21,33 +22,35 @@ const MintModal = ({ toggleOpen }) => {
 
       setIsLoading(true);
 
-      const gasPrice = await web3.eth.getGasPrice();
+      // const gasPrice = await web3.eth.getGasPrice();
       const balance = await preEventContract.methods
         .balanceOf(mintAccount.address)
         .call();
-      const newTokenId = Number(balance);
+      // const tokenId = Number(balance);
+      // const nonce = await web3.eth.getTransactionCount(account, "latest");
 
       const tx = {
         from: mintAccount.address,
-        to: preEventContract.address,
-        gas: 60000,
-        gasPrice: gasPrice,
-        data: preEventContract.methods
-          .mintTicket(account, newTokenId)
-          .encodeABI(),
-        value: "0x0",
-        // maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        // maxFeePerGas: web3.utils.toWei("100", "gwei"),
+        to: PRE_EVENT_CONTRACT,
+        gas: 150254n,
+        // gasPrice: gasPrice,
+        data: preEventContract.methods.mintTicket(account).encodeABI(),
+        // value: "0x0",
+        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        maxFeePerGas: web3.utils.toWei("30", "gwei"),
+        type: "0x02",
       };
 
-      // web3.eth
-      //   .estimateGas(tx)
-      //   .then((gasAmount) => {
-      //     console.log("Estiamte Gas:", gasAmount);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+      console.log("tx:", tx);
+
+      web3.eth
+        .estimateGas(tx)
+        .then((gasAmount) => {
+          console.log("Estiamte Gas:", gasAmount);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
@@ -60,10 +63,10 @@ const MintModal = ({ toggleOpen }) => {
         .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
         .call();
 
-      //민팅하기
+      // // 민팅하기;
       // await preEventContract.methods
-      //   .mintTicket(signPromise, tokenId)
-      //   .send({ from: account });
+      //   .mintTicket(account)
+      //   .send({ from: mintAccount.address });
 
       const metadataURI = await preEventContract.methods
         .tokenURI(tokenId)

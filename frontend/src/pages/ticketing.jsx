@@ -29,6 +29,7 @@ const Ticketing = () => {
     if (!tokenId) return;
     const concertInfo = concert.find((c) => c.tokenId.toString() === tokenId);
     setConcertId(concertInfo);
+    console.log(concertInfo);
   }, [tokenId, concert]);
 
   return (
@@ -64,7 +65,7 @@ const Ticketing = () => {
         TICKET
       </div>
       {/*예매하기 버튼 화면 현재 concertId는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
-      {concertId && (
+      {concertId ? (
         <div key={concertId.tokenId}>
           <div className="header">
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header ">
@@ -101,6 +102,8 @@ const Ticketing = () => {
             <PaymentPage toggleOpen={toggleOpen} concertId={concertId} />
           )}
         </div>
+      ) : (
+        <div>잠시만요</div>
       )}
     </div>
   );

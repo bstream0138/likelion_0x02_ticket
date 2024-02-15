@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import Web3 from "web3";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 const Account = () => {
@@ -9,7 +8,6 @@ const Account = () => {
   const [getBalance, setGetBalance] = useState(0);
   const [showInfo, setShowInfo] = useState(false);
   const [isSelect, setIsSelect] = useState("A");
-
   const [testTo, setTestTo] = useState("");
   const [tokenIdTo, setTokenIdTo] = useState();
   const [testAmount, setTestAmount] = useState(0);
@@ -104,16 +102,17 @@ const Account = () => {
         from: account,
         to: PRE_EVENT_CONTRACT,
         nonce: nonce,
-        gas: 93572n,
+        gas: 150254n,
         // gasPrice: gasPrice,
         data: preEventContract.methods
           .transferFrom(account, testTo, tokenId)
           .encodeABI(),
         // value: "0x0",
         maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        maxFeePerGas: web3.utils.toWei("10", "gwei"),
+        maxFeePerGas: web3.utils.toWei("30", "gwei"),
         type: "0x2",
       };
+      //0.00023271
 
       web3.eth
         .estimateGas(tx)

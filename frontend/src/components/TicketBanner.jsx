@@ -18,6 +18,7 @@ const TicketBanner = () => {
     cssEase: "linear",
   };
   const { concert } = useOutletContext();
+  console.log(concert);
 
   const getCurrentPage = () =>
     setPage(slideRef.current.innerSlider.state.currentSlide);
@@ -36,9 +37,9 @@ const TicketBanner = () => {
 
   return (
     <Slider {...settings} ref={slideRef}>
-      {concert.map((v, i) => (
+      {concert.map((v) => (
         <Link
-          key={i}
+          key={v.tokenId}
           to={`/ticketing/${v.tokenId}`}
           className="h-[280px] w-[350px] "
         >

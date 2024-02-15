@@ -12,9 +12,8 @@ const concert = [
     title: "BTS",
     content: "방탄소년단",
     date: "2024.02.21",
-    tokenId: 1,
+    tokenId: 3,
   },
-
   {
     image: "golden_hour.jpg",
     title: "IU",
@@ -27,7 +26,7 @@ const concert = [
     title: "aespa",
     content: "에스파",
     date: "2024.02.21",
-    tokenId: 3,
+    tokenId: 1,
   },
 ];
 //공연정보와 account kakaoId contract 정보
