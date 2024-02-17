@@ -33,7 +33,10 @@ const localDB = new sqlite3.Database(
                 localDB.run(`
                 CREATE TABLE IF NOT EXISTS CONCERT (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    IMAGE TEXT,
                     TITLE TEXT,
+                    CONTENT TEXT,
+                    DATE TEXT,
                     LOCATION TEXT,
                     PRICE INTEGER                    
                 )
@@ -113,12 +116,14 @@ app.post('/purchase', (req, res) => {
 });
 
 app.get('/concert', (req,res) => {
+    console.log('/concert')
     localDB.all('SELECT * FROM CONCERT', [], (err, rows) => {
         if(err) {
             throw err;
         }
         res.json(rows);
     });
+    console.log('Job done.')
 });
 
 app.listen(port, () => {

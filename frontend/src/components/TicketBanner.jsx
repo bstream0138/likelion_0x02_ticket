@@ -17,9 +17,9 @@ const TicketBanner = () => {
     autoplaySpeed: 4000,
     cssEase: "linear",
   };
+  
   const { concert } = useOutletContext();
-  console.log(concert);
-
+  
   const getCurrentPage = () =>
     setPage(slideRef.current.innerSlider.state.currentSlide);
 
@@ -33,31 +33,33 @@ const TicketBanner = () => {
 
   useEffect(() => {
     console.log(page);
+    console.log(concert[page]);
   }, [page]);
 
   return (
     <Slider {...settings} ref={slideRef}>
       {concert.map((v) => (
         <Link
-          key={v.tokenId}
-          to={`/ticketing/${v.tokenId}`}
-          className="h-[280px] w-[350px] "
+          key={v.ID}
+          to={`/ticketing/${v.ID}`}
+          className="h-[350px] w-[350px] "
         >
           <div className="bg-white rounded-md">
             <img
-              className="w-[350px] h-[280px] object-cover rounded-t-md"
-              src={`/${v.image}`}
-              alt="a"
+              className="w-[350px] h-[350px] object-cover rounded-t-md"
+              src={v.IMAGE}
+              alt={v.TITLE}
             />
             <ul className="mx-5 mt-1 ">
-              <li className="text-3xl">{v.title}</li>
-              <li>{v.content}</li>
-              <li>{v.date}</li>
+              <li className="text-3xl">{v.TITLE}</li>
+              <li>{v.CONTENT}</li>
+              <li>{v.DATE}</li>
             </ul>
           </div>
         </Link>
       ))}
     </Slider>
+    
   );
 };
 

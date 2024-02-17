@@ -27,7 +27,7 @@ const Ticketing = () => {
 
   useEffect(() => {
     if (!tokenId) return;
-    const concertInfo = concert.find((c) => c.tokenId.toString() === tokenId);
+    const concertInfo = concert.find((c) => c.ID.toString() === tokenId);
     setConcertId(concertInfo);
     console.log(concertInfo);
   }, [tokenId, concert]);
@@ -66,18 +66,18 @@ const Ticketing = () => {
       </div>
       {/*예매하기 버튼 화면 현재 concertId는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertId ? (
-        <div key={concertId.tokenId}>
+        <div key={concertId.ID}>
           <div className="header">
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header ">
               <img
                 className=" opacity-60 blur-sm"
-                src={`/${concertId.image}`}
+                src={concertId.IMAGE}
                 alt=""
               />
             </ul>
             <img
               className="fixed top-[62px] left-[30px] w-[150px] content rounded-md content"
-              src={`/${concertId.image}`}
+              src={concertId.IMAGE}
               alt=""
             />
           </div>
@@ -90,10 +90,10 @@ const Ticketing = () => {
             </button>
           </ul>
           <div className="mt-8 px-5">
-            <ul className="text-3xl ">{concertId.title}</ul>
-            <ul className="text-xs font-light">{concertId.content}</ul>
+            <ul className="text-3xl ">{concertId.TITLE}</ul>
+            <ul className="text-xs font-light">{concertId.CONTENT}</ul>
             <ul className="text-sm mt-1">장소</ul>
-            <ul className="text-sm">{concertId.date}</ul>
+            <ul className="text-sm">{concertId.DATE}</ul>
           </div>
 
           <div className="px-5 text-2xl font-bold mt-3">CASTING</div>

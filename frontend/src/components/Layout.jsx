@@ -6,35 +6,37 @@ import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import PreEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
 
-const concert = [
+
+const sample_concert = [
   {
-    image: "bts.jpg",
-    title: "BTS",
-    content: "방탄소년단",
-    date: "2024.02.21",
-    tokenId: 3,
+    IMAGE: "/bts.jpg",
+    TITLE: "BTS",
+    CONTENT: "방탄소년단",
+    DATE: "2024.02.21",
+    ID: 3,
   },
   {
-    image: "golden_hour.jpg",
-    title: "IU",
-    content: "아이유",
-    date: "2024.02.21",
-    tokenId: 2,
+    IMAGE: "/golden_hour.jpg",
+    TITLE: "IU",
+    CONTENT: "아이유",
+    DATE: "2024.02.21",
+    ID: 2,
   },
   {
-    image: "karina.jpg",
-    title: "aespa",
-    content: "에스파",
-    date: "2024.02.21",
-    tokenId: 1,
+    IMAGE: "/karina.jpg",
+    TITLE: "aespa",
+    CONTENT: "에스파",
+    DATE: "2024.02.21",
+    ID: 1,
   },
 ];
 //공연정보와 account kakaoId contract 정보
 
+
 const Layout = () => {
   const [web3, setWeb3] = useState(null);
   const [preEventContract, setPreEventContract] = useState();
-  const loginMethod = localStorage.getItem("loginMethod");
+  const loginFrom = localStorage.getItem("loginFrom");
   const [account, setAccount] = useState("");
   const [userInfo, setUserInfo] = useState({
     userID: "",
@@ -44,8 +46,41 @@ const Layout = () => {
 
   const current_url = useLocation();
 
+  // concert 정보
+  const [concert, setConcert] = useState([]);
+
+  // DB 연결 정보 - (X) 없음, (L) Local SQLite, (A) AWS-MySQL
+  const [dbConnection, setDBConnection] = useState(false);
+
+  useEffect( () => {
+    const fetchConcert = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/concert');
+        if (response.ok) {
+          console.log('Get concert data from DB');
+          const data = await response.json();
+          setConcert(data);
+          setDBConnection(true);
+        } else {
+          console.error('Fail');
+          setConcert(sample_concert);
+          setDBConnection(false);
+        }
+      } catch(error) {
+        console.error('Error: ', error);
+        setConcert(sample_concert);
+          setDBConnection(false);
+      }
+    }
+
+    fetchConcert();
+
+  }, []);
+  
+
+
   useEffect(() => {
-    if (loginMethod === "K") {
+    if (loginFrom === "K") {
       // Kakao Login
       const queryParams = new URLSearchParams(current_url.search);
       if (queryParams.get("userID")) {
@@ -63,7 +98,7 @@ const Layout = () => {
       console.log("userName: ", userName);
       console.log("userImage: ", userImage);
       setUserInfo({ userID, userName, userImage });
-    } else if (loginMethod === "M") {
+    } else if (loginFrom === "M") {
       // Metamask Login
       const account = localStorage.getItem("account");
       setAccount(account);
@@ -73,25 +108,15 @@ const Layout = () => {
       setPreEventContract(
         new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)
       );
-    } else if (loginMethod === "G") {
-      // Ganache Login
-      const account = localStorage.getItem("account");
-      setAccount(account);
-
-      const web3 = new Web3("http://127.0.0.1:7545");
-      setWeb3(web3);
-      setPreEventContract(
-        new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)
-      );
     }
-  }, [current_url, loginMethod]);
+  }, [current_url, loginFrom]);
 
   return (
     <div>
-      <DevInfo loginMethod={loginMethod} />
+      <DevInfo loginFrom={loginFrom} dbConnection={dbConnection}/>
       <Outlet
         context={{
-          loginMethod,
+          loginFrom,
           account,
           setAccount,
           userInfo,
