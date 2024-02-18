@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-
 exports.kakaoPayReady = async (req, res) => {
 
     console.log('Pay request: ', req.body);
@@ -26,9 +25,9 @@ exports.kakaoPayReady = async (req, res) => {
             "total_amount": 100,
             "vat_amount": 0,
             "tax_free_amount": 0,
-            "approval_url": "http://localhost:3000/pay/success",
-            "fail_url": "http://localhost:3000/pay/fail",
-            "cancel_url": "http://localhost:3000/pay/cancel",
+            "approval_url": "http://localhost:3000/payment_success",
+            "fail_url": "http://localhost:3000/payment_fail",
+            "cancel_url": "http://localhost:3000/payment_cancel",
         }, {
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,

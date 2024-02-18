@@ -10,6 +10,9 @@ import Home from "./pages/Home";
 import Ticketing from "./pages/Ticketing";
 import Ticket from "./pages/Ticket";
 import CreateAddress from "./pages/CreateAddress";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+
 
 //components
 import Layout from "./components/Layout";
@@ -30,6 +33,9 @@ const App = () => {
           <Route path="/ticket" element={<Ticket />} />
           <Route path="/my" element={<My />} />
           <Route path="/createaddress" element={<CreateAddress />} />
+          <Route path="/payment_success" element={<PaymentSuccess />} />
+          <Route path="/payment_fail" element={<PaymentCancel />} />
+          <Route path="/payment_cancel" element={<PaymentCancel />} />
         </Route>
       </Routes>
     </BrowserRouter>

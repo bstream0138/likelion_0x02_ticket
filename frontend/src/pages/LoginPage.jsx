@@ -13,7 +13,7 @@ const LoginPage = () => {
 
   // 메타마스크 환경의 여러 주소 사용 가능하도록 수정
   const [accounts, setAccounts] = useState([]); 
-  const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedAccount, setSelectedAccount] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const LoginPage = () => {
         if (accounts.length > 0) {
           console.log('LoginPage.jsx/connectMetamask:',accounts);
           setAccounts(accounts);
+          console.log('LoginPage.jsx/connectMetamask/accounts[0] :', accounts[0]);
           setSelectedAccount(accounts[0]);
         }
       } catch (error) {
@@ -51,11 +52,37 @@ const LoginPage = () => {
   };
 
   const handleAccountSelection = (e) => {
-    setSelectedAccount(e.target.value);
+    const newSelectedAccount = e.target.value
+    setSelectedAccount(newSelectedAccount);
+    console.log('LoginPage.jsx/handleAccountSelection:', newSelectedAccount);
   };
 
-  const confirmSelection = () => {
+  const confirmSelection = async () => {
     if(selectedAccount) {
+      console.log('LoginPage.jsx/confirmSelection/selectedAccount:', selectedAccount);
+      try {
+        const response = await fetch('http://localhost:3001/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            loginFrom: 'M',
+            account: selectedAccount,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+        } else {
+          console.error('[ERR] LoginPage.jsx/confirmSelection : response.ok')
+        }
+        
+      } catch (error) {
+        console.error('[ERR] LoginPage.jsx/confirmSelection: ', error);
+      }     
+
+      // localStorage에 접속 정보 저장
       localStorage.setItem("account", selectedAccount);
       localStorage.setItem("loginFrom", "M");
       navigate("/");

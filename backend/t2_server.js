@@ -71,7 +71,10 @@ app.post('/payReady', payController.kakaoPayReady);
 app.post('/PayApprove', payController.kakaoPayApprove);
 
 app.post('/login', (req, res) => {
-    const { loginMethod, account } = req.body;
+    const { loginFrom, account } = req.body;
+
+    console.log('t2_server.js/login:', req.body);
+
 
     const query = `SELECT * FROM CUSTOMER WHERE ADDR = ?`;
     localDB.get(query, [account], (err,row) => {
@@ -81,20 +84,21 @@ app.post('/login', (req, res) => {
         }
 
         if (row) {
+            console.log('t2_server.js/login: user exists');
             // 이미 가입한 회원인 경우 메세지 처리
             res.json({'message': 'user exists','user':row});
         } else {
             // 조회 결과가 없다면, 사용자 정보 추가
             const insert = `INSERT INTO CUSTOMER (LOGIN_FROM, ADDR) VALUES (?, ?)`;
-            localDB.run(insert, [loginMethod, account], function(err) {
+            localDB.run(insert, [loginFrom, account], function(err) {
                 if (err) {
                     res.status(500).json({"error": err.message});
                     return;
                 }
+                console.log('t2_server.js/login: user add');
                 res.json({"message": "User add", "id": this.lastID});
             });
         }
-
     })
 
 });
@@ -104,13 +108,14 @@ app.post('/purchase', (req, res) => {
     localDB.run(`
     INSERT INTO 
     PURCHASE    (CUSTOMER_ID, CONCERT_ID, DATE, IS_MINTING, IS_REFUNDED ) 
-    VALUES      (?, ?, '20240217', 0, 0)
+    VALUES      (?, ?, '20240218', 0, 0)
     `, [customer_id, concert_id], 
     function(err) {
         if(err) {
             return console.log(err);
         }
-        res.json({id: this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
+        console.log('t2_server.js/purchase: ',customer_id, concert_id);
+        res.json({success: true, id: this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
     });
 
 });

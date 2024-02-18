@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import PaymentPage from "../components/PaymentPage";
+import Payment from "../components/Payment";
 
 const Ticketing = () => {
   const { tokenId } = useParams();
@@ -10,7 +10,7 @@ const Ticketing = () => {
   const loginMethod = localStorage.getItem("loginMethod");
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
-  const [concertId, setConcertId] = useState(null);
+  const [concertInfo, setConcertInfo] = useState(null);
 
   // for Kakao Login
   const handleGoHome = () => {
@@ -28,7 +28,7 @@ const Ticketing = () => {
   useEffect(() => {
     if (!tokenId) return;
     const concertInfo = concert.find((c) => c.ID.toString() === tokenId);
-    setConcertId(concertInfo);
+    setConcertInfo(concertInfo);
     console.log(concertInfo);
   }, [tokenId, concert]);
 
@@ -64,20 +64,20 @@ const Ticketing = () => {
         </button>
         TICKET
       </div>
-      {/*예매하기 버튼 화면 현재 concertId는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
-      {concertId ? (
-        <div key={concertId.ID}>
+      {/*예매하기 버튼 화면 현재 concertInfo는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
+      {concertInfo ? (
+        <div key={concertInfo.ID}>
           <div className="header">
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header ">
               <img
                 className=" opacity-60 blur-sm"
-                src={concertId.IMAGE}
+                src={concertInfo.IMAGE}
                 alt=""
               />
             </ul>
             <img
               className="fixed top-[62px] left-[30px] w-[150px] content rounded-md content"
-              src={concertId.IMAGE}
+              src={concertInfo.IMAGE}
               alt=""
             />
           </div>
@@ -90,16 +90,16 @@ const Ticketing = () => {
             </button>
           </ul>
           <div className="mt-8 px-5">
-            <ul className="text-3xl ">{concertId.TITLE}</ul>
-            <ul className="text-xs font-light">{concertId.CONTENT}</ul>
+            <ul className="text-3xl ">{concertInfo.TITLE}</ul>
+            <ul className="text-xs font-light">{concertInfo.CONTENT}</ul>
             <ul className="text-sm mt-1">장소</ul>
-            <ul className="text-sm">{concertId.DATE}</ul>
+            <ul className="text-sm">{concertInfo.DATE}</ul>
           </div>
 
           <div className="px-5 text-2xl font-bold mt-3">CASTING</div>
 
           {isModal && (
-            <PaymentPage toggleOpen={toggleOpen} concertId={concertId} />
+            <Payment toggleOpen={toggleOpen} concertInfo={concertInfo} />
           )}
         </div>
       ) : (

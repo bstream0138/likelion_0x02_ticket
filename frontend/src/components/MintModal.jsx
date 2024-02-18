@@ -3,8 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
-//구매 PaymentPage 에서 구매 버튼 눌렀을때 민팅기능
-
 const MintModal = ({ toggleOpen }) => {
   const { account, preEventContract, web3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
