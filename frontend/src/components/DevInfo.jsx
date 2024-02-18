@@ -18,4 +18,3 @@ const DevInfo = ({loginFrom, dbConnection}) => {
   };
   
   export default DevInfo;
-  

@@ -8,6 +8,8 @@ const MintModal = ({ toggleOpen }) => {
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [hoverMint, setHoverMint] = useState(false);
+  const [hoverLater, setHoverLater] = useState(false);
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
@@ -85,13 +87,41 @@ const MintModal = ({ toggleOpen }) => {
 
   return (
     <div className="bg-opacity-40 bg-black w-full h-full top-0 left-0 fixed z-20">
-      <div className="w-[300px] h-[300px] bg-white fixed top-1/4 left-1/2 -translate-x-1/2 rounded-md ">
+      <div className="w-[300px] h-[300px] bg-black top-[182px] left-[57px] fixed"></div>
+      <div className="w-[300px] h-[300px] bg-white fixed top-1/4 left-1/2 -translate-x-1/2 border-2 border-black ">
+        <button className="fixed right-2" onClick={toggleOpen}>
+          x
+        </button>
         <ul className="flex items-center justify-center h-full gap-4 flex-col">
+          <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?
+티켓 민팅 후 환불이 불가능합니다
+`}</div>
+          <div className="text-xs text-center">
+            민팅은 MY메뉴의 구매내역에서도 가능합니다
+          </div>
           <div className="flex gap-4">
-            <button className="btn-style" onClick={onClickMint}>
+            <button
+              className={
+                hoverMint
+                  ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full"
+                  : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+              }
+              onClick={onClickMint}
+              onMouseEnter={() => setHoverMint(true)}
+              onMouseLeave={() => setHoverMint(false)}
+            >
               민팅하기
             </button>
-            <button className="btn-style" onClick={toggleOpen}>
+            <button
+              className={
+                hoverLater
+                  ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full"
+                  : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+              }
+              onClick={toggleOpen}
+              onMouseEnter={() => setHoverLater(true)}
+              onMouseLeave={() => setHoverLater(false)}
+            >
               나중에
             </button>
           </div>

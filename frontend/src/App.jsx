@@ -18,6 +18,7 @@ import PaymentCancel from "./pages/PaymentCancel";
 import Layout from "./components/Layout";
 import My from "./pages/My";
 import LoginPage from "./pages/LoginPage";
+import AdminFilter from "./pages/AdminFilter";
 
 const App = () => {
   return (
@@ -29,13 +30,16 @@ const App = () => {
         {/* App */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/ticketing/:tokenId" element={<Ticketing />} />
+          <Route path="/ticketing/:index" element={<Ticketing />} />
           <Route path="/ticket" element={<Ticket />} />
           <Route path="/my" element={<My />} />
           <Route path="/createaddress" element={<CreateAddress />} />
+
           <Route path="/payment_success" element={<PaymentSuccess />} />
           <Route path="/payment_fail" element={<PaymentCancel />} />
           <Route path="/payment_cancel" element={<PaymentCancel />} />
+          
+          <Route path="/adminfilter" element={<AdminFilter />} />
         </Route>
       </Routes>
     </BrowserRouter>
