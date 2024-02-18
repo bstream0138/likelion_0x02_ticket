@@ -49,16 +49,16 @@ const MyTicketCard = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] min-h-screen bg-blue-200">
+    <div className="w-[425px] min-h-screen ">
       <h1 className="px-2 py-2">MY TICKET</h1>
       <div className="grid grid-cols-1 gap-3 pt-10 rounded-md mx-auto ">
         {metadataArray.map((v, i) => (
           <button
             key={i}
-            className="w-[400px] h-[200px] bg-green-100 rounded-md mx-auto "
+            className="w-[400px] h-[200px] bg-green-100 rounded-md mx-auto overflow-hidden "
             onClick={isModalOpen}
           >
-            <img src={v.image} alt={v.name} />
+            <img src={v.image} alt={v.name} className=" object-center" />
             <span>{v.tokenId}</span>
           </button>
         ))}

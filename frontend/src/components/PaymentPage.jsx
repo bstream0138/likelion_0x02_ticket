@@ -43,16 +43,17 @@ const PaymentPage = ({ toggleOpen }) => {
   };
 
   return (
-    <div className="bg-opacity-40 bg-black w-full h-full top-0 left-0 fixed z-20">
-      <div className="flex flex-col items-center justify-center h-[770px] px-4 py-2 fixed top-[10px] bg-white border w-[400px] left-1/2 -translate-x-1/2 z-20 rounded-md">
+    <div className="bg-opacity-40 bg-black w-full h-full top-0 left-0 fixed z-20 ">
+      <div className="flex flex-col items-center justify-center h-[700px] header px-4 py-2 fixed top-[10px] bg-white border-2 w-[400px] left-1/2 -translate-x-1/2 z-20 border-black ">
         <img
           src="/golden_hour.jpg"
           alt="IU Concert"
-          className="w-full max-w-xs mb-8"
+          className="w-[300px] h-[400px] mb-8"
         />
         {isOpen && <MintModal toggleOpen={toggleOpen} />}
         {/*구매하기 버튼을 눌렀을때 민팅하기와 나중에 하기 버튼 */}
-        <div className="w-full max-w-xs mb-8">
+
+        <div className="w-full max-w-xs ">
           <div className="border-b border-gray-200 mb-4">
             <div className="flex justify-between py-2">
               <div className="font-semibold">공연일자:</div>
@@ -64,6 +65,7 @@ const PaymentPage = ({ toggleOpen }) => {
             </div>
           </div>
         </div>
+
         <div className="space-y-4 w-full max-w-xs">
           <button
             className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg shadow-lg"
@@ -79,6 +81,7 @@ const PaymentPage = ({ toggleOpen }) => {
           </button>
         </div>
       </div>
+      {/* <div className="fixed border-2 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[400px] h-[700px] bg-black  content"></div> */}
     </div>
   );
 };

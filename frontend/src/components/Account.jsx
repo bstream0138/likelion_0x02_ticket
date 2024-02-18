@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
-const Account = () => {
+const Account = ({ setIsModal }) => {
   const { account, web3, preEventContract } = useOutletContext();
 
   const [getBalance, setGetBalance] = useState(0);
@@ -11,9 +11,14 @@ const Account = () => {
   const [testTo, setTestTo] = useState("");
   const [tokenIdTo, setTokenIdTo] = useState();
   const [testAmount, setTestAmount] = useState(0);
+  const [hoverNftSend, setHoverNftSend] = useState(false);
+  const [hoverEthSend, setHoverEthSend] = useState(false);
 
   const privateKey =
-    "0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee";
+    "0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f";
+  //유저가 생성한 비공개키 넣기
+  // 1. 0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee;
+  // 2. 0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f;
 
   useEffect(() => {
     if (!account) return;
@@ -92,7 +97,7 @@ const Account = () => {
       e.preventDefault();
       if (!account || !testTo || tokenIdTo === undefined) return;
 
-      const nonce = await web3.eth.getTransactionCount(account, "latest");
+      // const nonce = await web3.eth.getTransactionCount(account, "latest");
       const gasPrice = await web3.eth.getGasPrice();
       console.log(gasPrice);
 
@@ -101,7 +106,6 @@ const Account = () => {
       const tx = {
         from: account,
         to: PRE_EVENT_CONTRACT,
-        nonce: nonce,
         gas: 150254n,
         // gasPrice: gasPrice,
         data: preEventContract.methods
@@ -136,75 +140,91 @@ const Account = () => {
   };
 
   return (
-    <div>
-      <div className="">
-        <button onClick={() => setShowInfo(true)}>Show Wallet</button>
-        {showInfo && (
+    <>
+      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black">
+        <button className="fixed right-2" onClick={() => setIsModal(false)}>
+          x
+        </button>
+        <div className="mt-6 px-4">
           <ul>
             <li>Address : {account}</li>
             <li>Balance : {getBalance}</li>
           </ul>
-        )}
-        <ul className="flex gap-2">
-          <button onClick={() => setIsSelect("A")} className="btn-style">
-            send ETH
-          </button>
-          <button onClick={() => setIsSelect("B")} className="btn-style">
-            send NFT
-          </button>
-        </ul>
+          <ul className="flex gap-2 mt-4">
+            <button onClick={() => setIsSelect("A")} className="btn-style">
+              send ETH
+            </button>
+            <button onClick={() => setIsSelect("B")} className="btn-style">
+              send NFT
+            </button>
+          </ul>
+
+          {isSelect === "A" && (
+            <form className="flex mt-2" onSubmit={(e) => sendEth(e)}>
+              <ul className="flex flex-col gap-2 ">
+                <input
+                  className="input-style"
+                  value={testTo}
+                  onChange={(e) => setTestTo(e.target.value)}
+                  type="text"
+                  placeholder="Address"
+                />
+                <input
+                  className="input-style"
+                  value={testAmount}
+                  onChange={(e) => setTestAmount(e.target.value)}
+                  type="number"
+                  placeholder="Amount"
+                />
+              </ul>
+              <button
+                className={
+                  hoverEthSend
+                    ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
+                    : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
+                }
+                onMouseEnter={() => setHoverEthSend(true)}
+                onMouseLeave={() => setHoverEthSend(false)}
+              >
+                send
+              </button>
+            </form>
+          )}
+          {isSelect === "B" && (
+            <form className="flex mt-2" onSubmit={(e) => transferNFT(e)}>
+              <ul className="flex flex-col gap-2 ">
+                <input
+                  className="input-style"
+                  value={testTo}
+                  onChange={(e) => setTestTo(e.target.value)}
+                  type="text"
+                  placeholder="Address"
+                />
+                <input
+                  className="input-style"
+                  value={tokenIdTo}
+                  onChange={(e) => setTokenIdTo(e.target.value)}
+                  type="number"
+                  placeholder="TokenID"
+                />
+              </ul>
+              <button
+                className={
+                  hoverNftSend
+                    ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
+                    : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
+                }
+                onMouseEnter={() => setHoverNftSend(true)}
+                onMouseLeave={() => setHoverNftSend(false)}
+              >
+                send
+              </button>
+            </form>
+          )}
+        </div>
       </div>
-      {isSelect === "A" && (
-        <form className="flex mt-2" onSubmit={(e) => sendEth(e)}>
-          <ul className="flex flex-col gap-2 ">
-            <input
-              className="input-style"
-              value={testTo}
-              onChange={(e) => setTestTo(e.target.value)}
-              type="text"
-              placeholder="Address"
-            />
-            <input
-              className="input-style"
-              value={testAmount}
-              onChange={(e) => setTestAmount(e.target.value)}
-              type="number"
-              placeholder="Amount"
-            />
-          </ul>
-          <input
-            className="self-center ml-2 font-semibold py-6 btn-style "
-            type="submit"
-            value="send"
-          />
-        </form>
-      )}
-      {isSelect === "B" && (
-        <form className="flex mt-2" onSubmit={(e) => transferNFT(e)}>
-          <ul className="flex flex-col gap-2 ">
-            <input
-              className="input-style"
-              value={testTo}
-              onChange={(e) => setTestTo(e.target.value)}
-              type="text"
-              placeholder="Address"
-            />
-            <input
-              className="input-style"
-              value={tokenIdTo}
-              onChange={(e) => setTokenIdTo(e.target.value)}
-              type="number"
-              placeholder="TokenID"
-            />
-          </ul>
-          <input
-            className="self-center ml-2 font-semibold py-6 btn-style "
-            type="submit"
-            value="send"
-          />
-        </form>
-      )}
-    </div>
+      <div className="bg-black w-[400px] h-[400px] fixed left-[487px] top-[58px] -z-20 "></div>
+    </>
   );
 };
 

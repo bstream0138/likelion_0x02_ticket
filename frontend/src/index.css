@@ -16,3 +16,16 @@
 .input-style {
   @apply focus:outline-none p-1 border-2 border-gray-300 focus:border-black rounded-md;
 }
+
+.poppins {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
