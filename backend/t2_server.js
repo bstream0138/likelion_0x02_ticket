@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
         if (row) {
             console.log('t2_server.js/login: user exists');
             // 이미 가입한 회원인 경우 메세지 처리
-            res.json({'message': 'user exists','user':row});
+            res.json({'MSG': 'user exists','ID':row.ID});
         } else {
             // 조회 결과가 없다면, 사용자 정보 추가
             const insert = `INSERT INTO CUSTOMER (LOGIN_FROM, ADDR) VALUES (?, ?)`;
@@ -96,26 +96,57 @@ app.post('/login', (req, res) => {
                     return;
                 }
                 console.log('t2_server.js/login: user add');
-                res.json({"message": "User add", "id": this.lastID});
+                res.json({"MSG": "User add", "ID": this.lastID});
             });
         }
     })
 
 });
 
+app.get('/purchase_list', (req, res) => {
+    const customerID = req.query.customerID;
+    if (!customerID) {
+        return res.status(400).send('Customer ID is required');
+    }
+
+    const query = `
+        SELECT 
+            c.ID AS ID, 
+            c.IMAGE AS IMAGE, 
+            c.CONTENT AS CONTENT, 
+            c.DATE AS CONCERT_DATE,
+            p.DATE AS PURCHASE_DATE
+        FROM PURCHASE p
+        JOIN CONCERT c ON p.CONCERT_ID = c.ID
+        WHERE p.CUSTOMER_ID = ?;
+    `;
+
+    localDB.all(query, [customerID], (err, rows) => {
+        if (err) {
+            console.error('[ERR] purchase_list: ', err);
+            return res.status(500).json({err:'[ERR] purchase_list'});
+        }
+
+        res.json(rows);
+    });
+
+});
+
 app.post('/purchase', (req, res) => {
-    const { customer_id, concert_id} = req.body;
+    const { customerID, concertID} = req.body;
+    const purchaseDate = new Date().toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
+    
     localDB.run(`
     INSERT INTO 
     PURCHASE    (CUSTOMER_ID, CONCERT_ID, DATE, IS_MINTING, IS_REFUNDED ) 
-    VALUES      (?, ?, '20240218', 0, 0)
-    `, [customer_id, concert_id], 
+    VALUES      (?, ?, ?, 0, 0)
+    `, [customerID, concertID, purchaseDate], 
     function(err) {
         if(err) {
             return console.log(err);
         }
-        console.log('t2_server.js/purchase: ',customer_id, concert_id);
-        res.json({success: true, id: this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
+        console.log('t2_server.js/purchase: ',customerID, concertID);
+        res.json({'MSG': 'Success', 'ID': this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
     });
 
 });
