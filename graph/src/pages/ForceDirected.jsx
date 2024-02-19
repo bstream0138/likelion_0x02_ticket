@@ -1,12 +1,15 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 import data from "../data/data.json";
+import data_IU from "../data/data_IU.json";
 
 const ForceDirected = () => {
   const svgRef = useRef();
 
-  const links = data.links.map((d) => ({ ...d }));
-  const nodes = data.nodes.map((d) => ({ ...d }));
+  //   const links = data.links.map((d) => ({ ...d }));
+  //   const nodes = data.nodes.map((d) => ({ ...d }));
+  const links = data_IU.links.map((d) => ({ ...d }));
+  const nodes = data_IU.nodes.map((d) => ({ ...d }));
 
   const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -21,7 +24,7 @@ const ForceDirected = () => {
         "link",
         d3.forceLink(links).id((d) => d.id)
       )
-      .force("charge", d3.forceManyBody().strength(-100)) // 노드들이 서로 밀치는 힘
+      .force("charge", d3.forceManyBody().strength(-300)) // 노드들이 서로 밀치는 힘
       .force("center", d3.forceCenter(width / 2, height / 2)) // 노드들을 중앙으로
       .on("tick", () => {
         link
@@ -45,6 +48,8 @@ const ForceDirected = () => {
       .selectAll("line")
       .data(links)
       .join("line")
+      .attr("class", "link")
+      .attr("marker-end", "url(#arrowhead)")
       .attr("stroke", "black")
       .attr("stroke-opacity", 0.3)
       .attr("stroke-width", (d) => Math.sqrt(d.value));
@@ -55,12 +60,15 @@ const ForceDirected = () => {
       .data(nodes)
       .join("g")
       .each(function (d) {
-        d3.select(this).append("circle").attr("r", 10).attr("fill", color);
+        d3.select(this)
+          .append("circle") // 노드 모양
+          .attr("r", 20) // circle 크기
+          .attr("fill", (d) => color(d.group)); // circle 색상(1: 파랑, 2: 주황, 3: 초록, 4: 빨강, 5: 보라)
         d3.select(this)
           .append("text")
-          .text((d) => d.id)
-          .attr("x", -5)
-          .attr("y", 5);
+          .text((d) => d.id) // 노드 텍스트
+          .attr("x", -5) // 텍스트 x위치
+          .attr("y", 5); // 텍스트 y위치
       });
   }, [nodes, links]);
   return <svg ref={svgRef} />;
