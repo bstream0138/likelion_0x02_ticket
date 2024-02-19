@@ -32,12 +32,13 @@ const LoginSuccess = () => {
   useEffect(() => {
 
     const queryParams = new URLSearchParams(current_url.search);
+
     const loginFrom = queryParams.get('login_from');
-  
-    console.log('LoginSuccess.jsx/useEffect/loginFrom: ', loginFrom);
-    localStorage.setItem("loginFrom", loginFrom);
+    localStorage.setItem("loginFrom", loginFrom);  
+    //console.log('LoginSuccess.jsx/useEffect/loginFrom: ', loginFrom);    
 
     const fetchUserInfo = async () => {
+      
       if (loginFrom === "K") {  
         // Kakao Login
         if (queryParams.get("userID")) {
@@ -60,8 +61,9 @@ const LoginSuccess = () => {
   
       } else if (loginFrom === "M") {
         // Metamask Login
-        account = queryParams.get('account');
+        const account = queryParams.get("account");
         setAccount(account);
+
         try {
           const response = await fetch('http://localhost:3001/login', {
             method: 'POST',
@@ -85,25 +87,21 @@ const LoginSuccess = () => {
           }        
         } catch (error) {
           console.error('[ERR] LoginPage.jsx/confirmSelection: ', error);
-        }      
+        }
+
         navigate("/");
       }
     };
 
     fetchUserInfo();
 
+    const web3 = new Web3(window.ethereum);
+    setWeb3(web3);
 
-      
+    const preEventContract = new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT);
 
-    /*
-      setWeb3(
-        new Web3(window.ethereum)
-      );
-      setPreEventContract(
-        new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT)
-      );
-    }
-    */
+    setPreEventContract(preEventContract);
+
   }, [current_url, loginFrom]);
 
   return (

@@ -1,9 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import TicketBanner from "../components/TicketBanner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [hoverMove, setHoverMove] = useState();
+  const { userInfo, account } = useOutletContext();
+  const [hoverMove, setHoverMove] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    if (userInfo || account) {
+      setIsLoggedIn(true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(userInfo);
+    console.log(account);
+  }, []);
 
   return (
     <div className="w-[425px] min-h-screen mx-auto z-10 poppins">
@@ -22,11 +35,12 @@ const Home = () => {
           }
           onMouseEnter={() => setHoverMove(true)}
           onMouseLeave={() => setHoverMove(false)}
+          onClick={!isLoggedIn ? handleLogin : "cursor-not-allowed"}
         >
           login
         </Link>
       </div>
-      <img src="ticket-border.png" alt="" className="rotate-180 w-[425px]" />
+      <img src="ticket-head.png" alt="" className=" w-[425px]" />
       <div className="w-[350px] h-[280px] ml-[36.5px] rounded-md mt-12">
         <TicketBanner />
       </div>

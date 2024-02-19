@@ -223,7 +223,7 @@ const Account = ({ setIsModal }) => {
           )}
         </div>
       </div>
-      <div className="bg-black w-[400px] h-[400px] fixed left-[487px] top-[58px] -z-20 "></div>
+      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 -z-40"></div>
     </>
   );
 };

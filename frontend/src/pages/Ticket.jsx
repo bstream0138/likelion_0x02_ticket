@@ -21,7 +21,7 @@ const Ticket = () => {
       <div className="bg-[#038BD5] h-[80px] text-3xl flex items-center justify-center font-black ">
         TICKET
       </div>
-      <img src="ticket-border.png" alt="ticket" className="rotate-180" />
+      <img src="ticket-head.png" alt="ticket" />
       <ul className="grid grid-cols-2 justify-items-center py-3 mt-4">
         <button
           className={
