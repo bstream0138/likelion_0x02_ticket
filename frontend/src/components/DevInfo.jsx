@@ -9,10 +9,7 @@ const DevInfo = ({ loginFrom, dbConnection }) => {
 
   return (
     <div className="fixed top-0 left-0 opacity-75 flex flex-row justify-between ">
-      <div className="text-sm">
-        {" "}
-        (u){loginFrom ? loginFrom : "X"}(d){dbConnection ? "L" : "X"}{" "}
-      </div>
+      __{loginFrom ? loginFrom : "X"}
     </div>
   );
 };

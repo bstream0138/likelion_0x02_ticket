@@ -43,7 +43,7 @@ const Layout = () => {
       try {
         const response = await fetch('http://localhost:3001/concert');
         if (response.ok) {
-          //console.log('Get concert data from DB');
+          console.log('Get concert data from DB');
           const data = await response.json();
           setConcert(data);
           localStorage.setItem("connectDB", "L");

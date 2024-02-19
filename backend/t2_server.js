@@ -26,6 +26,7 @@ const localDB = new sqlite3.Database(
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     LOGIN_FROM TEXT,
                     ADDR TEXT,
+                    K_ID TEXT,
                     PRI_KEY TEXT                    
                 )
                 `);
@@ -68,6 +69,7 @@ app.use(express.json());
 
 // Server 동작 확인용
 app.get('/ping', (req,res) => {
+    console.log('t2_server.js/ping: check connection');
     res.status(200).send('ping');
 });
 

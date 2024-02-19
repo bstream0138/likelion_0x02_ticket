@@ -5,11 +5,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import axios from "axios";
 
 //pages
-
 import Home from "./pages/Home";
 import Ticketing from "./pages/Ticketing";
 import Ticket from "./pages/Ticket";
-import CreateAddress from "./pages/CreateAddress";
 
 import KakaoLoginSuccess from "./pages/LoginSuccess";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -32,7 +30,6 @@ const App = () => {
           <Route path="/ticketing/:index" element={<Ticketing />} />
           <Route path="/ticket" element={<Ticket />} />
           <Route path="/my" element={<My />} />
-          <Route path="/createaddress" element={<CreateAddress />} />
 
           {/* pages using Kakao API*/}
           <Route path="/login" element={<LoginPage />} />
