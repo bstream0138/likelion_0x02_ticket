@@ -74,6 +74,10 @@ const LoginPage = () => {
         if (response.ok) {
           const data = await response.json();
           console.log(data);
+          if (data.ID) {
+            localStorage.setItem('customerID', data.ID);
+            console.log('LoginPage.jsx/confirmSelection/customerID:', data.ID);
+          }
         } else {
           console.error('[ERR] LoginPage.jsx/confirmSelection : response.ok')
         }

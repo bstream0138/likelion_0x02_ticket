@@ -9,19 +9,31 @@ const My = () => {
   const navigate = useNavigate();
   const [hoverLogout, setHoverLogout] = useState(false);
   const [isModal, setIsModal] = useState(false);
+
+  const [purchasedList, setPurchasedList] = useState([]);
+  
   //Purchased 리스트 작성예정
-  // const [purchasedList, setPerchasedList] = useState();
+  const getPurchased = async () => {
+    const customerID = localStorage.getItem('customerID');
+    if(!customerID) return;
 
-  // const getPurchased = async () => {
-  //   try {
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+    try {
+      const response = await fetch(`http://localhost:3001/purchase_list?customerID=${customerID}`);
+      if (response.ok) {
+        const data = await response.json();
+        setPurchasedList(data);
+      } else {
+        throw new Error('Failed to fetch purchase list');
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
-  // useEffect(() => {
-  //   getPurchased();
-  // }, []);
+  };
+  
+  useEffect(() => {
+    getPurchased();
+  }, []);
 
   const onClickModal = () => {
     setIsModal(!isModal);
@@ -79,6 +91,13 @@ const My = () => {
           <div className="mt-4 text-2xl font-semibold">Purchased</div>
           <ul className="flex flex-col gap-2 border rounded-md py-[2px]">
             <Purchased />
+          </ul>
+          <ul className="flex flex-col gap-2 border rounded-md py-[2px]">
+            {purchasedList.map((purchase) => (
+              <li key={purchase.ID} className="px-4 py-2">
+                공연: {purchase.CONTENT} 구매일자: {purchase.PURCHASE_DATE}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
