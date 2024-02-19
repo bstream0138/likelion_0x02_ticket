@@ -14,6 +14,7 @@ const Payment = ({ toggleOpen, concertInfo }) => {
     // 카카오로그인이면 카카오페이로 이동, 메타마스크 로그인이면 바로 결제 성공
     const loginFrom = localStorage.getItem('loginFrom');
     localStorage.setItem('concertID', concertInfo.ID);
+    localStorage.setItem('paymentAttempt', 1);
 
     if (loginFrom === 'K') {
       try {

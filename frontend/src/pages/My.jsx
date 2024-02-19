@@ -5,7 +5,7 @@ import Account from "../components/Account";
 import Purchased from "../components/Purchased";
 
 const My = () => {
-  const { account } = useOutletContext();
+  const { account, setAccount } = useOutletContext();
   const navigate = useNavigate();
   const [hoverLogout, setHoverLogout] = useState(false);
   const [isModal, setIsModal] = useState(false);
@@ -42,6 +42,7 @@ const My = () => {
   const handleLogout = () => {
     //localStorage에서 item 삭제
     localStorage.clear();
+    setAccount("");
     navigate("/");
   };
 

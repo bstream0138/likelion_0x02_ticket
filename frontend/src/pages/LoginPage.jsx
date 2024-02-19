@@ -2,16 +2,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Ganache login 처리
-import Web3 from 'web3';
+// App은 2가지 Login 방식 지원: (1) Kakao Login (2) Metamask Login
+// User가 사용한 Login 방식은 localStorage에 loginFrom 변수를 선언하여 관리
+// loginFrom value: 로그인 전 값 X, Kakao 사용 시 K, Metamask 사용 시 M
 
 const LoginPage = () => {
-  // 2가지 Login 방식을 지원한다. Kakao Login / Metamask Login
-  // 사용한 Login 방식에 따라 프로그램의 동작이 달라지므로
-  // localStorage에 loginFrom 변수를 선언하여 사용자가 어떤 방식으로 로그인 했는지 관리한다
-  // 로그인 전 값은 X로 설정하고, 사용자가 Kakao 사용 시 K, Metamask 사용 시 M 으로 설정한다
 
-  // 메타마스크 환경의 여러 주소 사용 가능하도록 수정
   const [accounts, setAccounts] = useState([]); 
   const [selectedAccount, setSelectedAccount] = useState("");
   const navigate = useNavigate();
@@ -20,28 +16,27 @@ const LoginPage = () => {
     localStorage.setItem("loginFrom", "X");
   }, []);
 
-  // 카카오 로그인은 버튼 클릭 시, backend에서 로직 처리하기에 backend의 response 호출로 main 페이지로 이동
+  // 카카오 로그인 관련
   const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   
   const connectMetamask = async () => {
-    if (window.ethereum) {  // 개발 테스트용 함수이니 Chrome 접근만 가정
+    if (window.ethereum) {  
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
-          // Sepolia 테스트넷으로 접속하도록 chain ID 지정
           params: [
             {
-              chainId: 11155111,
+              chainId: 11155111,  // Sepolia 테스트넷
             },
           ],
         });
         if (accounts.length > 0) {
-          console.log('LoginPage.jsx/connectMetamask:',accounts);
-          setAccounts(accounts);
-          console.log('LoginPage.jsx/connectMetamask/accounts[0] :', accounts[0]);
-          setSelectedAccount(accounts[0]);
+          //console.log('LoginPage.jsx/connectMetamask:',accounts);
+          //console.log('LoginPage.jsx/connectMetamask/accounts[0] :', accounts[0]);
+          setAccounts(accounts);          
+          setSelectedAccount(accounts[0]);  // setting default value
         }
       } catch (error) {
         console.error(error);
@@ -54,43 +49,14 @@ const LoginPage = () => {
   const handleAccountSelection = (e) => {
     const newSelectedAccount = e.target.value
     setSelectedAccount(newSelectedAccount);
-    console.log('LoginPage.jsx/handleAccountSelection:', newSelectedAccount);
+    //console.log('LoginPage.jsx/handleAccountSelection:', newSelectedAccount);
   };
 
   const confirmSelection = async () => {
     if(selectedAccount) {
-      console.log('LoginPage.jsx/confirmSelection/selectedAccount:', selectedAccount);
-      try {
-        const response = await fetch('http://localhost:3001/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            loginFrom: 'M',
-            account: selectedAccount,
-          }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          if (data.ID) {
-            localStorage.setItem('customerID', data.ID);
-            console.log('LoginPage.jsx/confirmSelection/customerID:', data.ID);
-          }
-        } else {
-          console.error('[ERR] LoginPage.jsx/confirmSelection : response.ok')
-        }
-        
-      } catch (error) {
-        console.error('[ERR] LoginPage.jsx/confirmSelection: ', error);
-      }     
-
-      // localStorage에 접속 정보 저장
-      localStorage.setItem("account", selectedAccount);
-      localStorage.setItem("loginFrom", "M");
-      navigate("/");
-    }
+      //console.log('LoginPage.jsx/confirmSelection/selectedAccount:', selectedAccount);
+      navigate(`/login_success?login_from=M&account=${selectedAccount}`);
+    };
   };
 
   return (

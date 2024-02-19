@@ -66,6 +66,11 @@ app.use(cors({
 // KakaoPay의 paymentRequest 등 JSON 구조체 처리 위해 추가
 app.use(express.json());
 
+// Server 동작 확인용
+app.get('/ping', (req,res) => {
+    res.status(200).send('ping');
+});
+
 app.get('/oauth', authController.kakaoLogin);
 app.post('/payReady', payController.kakaoPayReady);
 app.post('/PayApprove', payController.kakaoPayApprove);

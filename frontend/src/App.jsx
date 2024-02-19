@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Ticketing from "./pages/Ticketing";
 import Ticket from "./pages/Ticket";
 import CreateAddress from "./pages/CreateAddress";
+
+import KakaoLoginSuccess from "./pages/LoginSuccess";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 
@@ -24,9 +26,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* pages using Kakao API*/}
-        <Route path="/login" element={<LoginPage />} />
-
         {/* App */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -35,6 +34,9 @@ const App = () => {
           <Route path="/my" element={<My />} />
           <Route path="/createaddress" element={<CreateAddress />} />
 
+          {/* pages using Kakao API*/}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login_success" element={<KakaoLoginSuccess />} />
           <Route path="/payment_success" element={<PaymentSuccess />} />
           <Route path="/payment_fail" element={<PaymentCancel />} />
           <Route path="/payment_cancel" element={<PaymentCancel />} />
