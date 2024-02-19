@@ -29,6 +29,16 @@ contract PreTicket is ERC721Enumerable, Ownable {
     string afterURI; // pre event용 티켓 이미지 ex) 콘서트 포스터 사진
     bool isRevealed;
 
+    // tokenId => bool
+    mapping(uint => bool) internal isCanceledTicket;
+
+    event Canceled(uint indexed _tokenId);
+    
+    modifier notCanceled(uint _tokenId) {
+        require(!isCanceledTicket[_tokenId], "CanceledTicket: ticket is canceled");
+        _;
+    }
+
     constructor(string memory _name, string memory _symbol, string memory _beforeURI, string memory _afterURI) ERC721(_name, _symbol) Ownable(msg.sender) {
         beforeURI = _beforeURI;
         afterURI = _afterURI;
@@ -52,5 +62,15 @@ contract PreTicket is ERC721Enumerable, Ownable {
         }
     }
     
-    // 유저등록
+    // 취소된 티켓인지 tokenId로 확인
+    function isCanceled(uint _tokenId) external view returns(bool) {
+        return isCanceledTicket[_tokenId];
+    }
+
+    // 해당 tokenId를 가진 티켓 취소
+    function cancel(uint _tokenId) external {
+        require(msg.sender == ownerOf(_tokenId), "You are not owner of this ticket");
+        isCanceledTicket[_tokenId] = true;
+        emit Canceled(_tokenId);
+    }
 }
