@@ -9,16 +9,14 @@ const MenuBar = () => {
           src="bottom-border.png"
           alt="bottom"
         />
-        <ul className="flex bg-[#FBAE16] items-center h-full  gap-6 justify-between px-4">
+        <ul className="flex bg-[#FBAE16] items-center h-full  justify-between px-4">
           <ul className="">
             <Link to="/">HOME</Link>
           </ul>
-          <ul className="">
+          <ul className="mr-6">
             <Link to="/ticket">TICKET</Link>
           </ul>
-          <ul>
-            <li>(searching)</li>
-          </ul>
+
           <ul>
             <Link to="/my">MY</Link>
           </ul>

@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 
-const DevInfo = ({loginFrom, dbConnection}) => {
+const DevInfo = ({ loginFrom, dbConnection }) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-
-    const handleLogin = () => {
-        navigate("/login");
-    };
-
-    return (
-        <div className="fixed top-0 left-0 w-full bg-gray-100 opacity-75 flex flex-row justify-between items-center space-x-2">
-            <div className="text-sm"> (dev) [user]: {loginFrom? loginFrom: 'X'} [db]: {dbConnection? 'L': 'X'} </div>
-            <button className="text-sm bg-blue-500 py-2 px-4" onClick={handleLogin}>BTN</button>
-        </div>
-        
-    );
+  const handleLogin = () => {
+    navigate("/login");
   };
-  
-  export default DevInfo;
+
+  return (
+    <div className="fixed top-0 left-0 opacity-75 flex flex-row justify-between ">
+      <div className="text-sm">
+        {" "}
+        (u){loginFrom ? loginFrom : "X"}(d){dbConnection ? "L" : "X"}{" "}
+      </div>
+    </div>
+  );
+};
+
+export default DevInfo;
