@@ -7,7 +7,6 @@ import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { CiCalendar, CiMicrophoneOn } from "react-icons/ci";
 
 const TicketBanner = () => {
-  const [page, setPage] = useState();
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
   const slideRef = useRef();
@@ -22,7 +21,7 @@ const TicketBanner = () => {
     slideToScroll: 1,
     arrows: false,
   };
-  
+
   const { concert } = useOutletContext();
   console.log(concert);
 
@@ -64,7 +63,7 @@ const TicketBanner = () => {
           </Link>
         ))}
       </Slider>
-      <div className="bg-black w-[355px] h-[369px] fixed top-[6px] left-[3px] content -z-10">
+      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-10">
         {" "}
       </div>
       <div className="mt-4 self-center flex gap-3">

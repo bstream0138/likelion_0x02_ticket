@@ -11,26 +11,27 @@ const My = () => {
   const [isModal, setIsModal] = useState(false);
 
   const [purchasedList, setPurchasedList] = useState([]);
-  
+
   //Purchased 리스트 작성예정
   const getPurchased = async () => {
-    const customerID = localStorage.getItem('customerID');
-    if(!customerID) return;
+    const customerID = localStorage.getItem("customerID");
+    if (!customerID) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/purchase_list?customerID=${customerID}`);
+      const response = await fetch(
+        `http://localhost:3001/purchase_list?customerID=${customerID}`
+      );
       if (response.ok) {
         const data = await response.json();
         setPurchasedList(data);
       } else {
-        throw new Error('Failed to fetch purchase list');
+        throw new Error("Failed to fetch purchase list");
       }
     } catch (error) {
       console.error(error);
     }
-
   };
-  
+
   useEffect(() => {
     getPurchased();
   }, []);
@@ -57,7 +58,7 @@ const My = () => {
       <div className="flex items-center justify-center text-3xl font-bold h-[80px] pt-1 bg-[#038BD5]">
         MY PAGE
       </div>
-      <img src="ticket-border.png" alt="" className="rotate-180" />
+      <img src="ticket-head.png" alt="" />
 
       <div className="px-4 mt-4">
         <ul className="flex justify-between items-center">
