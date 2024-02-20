@@ -31,14 +31,14 @@ const Home = () => {
           to="/login"
           className={
             hoverMove
-              ? "flex items-center mr-14 mb-3 justify-end mt-[13px] border-2 border-[#bcbcbc] py-1 px-[10px] rounded-full text-black bg-white"
-              : "flex items-center mr-14 mb-3 justify-end mt-[10px] border-2 border-b-[5px] border-[#bcbcbc]  py-1 px-[10px] rounded-full text-black bg-white"
+              ? "flex items-center mr-6 mb-3 justify-end mt-[13px] border-2 border-[#bcbcbc] py-1 px-[10px] rounded-full text-black bg-white"
+              : "flex items-center mr-6 mb-3 justify-end mt-[10px] border-2 border-b-[5px] border-[#bcbcbc]  py-1 px-[10px] rounded-full text-black bg-white"
           }
           onMouseEnter={() => setHoverMove(true)}
           onMouseLeave={() => setHoverMove(false)}
           onClick={!isLoggedIn ? handleLogin : "cursor-not-allowed"}
         >
-          login
+          Login
         </Link>
       </div>
       <img src="ticket-head.png" alt="" className=" w-[425px]" />
@@ -46,8 +46,7 @@ const Home = () => {
         <TicketBanner />
       </div>
       <div className="mt-[162px] border-t-2 border-black"></div>
-
-      <ul className="grid grid-cols-4 items-center mt-4  mx-10 gap-3 overflow-x-scroll">
+      <ul className="flex items-center mt-4 mx-10 gap-3">
         <Link
           to="/ticketing/1"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
@@ -61,19 +60,34 @@ const Home = () => {
           <span className="mb-1">
             <PiHashBold />
           </span>
-          ITZY
+          The Golden Hour
         </button>
+
         <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
           박효신
         </button>
+      </ul>
+      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
+          New Jeans
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
           BTS
+        </button>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          Black Pink
         </button>
         <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
           <span className="mb-1">
@@ -81,17 +95,71 @@ const Home = () => {
           </span>
           aespa
         </button>
-        <button className="hashtag w-[106px] hover:bg-[#FBAE16] hover:text-white duration-150">
+      </ul>
+      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+        <button className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
-          New Jeans
+          BLACKPINK IN YOUR AREA
         </button>
-        <button className="hashtag w-[106px] ml-[24px] hover:bg-[#038BD5] hover:text-white duration-150">
+      </ul>
+      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
-          Black Pink
+          Hype Boy
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          Sneakers
+        </button>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          Butter
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          Drama
+        </button>
+      </ul>
+      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          유나
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          카리나
+        </button>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          V
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          대장님
+        </button>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          해린
         </button>
       </ul>
     </div>
