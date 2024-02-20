@@ -1,7 +1,7 @@
 import Web3 from "web3";
 
 // 지갑주소 만들기
-function CreateAddress( base1, base2) {
+export function CreateAddress( base1, base2) {
   return new Promise( (resolve, reject) => {
     try {
       const web3 = new Web3();
@@ -16,3 +16,4 @@ function CreateAddress( base1, base2) {
     }
   });
 };
+

@@ -20,14 +20,13 @@ const LoginSuccess = () => {
     preEventContract, setPreEventContract 
   } = useOutletContext();
 
-  const loginFrom = localStorage.getItem("loginFrom");
   const current_url = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(current_url.search);
-    localStorage.setItem("loginFrom", loginFrom);  
-    //console.log('LoginSuccess.jsx/useEffect/loginFrom: ', loginFrom);    
+    const loginFrom = queryParams.get("login_from");
+    localStorage.setItem("loginFrom", loginFrom);
 
     const fetchUserInfo = async () => {
       
@@ -39,20 +38,23 @@ const LoginSuccess = () => {
         if(userID && userName) {
           CreateAddress(userID, userName)
           .then(({privateKey, address}) => {
-            fetch("http://localhost:3001/storeWallet", {
+            fetch("http://localhost:3001/store_kinfo", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(
                 {
-                  userID, privateKey, address
+                  loginFrom: "K", 
+                  userID, userName,
+                  privateKey, address
                 }
               ),
             })
             .then(response => response.json())
             .then(data => {
-              console.log("Create Wallet related to Kakao ID");
+              localStorage.setItem('customerID', data.ID);
+              setAccount(data.ADDR);
             })
             .catch(error => { console.error(error);});
           })
@@ -91,17 +93,16 @@ const LoginSuccess = () => {
         navigate("/");
       }
     };
-
+   
     fetchUserInfo();
 
     const web3 = new Web3(window.ethereum);
     setWeb3(web3);
 
     const preEventContract = new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT);
-
     setPreEventContract(preEventContract);
 
-  }, [current_url, loginFrom]);
+  }, [current_url]);
 
   return (
     <div className="w-[425px] min-h-screen bg-blue-200 mx-auto z-10 flex justify-center items-center">

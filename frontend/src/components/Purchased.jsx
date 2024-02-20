@@ -1,7 +1,7 @@
 const Purchased = () => {
   return (
     <li className="flex items-center justify-between">
-      <li className="w-60 text-left ml-2 truncate">NFT </li>
+      <ul className="w-60 text-left ml-2 truncate">NFT </ul>
       <button className="btn-style ml-5">Mint</button>
       <button className="btn-style ml">Refund</button>
     </li>
