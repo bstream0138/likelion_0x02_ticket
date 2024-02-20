@@ -21,14 +21,15 @@ const MyTicketCard = () => {
     try {
       if (!preEventContract) return;
 
-      const searchTokenId = await preEventContract.methods
-        .balanceOf(account)
-        .call();
+      // 내가 가진 티켓 개수
+      const balance = await preEventContract.methods.balanceOf(account).call();
 
       let temp = [];
 
-      for (let i = 0; i < Number(searchTokenId); i++) {
-        const tokenId = i + 1;
+      for (let i = 0; i < Number(balance); i++) {
+        const tokenId = await preEventContract.methods
+          .tokenOfOwnerByIndex(account, i)
+          .call();
         const isCanceled = await preEventContract.methods
           .isCanceled(tokenId)
           .call();
@@ -40,7 +41,7 @@ const MyTicketCard = () => {
 
           const response = await axios.get(metadataURI);
 
-          temp.push({ ...response.data, tokenId: tokenId });
+          temp.push({ ...response.data, tokenId: Number(tokenId) });
           console.log(response.data);
         }
       }
