@@ -8,7 +8,7 @@ const Home = () => {
   const [hoverMove, setHoverMove] = useState(false);
 
   useEffect(() => {
-    console.log(userInfo); // => 찍히는 값 undefined인데 필요한 정보인가?
+    console.log(userInfo);
     console.log(account);
   }, []);
 
