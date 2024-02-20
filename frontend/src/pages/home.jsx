@@ -47,29 +47,29 @@ const Home = () => {
       </div>
       <div className="mt-[162px] border-t-2 border-black"></div>
 
-      <ul className="grid grid-cols-4 items-center mt-4  mx-10 gap-3 overflow-x-scroll">
+      <ul className="grid grid-cols-4 items-center mt-4  mx-10 gap-2 ">
         <Link
           to="/ticketing/1"
-          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+          className="hashtag hover:bg-[#038BD5] ml-5 w-[58px] hover:text-white duration-150"
         >
           <span className="mb-1">
             <PiHashBold />
           </span>
           IU
         </Link>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <button className="hashtag hover:bg-[#FBAE16] mx-1  hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
           ITZY
         </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        <button className="hashtag hover:bg-[#038BD5]  hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
           박효신
         </button>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <button className="hashtag hover:bg-[#FBAE16] ml-2 hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
@@ -81,13 +81,13 @@ const Home = () => {
           </span>
           aespa
         </button>
-        <button className="hashtag w-[106px] hover:bg-[#FBAE16] hover:text-white duration-150">
+        <button className="hashtag w-[108px] hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>
           New Jeans
         </button>
-        <button className="hashtag w-[106px] ml-[24px] hover:bg-[#038BD5] hover:text-white duration-150">
+        <button className="hashtag w-[107px] ml-[25px] hover:bg-[#038BD5] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
           </span>

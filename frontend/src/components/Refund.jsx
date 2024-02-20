@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+// import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 const Refund = ({ tokenId, getMyNft }) => {
   const { preEventContract, account } = useOutletContext();

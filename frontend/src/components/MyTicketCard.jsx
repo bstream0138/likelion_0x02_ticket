@@ -21,14 +21,14 @@ const MyTicketCard = () => {
     try {
       if (!preEventContract) return;
 
-      const searchTokenId = await preEventContract.methods
-        .balanceOf(account)
-        .call();
+      const balance = await preEventContract.methods.balanceOf(account).call();
 
       let temp = [];
 
-      for (let i = 0; i < Number(searchTokenId); i++) {
-        const tokenId = i + 1;
+      for (let i = 0; i < Number(balance); i++) {
+        const tokenId = await preEventContract.methods
+          .tokenOfOwnerByIndex(account, i)
+          .call();
         const isCanceled = await preEventContract.methods
           .isCanceled(tokenId)
           .call();
@@ -40,7 +40,7 @@ const MyTicketCard = () => {
 
           const response = await axios.get(metadataURI);
 
-          temp.push({ ...response.data, tokenId: tokenId });
+          temp.push({ ...response.data, tokenId: Number(tokenId) });
           console.log(response.data);
         }
       }
@@ -62,7 +62,7 @@ const MyTicketCard = () => {
       <div className="grid grid-cols-1 gap-3 pt-10  mx-auto ">
         {metadataArray.map((v, i) => (
           <div key={i} className="header">
-            <div className="w-[404px] h-[205px] ml-[13px] fixed bg-black top-0 left-0 content -z-30 rounded-md content"></div>
+            <div className="w-[404px] h-[205px] ml-[13px] mt-1 fixed bg-black top-0 left-0 content -z-30 rounded-md content"></div>
 
             <button
               className="w-[400px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "

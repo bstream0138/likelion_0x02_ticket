@@ -64,16 +64,23 @@ const MintModal = ({ toggleOpen }) => {
         .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
         .call();
 
-      const metadataURI = await preEventContract.methods
-        .tokenURI(tokenId)
+      const isCanceled = await preEventContract.methods
+        .isCanceled(tokenId)
         .call();
 
-      const response = await axios.get(metadataURI);
+      if (!isCanceled) {
+        const metadataURI = await preEventContract.methods
+          .tokenURI(tokenId)
+          .call();
 
-      // setMetadata(response.data);
-      setMetadataArray([response.data, ...metadataArray]);
+        const response = await axios.get(metadataURI);
+
+        // setMetadata(response.data);
+        setMetadataArray([response.data, ...metadataArray]);
+        console.log("metadata:", response.data);
+      }
       setIsLoading(false);
-      console.log("metadata:", response.data);
+
       alert("Minting Success");
     } catch (error) {
       console.error(error);
