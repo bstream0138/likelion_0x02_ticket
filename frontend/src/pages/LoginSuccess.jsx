@@ -5,6 +5,7 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import Web3 from "web3";
 import PreEventAbi from "../abis/PreEventAbi.json";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+import { CreateAddress} from "../components/CreateAddress";
 
 // App은 2가지 Login 방식 지원: (1) Kakao Login (2) Metamask Login
 // Kakao login 성공한 경우 -> 가입 여부 확인 -> 신규 가입 시, 개인키 및 지갑 주소 생성 -> 정보 저장
@@ -19,46 +20,46 @@ const LoginSuccess = () => {
     preEventContract, setPreEventContract 
   } = useOutletContext();
 
-  const [userInfo, setUserInfo] = useState({
-    userID: "",
-    userName: "",
-    userImage: "",
-  });
-
-  const loginFrom = localStorage.getItem("loginFrom");
   const current_url = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const queryParams = new URLSearchParams(current_url.search);
-
-    const loginFrom = queryParams.get('login_from');
-    localStorage.setItem("loginFrom", loginFrom);  
-    //console.log('LoginSuccess.jsx/useEffect/loginFrom: ', loginFrom);    
+    const loginFrom = queryParams.get("login_from");
+    localStorage.setItem("loginFrom", loginFrom);
 
     const fetchUserInfo = async () => {
       
       if (loginFrom === "K") {  
         // Kakao Login
-        if (queryParams.get("userID")) {
-          // backend에서 redirect된 상황이므로 값을 localStorage에 저장
-          localStorage.setItem("userID", queryParams.get("userID"));
-          localStorage.setItem("userName", queryParams.get("userName"));
-          localStorage.setItem("userImage", queryParams.get("userImage"));
+        const userID = queryParams.get("userID");
+        const userName = queryParams.get("userName");
+
+        if(userID && userName) {
+          CreateAddress(userID, userName)
+          .then(({privateKey, address}) => {
+            fetch("http://localhost:3001/store_kinfo", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(
+                {
+                  loginFrom: "K", 
+                  userID, userName,
+                  privateKey, address
+                }
+              ),
+            })
+            .then(response => response.json())
+            .then(data => {
+              localStorage.setItem('customerID', data.ID);
+              setAccount(data.ADDR);
+            })
+            .catch(error => { console.error(error);});
+          })
+          .catch(error => { console.error(error);});
         }
-  
-        //localStorage에서 userID와 userName 가져오기
-        const userID = localStorage.getItem("userID");
-        const userName = localStorage.getItem("userName");
-        const userImage = localStorage.getItem("userImage");
-        //console.log("userID: ", userID);
-        //console.log("userName: ", userName);
-        //console.log("userImage: ", userImage);
-        setUserInfo({ userID, userName, userImage });
-  
-        // 여기에 지갑 생성 및 회원가입 등 처리
-  
       } else if (loginFrom === "M") {
         // Metamask Login
         const account = queryParams.get("account");
@@ -92,17 +93,16 @@ const LoginSuccess = () => {
         navigate("/");
       }
     };
-
+   
     fetchUserInfo();
 
     const web3 = new Web3(window.ethereum);
     setWeb3(web3);
 
     const preEventContract = new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT);
-
     setPreEventContract(preEventContract);
 
-  }, [current_url, loginFrom]);
+  }, [current_url]);
 
   return (
     <div className="w-[425px] min-h-screen bg-blue-200 mx-auto z-10 flex justify-center items-center">

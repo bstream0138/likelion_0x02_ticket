@@ -24,6 +24,7 @@ const My = () => {
       if (response.ok) {
         const data = await response.json();
         setPurchasedList(data);
+        console.log('getPurchased: ', data);
       } else {
         throw new Error("Failed to fetch purchase list");
       }

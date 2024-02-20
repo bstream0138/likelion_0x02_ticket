@@ -22,11 +22,14 @@ const Layout = () => {
 
   useEffect( () => {
 
+    /*
     // 서버 연결 확인
     const checkServer = async () => {
       try {
+        console.log('Check DB connection ...');
         const response = await fetch('http://localhost:3001/ping');
         if(response.ok) {
+          console.log('Success.');
           localStorage.setItem("connectDB", "L");
         } else {
           console.error('Server respond, but something goes wrong.');
@@ -37,13 +40,15 @@ const Layout = () => {
         localStorage.setItem("connectDB", "X");
       }
     }
+    */
 
     // DB CONCERT 테이블에서 공연 정보 가져오기
     const fetchConcert = async () => {
+      console.log('Get concert data from DB...');
       try {
         const response = await fetch('http://localhost:3001/concert');
         if (response.ok) {
-          //console.log('Get concert data from DB');
+          console.log('Success.');
           const data = await response.json();
           setConcert(data);
           localStorage.setItem("connectDB", "L");
@@ -56,8 +61,6 @@ const Layout = () => {
         setConcert(sample_concert);
       }
     }
-
-    checkServer();
 
     fetchConcert();
 

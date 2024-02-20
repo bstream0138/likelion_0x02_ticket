@@ -26,6 +26,7 @@ const localDB = new sqlite3.Database(
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     LOGIN_FROM TEXT,
                     ADDR TEXT,
+                    K_ID TEXT,
                     PRI_KEY TEXT                    
                 )
                 `);
@@ -68,6 +69,7 @@ app.use(express.json());
 
 // Server 동작 확인용
 app.get('/ping', (req,res) => {
+    console.log('t2_server.js/ping: check connection');
     res.status(200).send('ping');
 });
 
@@ -116,7 +118,7 @@ app.get('/purchase_list', (req, res) => {
 
     const query = `
         SELECT 
-            c.ID AS ID, 
+            p.ID AS ID, 
             c.IMAGE AS IMAGE, 
             c.CONTENT AS CONTENT, 
             c.DATE AS CONCERT_DATE,
@@ -152,6 +154,37 @@ app.post('/purchase', (req, res) => {
         }
         console.log('t2_server.js/purchase: ',customerID, concertID);
         res.json({'MSG': 'Success', 'ID': this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
+    });
+
+});
+
+
+app.post('/store_kinfo', (req, res) => {
+    const {loginFrom, userID, userName, privateKey, address} = req.body;
+
+    localDB.get(
+        'SELECT ID, ADDR FROM CUSTOMER WHERE LOGIN_FROM = ? AND K_ID = ?',
+        [loginFrom, userID], (err, row) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('server error');
+            } else if(row) {
+                //기존재하는 ID
+                res.json({ID: row.ID, ADDR: row.ADDR});
+            } else {
+                //신규 고객정보 Insert
+                localDB.run(
+                    'INSERT INTO CUSTOMER (LOGIN_FROM, ADDR, K_ID, PRI_KEY) VALUES (?,?,?,?)',
+                    [loginFrom, address, userID, privateKey], function(err) {
+                        if (err) {
+                            console.error(err.message);
+                            res.status(500).send('server error');
+                        } else {
+                            res.json({ID: this.lastID, ADDR: address});
+                        }
+                    }
+                );
+            }
     });
 
 });
