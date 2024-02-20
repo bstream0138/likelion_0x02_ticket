@@ -151,10 +151,24 @@ const Account = ({ setIsModal }) => {
             <li>Balance : {getBalance}</li>
           </ul>
           <ul className="flex gap-2 mt-4">
-            <button onClick={() => setIsSelect("A")} className="btn-style">
+            <button
+              onClick={() => setIsSelect("A")}
+              className={
+                isSelect === "A"
+                  ? " bg-[#a8a8a8] rounded-md px-1 border-2 border-black"
+                  : "px-1 border-2 border-black rounded-md"
+              }
+            >
               send ETH
             </button>
-            <button onClick={() => setIsSelect("B")} className="btn-style">
+            <button
+              onClick={() => setIsSelect("B")}
+              className={
+                isSelect === "B"
+                  ? "  bg-[#a8a8a8] rounded-md px-1 border-2 border-black"
+                  : "px-1 border-2 border-black rounded-md"
+              }
+            >
               send NFT
             </button>
           </ul>

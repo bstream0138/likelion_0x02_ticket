@@ -42,7 +42,7 @@ const Ticketing = () => {
   }, [index, concert, navigate]);
 
   return (
-    <div className="w-[425px] min-h-screen  mx-auto">
+    <div className="w-[425px] h-[100vh]  mx-auto">
       <div>
         {loginMethod === "K" ? (
           <div>
@@ -85,9 +85,9 @@ const Ticketing = () => {
         <div key={concertInfo.ID}>
           <div className="header">
             <img
-              src="../ticket-border.png"
+              src="../ticket-head.png"
               alt="ticket"
-              className="rotate-180 z-10 fixed w-[425px] content"
+              className="z-10 fixed w-[425px] content"
             />
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header h ">
               <img
@@ -121,7 +121,7 @@ const Ticketing = () => {
           </ul>
           <div className="mt-8 px-5">
             <ul className="text-3xl">{concertInfo.TITLE}</ul>
-            <ul className="text-xs font-normal flex items-center gap-1 ml-[1px]">
+            <ul className="text-xs font-normal flex items-center gap-1 mt-3 ml-[1px]">
               <CiMicrophoneOn />
               {concertInfo.CONTENT}
             </ul>

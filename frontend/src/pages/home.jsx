@@ -1,6 +1,7 @@
 import { Link, useOutletContext } from "react-router-dom";
 import TicketBanner from "../components/TicketBanner";
 import { useEffect, useState } from "react";
+import { PiHashBold } from "react-icons/pi";
 
 const Home = () => {
   const { userInfo, account } = useOutletContext();
@@ -19,7 +20,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-[425px] min-h-screen mx-auto z-10 poppins">
+    <div className="w-[425px] h-[110vh] mx-auto z-10 poppins">
       <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 ">
         <img
           src="logo.png"
@@ -44,15 +45,54 @@ const Home = () => {
       <div className="w-[350px] h-[280px] ml-[36.5px] rounded-md mt-12">
         <TicketBanner />
       </div>
-      <ul className="grid grid-cols-4 items-center mt-40 mx-10 gap-2">
-        <li className="text-center">ALL</li>
-        <li className="text-center">BALLAD</li>
-        <li className="text-center">ROCK</li>
-        <li className="text-center">HIPHOP</li>
-        <li className="text-center">JAZZ</li>
-        <li className="text-center">FOLK</li>
-        <li className="text-center">FESTIVAL</li>
-        <li className="text-center">INDIE</li>
+      <div className="mt-[162px] border-t-2 border-black"></div>
+
+      <ul className="grid grid-cols-4 items-center mt-4  mx-10 gap-3 overflow-x-scroll">
+        <Link
+          to="/ticketing/1"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          IU
+        </Link>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          ITZY
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          박효신
+        </button>
+        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          BTS
+        </button>
+        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          aespa
+        </button>
+        <button className="hashtag w-[106px] hover:bg-[#FBAE16] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          New Jeans
+        </button>
+        <button className="hashtag w-[106px] ml-[24px] hover:bg-[#038BD5] hover:text-white duration-150">
+          <span className="mb-1">
+            <PiHashBold />
+          </span>
+          Black Pink
+        </button>
       </ul>
     </div>
   );
