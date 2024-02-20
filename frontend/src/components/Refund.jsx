@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+import { ImSpinner8 } from "react-icons/im";
 
 const Refund = ({ tokenId, getMyNft }) => {
   const { preEventContract, account } = useOutletContext();
   const [refundModal, setRefundModal] = useState(false);
   const [hoverRefund, setHoverRefund] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openModal = () => {
     setRefundModal(!refundModal);
@@ -19,6 +21,8 @@ const Refund = ({ tokenId, getMyNft }) => {
 
   const onClickRefund = async () => {
     try {
+      setIsLoading(true);
+
       await preEventContract.methods.cancel(tokenId).send({ from: account });
 
       // const tx = {
@@ -53,10 +57,13 @@ const Refund = ({ tokenId, getMyNft }) => {
 
       await preEventContract.methods.isCanceled(tokenId).call();
 
-      alert("Refund Success");
+      alert("환불이 완료되었습니다.");
+      setIsLoading(false);
+      setRefundModal(false);
       getMyNft();
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -87,6 +94,16 @@ const Refund = ({ tokenId, getMyNft }) => {
             >
               Refund
             </button>
+            <div className="w-[300px] h-[10px]">
+              {isLoading && (
+                <ul className="flex w-[300px] items-center flex-col justify-center mt-4">
+                  <li>
+                    <ImSpinner8 className="animate-spin w-10 h-10" />
+                  </li>
+                  <li className="mt-2">환불을 진행중입니다.</li>
+                </ul>
+              )}
+            </div>
           </div>
           <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 z-40"></div>
         </div>

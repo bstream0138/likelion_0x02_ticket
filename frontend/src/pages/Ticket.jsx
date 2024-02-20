@@ -17,7 +17,7 @@ const Ticket = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[100vh] mx-auto poppins overflow-hidden">
+    <div className="w-[425px] h-[80vh] mx-auto poppins  overflow-y-auto">
       <div className="bg-[#038BD5] h-[80px] text-3xl flex items-center justify-center font-black ">
         TICKET
       </div>
@@ -26,8 +26,8 @@ const Ticket = () => {
         <button
           className={
             hoverTicket
-              ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full"
-              : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+              ? "flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full "
+              : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
           }
           onClick={() => setIsSelect("A")}
           onMouseEnter={() => setHoverTicket(true)}
@@ -55,3 +55,8 @@ const Ticket = () => {
 };
 
 export default Ticket;
+// className={
+//   hoverTicket
+//     ? "flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full "
+//     : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+// }

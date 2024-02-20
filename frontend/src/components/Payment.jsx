@@ -55,13 +55,13 @@ const Payment = ({ toggleOpen, concertInfo }) => {
     <div className="bg-opacity-40 bg-black w-full h-full top-0 left-0 fixed z-20">
       <div className="h-[304px] fixed top-[200px] bg-black ml-2 mt-2 w-[404px] left-1/2 -translate-x-1/2"></div>
       <div className="flex flex-col items-center justify-center h-[300px] px-4 py-2 fixed top-[200px] bg-white border w-[400px] left-1/2 -translate-x-1/2 z-20 ">
-        <div className="w-full max-w-xs mb-8">
-          <div className="border-b-2 border-black mb-4">
+        <div className="w-full max-w-xs mb-4">
+          <div className="border-b-2 border-black mb-2">
             <div className="flex justify-between py-2">
               <div className="font-bold">공연일자:</div>
               <div>{concertInfo.DATE}</div>
             </div>
-            <div className="flex justify-between py-2">
+            <div className="flex justify-between py-2 mb-2">
               <div className="font-bold">가격:</div>
               <div>{concertInfo.PRICE}원</div>
             </div>

@@ -35,7 +35,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
   }, []);
 
   return (
-    <div className="w-[425px] h-[100vh]  mx-auto ">
+    <div className="w-[425px] h-[80vh]  mx-auto ">
       <div className="pt-10">
         <img src="ticket-border.png" alt="" />
         <ul className="w-[425px] h-[120px] flex items-center justify-center  bg-[#038BD5]">

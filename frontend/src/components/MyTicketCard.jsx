@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import NftModal from "./NftModal";
 import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
+import { ImSpinner8 } from "react-icons/im";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
@@ -16,11 +16,12 @@ const MyTicketCard = () => {
   };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getMyNft = async () => {
     try {
       if (!preEventContract) return;
-
+      setIsLoading(true);
       // 내가 가진 티켓 개수
       const balance = await preEventContract.methods.balanceOf(account).call();
 
@@ -43,11 +44,13 @@ const MyTicketCard = () => {
 
           temp.push({ ...response.data, tokenId: Number(tokenId) });
           console.log(response.data);
+          setIsLoading(false);
         }
       }
       setMetadataArray(temp);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -58,15 +61,23 @@ const MyTicketCard = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[90vh] overflow-y-scroll">
-      <h1 className="px-2 py-2">MY TICKET</h1>
-      <div className="grid grid-cols-1 gap-3 pt-10  mx-auto ">
+    <div className="w-[425px] h-[90vh] ">
+      <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
+      <div className="flex flex-col gap-3 pt-10">
+        {isLoading && (
+          <div className="flex items-center justify-start text-3xl flex-col mt-20">
+            <ul>
+              <ImSpinner8 className="animate-spin w-16 h-16" />
+            </ul>
+            <ul className="mt-2">Loading...</ul>
+          </div>
+        )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header">
-            <div className="w-[404px] h-[205px] ml-[13px] fixed bg-black top-0 left-0 content -z-30 rounded-md content"></div>
+            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-black top-0 left-0 -z-30 content"></div>
 
             <button
-              className="w-[400px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
+              className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
               {metadataArray ? (

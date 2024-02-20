@@ -1,16 +1,20 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+import { ImSpinner8 } from "react-icons/im";
 
 const MintModal = ({ toggleOpen }) => {
   const { account, preEventContract, web3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [hoverMint, setHoverMint] = useState(false);
   const [hoverLater, setHoverLater] = useState(false);
   const navigate = useNavigate();
+  const [hoverToHome, setHoverToHome] = useState(false);
+  const [hoverViewTicket, setHoverViewTicket] = useState(false);
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
@@ -60,21 +64,23 @@ const MintModal = ({ toggleOpen }) => {
       );
       console.log("tx receipt:", receipt);
 
+      setIsModalOpen(true);
+      setIsLoading(false);
+
       const tokenId = await preEventContract.methods
         .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
         .call();
 
       const metadataURI = await preEventContract.methods
-        .tokenURI(tokenId)
+        .tokenURI(Number(tokenId))
         .call();
 
       const response = await axios.get(metadataURI);
 
       // setMetadata(response.data);
       setMetadataArray([response.data, ...metadataArray]);
-      setIsLoading(false);
+
       console.log("metadata:", response.data);
-      alert("Minting Success");
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -82,7 +88,7 @@ const MintModal = ({ toggleOpen }) => {
   };
 
   return (
-    <div className="w-[425px] h-[250px]  bg-[#038BD5]  ">
+    <div className="w-[425px] h-[290px]  bg-[#038BD5]  ">
       <ul className="flex items-center justify-center h-full gap-4 flex-col">
         <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?
 티켓 민팅 후 환불이 불가능합니다
@@ -116,8 +122,50 @@ const MintModal = ({ toggleOpen }) => {
             나중에
           </button>
         </div>
-
-        {isLoading && <div className="mt-4">잠시만 기다려 주세요.</div>}
+        <div className=" w-[425px] h-[50px]">
+          {isLoading && (
+            <ul className="flex justify-center items-center flex-col">
+              <li>
+                <ImSpinner8 className="animate-spin h-10 w-10" />
+              </li>
+              <li className="mt-2">민팅을 진행중...</li>
+            </ul>
+          )}
+          {isModalOpen && (
+            <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
+              <ul className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
+                <li>민팅이 완료되었습니다!</li>
+                <li className="flex gap-3 mt-3">
+                  <Link
+                    to="/ticket"
+                    className={
+                      hoverViewTicket
+                        ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
+                        : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold "
+                    }
+                    onMouseEnter={() => setHoverViewTicket(true)}
+                    onMouseLeave={() => setHoverViewTicket(false)}
+                  >
+                    티켓보기
+                  </Link>
+                  <Link
+                    to="/"
+                    className={
+                      hoverToHome
+                        ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
+                        : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold"
+                    }
+                    onMouseEnter={() => setHoverToHome(true)}
+                    onMouseLeave={() => setHoverToHome(false)}
+                  >
+                    홈으로
+                  </Link>
+                </li>
+              </ul>
+              <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 z-40"></div>
+            </div>
+          )}
+        </div>
       </ul>
       <img src="ticket-head.png" alt="" />
     </div>

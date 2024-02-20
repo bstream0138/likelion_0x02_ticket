@@ -42,7 +42,7 @@ const Ticketing = () => {
   }, [index, concert, navigate]);
 
   return (
-    <div className="w-[425px] h-[100vh]  mx-auto">
+    <div className="w-[425px] h-[80vh]  mx-auto overflow-y-auto">
       <div>
         {loginMethod === "K" ? (
           <div>

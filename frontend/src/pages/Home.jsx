@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-[425px] h-[110vh] mx-auto z-10 poppins">
+    <div className="w-[425px] h-[80vh] mx-auto z-10 poppins overflow-y-auto">
       <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 ">
         <img
           src="logo.png"
@@ -69,7 +69,7 @@ const Home = () => {
           박효신
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+      <ul className="flex items-center mt-4 mx-auto gap-3 ">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -95,7 +95,7 @@ const Home = () => {
           aespa
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+      <ul className="flex items-center mt-4 mx-auto gap-3 ">
         <button className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -103,7 +103,7 @@ const Home = () => {
           BLACKPINK IN YOUR AREA
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+      <ul className="flex items-center mt-4 mx-auto gap-3">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -129,7 +129,7 @@ const Home = () => {
           Drama
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 overflow-x-scroll">
+      <ul className="flex items-center mt-4 mx-auto gap-3">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />

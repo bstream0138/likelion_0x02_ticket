@@ -24,7 +24,7 @@ const My = () => {
       if (response.ok) {
         const data = await response.json();
         setPurchasedList(data);
-        console.log('getPurchased: ', data);
+        console.log("getPurchased: ", data);
       } else {
         throw new Error("Failed to fetch purchase list");
       }
@@ -56,7 +56,7 @@ const My = () => {
   }, [account]);
 
   return (
-    <div className="w-[425px] h-[100vh] mx-auto poppins">
+    <div className="w-[425px] h-[80vh] mx-auto poppins overflow-y-auto">
       <div className="flex items-center justify-center text-3xl font-bold h-[80px] pt-1 bg-[#038BD5]">
         MY PAGE
       </div>
