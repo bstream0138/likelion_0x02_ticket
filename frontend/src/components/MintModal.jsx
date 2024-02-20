@@ -38,7 +38,7 @@ const MintModal = ({ toggleOpen }) => {
         data: preEventContract.methods.mintTicket(account).encodeABI(),
         // value: "0x0",
         maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        maxFeePerGas: web3.utils.toWei("30", "gwei"),
+        maxFeePerGas: web3.utils.toWei("120", "gwei"),
         type: "0x02",
       };
 
@@ -63,11 +63,6 @@ const MintModal = ({ toggleOpen }) => {
       const tokenId = await preEventContract.methods
         .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
         .call();
-
-      // // 민팅하기;
-      // await preEventContract.methods
-      //   .mintTicket(account)
-      //   .send({ from: mintAccount.address });
 
       const metadataURI = await preEventContract.methods
         .tokenURI(tokenId)

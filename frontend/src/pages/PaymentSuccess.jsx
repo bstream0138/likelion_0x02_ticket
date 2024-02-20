@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MintModal from "../components/MintModal";
 
 const PaymentSuccess = ({ toggleOpen }) => {
-
-  useEffect( () => {
+  useEffect(() => {
     // 결제 성공 시, localStorage의 customerID와 concertID로 구매 정보 생성
     const customerID = localStorage.getItem("customerID");
     const concertID = localStorage.getItem("concertID");
@@ -26,19 +25,18 @@ const PaymentSuccess = ({ toggleOpen }) => {
         console.error("[ERR] PaymentSuccess/insertPurchase: ", error);
       }
     };
-    
-    console.log('PaymentSuccess/useEffect/customerID: ', customerID);
-    console.log('PaymentSuccess/useEffect/concertID: ', concertID);
 
-    if ( customerID && concertID ) {      
+    console.log("PaymentSuccess/useEffect/customerID: ", customerID);
+    console.log("PaymentSuccess/useEffect/concertID: ", concertID);
+
+    if (customerID && concertID) {
       insertPurchase();
     }
-
   }, []);
 
   return (
-    <div className="w-[425px] min-h-screen  mx-auto ">
-      <div className="pt-2">
+    <div className="w-[425px] h-[100vh]  mx-auto ">
+      <div className="pt-10">
         <img src="ticket-border.png" alt="" />
         <ul className="w-[425px] h-[120px] flex items-center justify-center  bg-[#038BD5]">
           <p className="text-4xl">결제 성공 !!</p>
