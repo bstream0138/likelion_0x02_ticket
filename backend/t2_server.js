@@ -56,17 +56,23 @@ const localDB = new sqlite3.Database(
                 )
                 `);
 
-                // Insert sample data into CONCERT table
-                localDB.run(`
-                INSERT INTO CONCERT (IMAGE, TITLE, CONTENT, DATE, LOCATION, PRICE) VALUES 
-                ('/db_bts.jpg', 'BTS', '방탄소년단', '2024.02.21', '', 100000),
-                ('/IU.jpg', 'IU', '아이유', '2024.03.21', '', 110000),
-                ('/karina.jpg', 'aespa', '에스파', '2024.03.03', '', 140000),
-                ('/itzy.jpg', 'ITZY', '잇지', '2024.02.21', '', 130000),
-                ('/newjeans.jpeg', 'New jeans', '뉴진스', '2024.02.21', '', 150000),
-                ('/hyoshin.jpeg', 'Hyo Shin Park', '박효신', '2024.02.21', '', 170000),
-                ('/blackpink.jpeg', 'Black pink', '블랙핑크', '2024.02.21', '', 200000);
-                `);
+                localDB.get("SELECT COUNT(*) AS count FROM CONCERT", (err, row) => {
+                    if(err) {
+                        console.error('Error checking CONCERT table: ', err);
+                    } else if(row.count === 0) { // CONCERT table is empty
+                        // Insert sample data into CONCERT table
+                        localDB.run(`
+                        INSERT INTO CONCERT (IMAGE, TITLE, CONTENT, DATE, LOCATION, PRICE) VALUES 
+                        ('/db_bts.jpg', 'BTS', '방탄소년단', '2024.02.21', '', 100000),
+                        ('/IU.jpg', 'IU', '아이유', '2024.03.21', '', 110000),
+                        ('/karina.jpg', 'aespa', '에스파', '2024.03.03', '', 140000),
+                        ('/itzy.jpg', 'ITZY', '잇지', '2024.02.21', '', 130000),
+                        ('/newjeans.jpeg', 'New jeans', '뉴진스', '2024.02.21', '', 150000),
+                        ('/hyoshin.jpeg', 'Hyo Shin Park', '박효신', '2024.02.21', '', 170000),
+                        ('/blackpink.jpeg', 'Black pink', '블랙핑크', '2024.02.21', '', 200000);
+                        `);
+                    }
+                });
             });
         }
     });
