@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# DB
-/backend/local_database.db
+# database
+local_database.db
 
 # keys
 /frontend/.env
