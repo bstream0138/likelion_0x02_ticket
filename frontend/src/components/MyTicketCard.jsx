@@ -64,7 +64,17 @@ const MyTicketCard = () => {
     <div className="w-[425px] h-[90vh] ">
       <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
       <div className="flex flex-col gap-3 pt-10">
-        {isLoading && (
+        {isLoading ? (
+          <div>
+            <div className="flex items-center justify-center text-3xl mt-4">
+              발급 된 티켓이 없습니다
+            </div>
+            <div className=" whitespace-pre-wrap text-sm font-normal flex justify-center mt-2">
+              {`티켓 구매후 민팅을 진행해주세요 티켓구매가 완료된 상태이시면
+                      구매내역을 확인후 민팅해주세요`}
+            </div>
+          </div>
+        ) : (
           <div className="flex items-center justify-start text-3xl flex-col mt-20">
             <ul>
               <ImSpinner8 className="animate-spin w-16 h-16" />
@@ -80,13 +90,7 @@ const MyTicketCard = () => {
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
-              {metadataArray ? (
-                <img src={v.image} alt={v.name} className="w-[145px]" />
-              ) : (
-                <div className="flex w-[145px] h-[205px] items-center justify-center text-sm ">
-                  Loading...
-                </div>
-              )}
+              <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
                 <ul className="mt-5">
                   TokenID : {v.tokenId}

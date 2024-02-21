@@ -12,7 +12,6 @@ import Web3 from "web3";
 import { sample_concert } from "../sample/sample_concert";
 
 const Layout = () => {
-
   const [web3, setWeb3] = useState(null);
   const [account, setAccount] = useState("");
   const [preEventContract, setPreEventContract] = useState();
@@ -20,8 +19,7 @@ const Layout = () => {
   // concert 정보
   const [concert, setConcert] = useState([]);
 
-  useEffect( () => {
-
+  useEffect(() => {
     /*
     // 서버 연결 확인
     const checkServer = async () => {
@@ -44,26 +42,25 @@ const Layout = () => {
 
     // DB CONCERT 테이블에서 공연 정보 가져오기
     const fetchConcert = async () => {
-      console.log('Get concert data from DB...');
+      console.log("Get concert data from DB...");
       try {
-        const response = await fetch('http://localhost:3001/concert');
+        const response = await fetch("http://localhost:3001/concert");
         if (response.ok) {
-          console.log('Success.');
+          console.log("Success.");
           const data = await response.json();
           setConcert(data);
           localStorage.setItem("connectDB", "L");
         } else {
-          console.error('Fail');
+          console.error("Fail");
           setConcert(sample_concert);
         }
-      } catch(error) {
-        console.error('Error: ', error);
+      } catch (error) {
+        console.error("Error: ", error);
         setConcert(sample_concert);
       }
-    }
+    };
 
     fetchConcert();
-
   }, []);
 
   return (
