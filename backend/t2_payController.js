@@ -13,21 +13,24 @@ exports.kakaoPayReady = async (req, res) => {
     // 카카오페이 목업웹: https://online-pay.kakao.com/mockup/
     try {
         // 상품명, 결제금액
-        const { item_name, total_amount } = req.body;
+        const { item_name, total_amount, is_mobile } = req.body;
+        const approval_url = "http://localhost:3000/payment_success";
+        const fail_url = "http://localhost:3000/payment_fail";
+        const cancel_url = "http://localhost:3000/payment_cancel";
 
         // 결제 준비 요청
         const response = await axios.post('https://open-api.kakaopay.com/online/v1/payment/ready', {
             "cid": "TC0ONETIME",
             "partner_order_id": "partner_order_id",
             "partner_user_id": "partner_user_id",
-            "item_name": "TEST",
+            "item_name": item_name,
             "quantity": 1,
-            "total_amount": 100,
+            "total_amount": total_amount,
             "vat_amount": 0,
             "tax_free_amount": 0,
-            "approval_url": "http://localhost:3000/payment_success",
-            "fail_url": "http://localhost:3000/payment_fail",
-            "cancel_url": "http://localhost:3000/payment_cancel",
+            "approval_url": approval_url,
+            "fail_url": fail_url,
+            "cancel_url": cancel_url,
         }, {
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
@@ -35,8 +38,10 @@ exports.kakaoPayReady = async (req, res) => {
             },
         });
 
-        console.log('next_redirect_pc_url: ', response.data.next_redirect_pc_url);
-        res.json({ next_redirect_pc_url: response.data.next_redirect_pc_url });
+        console.log('kakaoPayReady/response: ', response.data);
+        const next_redirect_url = is_mobile ? response.data.next_redirect_mobile_url : response.data.next_redirect_pc_url;
+        console.log('kakaoPayReady/next_redirect_url: ', next_redirect_url);
+        res.json({ next_redirect_url: next_redirect_url });
 
     } catch(error) {
         console.error(error);
@@ -64,7 +69,7 @@ exports.kakaoPayApprove = async (req, res) => {
             }
         });
 
-        console.log('response: ', response.data);
+        console.log('kakaoPayApprove/response: ', response.data);
         res.send(response.data);
 
     } catch(error) {

@@ -4,7 +4,7 @@ import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 
-const MintModal = ({ toggleOpen }) => {
+const Mint = () => {
   const { account, preEventContract, web3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
@@ -172,4 +172,4 @@ const MintModal = ({ toggleOpen }) => {
   );
 };
 
-export default MintModal;
+export default Mint;

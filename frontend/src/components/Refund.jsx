@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 
-const Refund = ({ tokenId, getMyNft }) => {
+const Refund = ({ tokenId }) => {
   const { preEventContract, account } = useOutletContext();
   const [refundModal, setRefundModal] = useState(false);
   const [hoverRefund, setHoverRefund] = useState(false);
@@ -60,7 +60,6 @@ const Refund = ({ tokenId, getMyNft }) => {
       alert("환불이 완료되었습니다.");
       setIsLoading(false);
       setRefundModal(false);
-      getMyNft();
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -70,14 +69,14 @@ const Refund = ({ tokenId, getMyNft }) => {
   return (
     <div>
       <button
-        className="border-2 border-black rounded-md px-2 mt-5"
+        className="border-2 border-black rounded-md px-2 text-2xl hover:bg-[#AB161E] duration-100 hover:text-white"
         onClick={openModal}
       >
-        Refund
+        환불하기
       </button>
       {refundModal && (
         <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
-          <div className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
+          <div className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
             <button className="fixed top-0 right-2" onClick={openModal}>
               x
             </button>
@@ -85,8 +84,8 @@ const Refund = ({ tokenId, getMyNft }) => {
             <button
               className={
                 hoverRefund
-                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
-                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
+                  ? "flex items-center mt-[12px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
+                  : "flex items-center mt-[9px] justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
               }
               onMouseEnter={() => setHoverRefund(true)}
               onMouseLeave={() => setHoverRefund(false)}
@@ -105,7 +104,7 @@ const Refund = ({ tokenId, getMyNft }) => {
               )}
             </div>
           </div>
-          <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 z-40"></div>
+          <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-40"></div>
         </div>
       )}
     </div>

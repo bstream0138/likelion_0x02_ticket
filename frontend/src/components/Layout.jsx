@@ -10,6 +10,7 @@ import Web3 from "web3";
 */
 
 import { sample_concert } from "../sample/sample_concert";
+import Header from "./Header";
 
 const Layout = () => {
   const [web3, setWeb3] = useState(null);
@@ -64,8 +65,9 @@ const Layout = () => {
   }, []);
 
   return (
-    <div>
+    <div className="border-2 w-[450px] mx-auto border-black">
       <DevInfo />
+      <Header account={account} />
       <Outlet
         context={{
           account,
@@ -77,6 +79,7 @@ const Layout = () => {
           concert,
         }}
       />
+
       <MenuBar />
     </div>
   );

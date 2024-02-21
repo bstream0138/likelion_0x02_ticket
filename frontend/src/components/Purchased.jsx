@@ -12,11 +12,11 @@ const Purchased = () => {
 
   return (
     <ul className="flex flex-col gap-2  mb-2 border-t-2 border-black py-[2px]">
-      <li className="flex items-center justify-between mt-4">
-        <li className="w-60 text-left ml-12 truncate">Concert Info</li>
+      <ul className="flex items-center justify-between mt-4">
+        <li className="w-60 text-left ml-10">Concert Info</li>
         <li className=" mr-[38px]">Date</li>
         <li className=" mr-[60px]">Time</li>
-      </li>
+      </ul>
     </ul>
   );
 };

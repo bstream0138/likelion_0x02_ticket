@@ -3,6 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// 사용자의 실행환경이 PC인지 모바일인지 확인
+const checkIsMobile = () => {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+};
+
 const Payment = ({ toggleOpen, concertInfo }) => {
   const navigate = useNavigate();
 
@@ -16,18 +21,22 @@ const Payment = ({ toggleOpen, concertInfo }) => {
     localStorage.setItem("concertID", concertInfo.ID);
     localStorage.setItem("paymentAttempt", 1);
 
-    if (loginFrom === "K") {
+    if (loginFrom === "KK") {
       try {
         // 백엔드 서버의 결제 준비 API 주소
         const backendURL = "http://localhost:3001/payReady";
 
         const total_amount = quantity * price; // 총 결제 금액 계산
+        const isMobile = checkIsMobile();
+
+        console.log("Payment/isMobile: ", isMobile);
 
         // 결제 요청 정보
         const paymentRequest = {
           item_name: concertInfo.CONTENT,
           total_amount: total_amount, // 총 결제 금액
           quantity: quantity, // 상품 수량
+          is_mobile: isMobile, // 모바일이면 true, PC이면 false
         };
 
         // 결제 준비 요청
@@ -36,14 +45,15 @@ const Payment = ({ toggleOpen, concertInfo }) => {
             "Content-Type": "application/json",
           },
         });
-        const { next_redirect_pc_url } = response.data;
-        window.location.href = next_redirect_pc_url;
+        console.log("KAKAO PAY RESPONSE: ", response);
+        const { next_redirect_url } = response.data;
+        window.location.href = next_redirect_url;
       } catch (error) {
         console.error(error);
       }
+    } else if (loginFrom === "K") {
+      navigate("/payment_success");
     } else if (loginFrom === "M") {
-      //console.log('Payment.jsx/handlePayment/customerID: ', localStorage.getItem("customerID"));
-      //console.log('Payment.jsx/handlePayment/concertID: ', localStorage.getItem("concertID"));
       navigate("/payment_success");
     } else {
       alert("You need to login");
@@ -58,7 +68,7 @@ const Payment = ({ toggleOpen, concertInfo }) => {
         <div className="w-full max-w-xs mb-4">
           <div className="border-b-2 border-black mb-2">
             <div className="flex justify-between py-2">
-              <div className="font-bold">공연일자:</div>
+              <div className="font-semibold">공연일자:</div>
               <div>{concertInfo.DATE}</div>
             </div>
             <div className="flex justify-between py-2 mb-2">
@@ -69,13 +79,13 @@ const Payment = ({ toggleOpen, concertInfo }) => {
         </div>
         <div className="space-y-4 w-full max-w-xs">
           <button
-            className="flex items-center justify-center border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl w-full hover:bg-[#038BD5] hover:text-white duration-150 "
+            className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg shadow-lg"
             onClick={handlePayment}
           >
             구매하기
           </button>
           <button
-            className="flex items-center justify-center border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl w-full hover:bg-[#FBAE16] hover:text-white duration-150"
+            className="w-full bg-gray-500 text-white font-bold py-3 rounded shadow"
             onClick={toggleOpen}
           >
             뒤로가기

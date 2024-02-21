@@ -17,37 +17,43 @@ const MyTicketCard = () => {
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   const getMyNft = async () => {
     try {
       if (!preEventContract) return;
-      setIsLoading(true);
+
       // 내가 가진 티켓 개수
       const balance = await preEventContract.methods.balanceOf(account).call();
 
       let temp = [];
-
-      for (let i = 0; i < Number(balance); i++) {
-        const tokenId = await preEventContract.methods
-          .tokenOfOwnerByIndex(account, i)
-          .call();
-        const isCanceled = await preEventContract.methods
-          .isCanceled(tokenId)
-          .call();
-
-        if (!isCanceled) {
-          const metadataURI = await preEventContract.methods
-            .tokenURI(Number(!isCanceled))
+      if (balance > 0) {
+        setIsLoading(true);
+        setIsEmpty(false);
+        for (let i = 0; i < Number(balance); i++) {
+          const tokenId = await preEventContract.methods
+            .tokenOfOwnerByIndex(account, i)
+            .call();
+          const isCanceled = await preEventContract.methods
+            .isCanceled(tokenId)
             .call();
 
-          const response = await axios.get(metadataURI);
+          if (!isCanceled) {
+            const metadataURI = await preEventContract.methods
+              .tokenURI(Number(!isCanceled))
+              .call();
 
-          temp.push({ ...response.data, tokenId: Number(tokenId) });
-          console.log(response.data);
-          setIsLoading(false);
+            const response = await axios.get(metadataURI);
+
+            temp.push({ ...response.data, tokenId: Number(tokenId) });
+            console.log(response.data);
+          }
         }
+
+        setMetadataArray(temp);
+        setIsLoading(false);
       }
-      setMetadataArray(temp);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -64,22 +70,23 @@ const MyTicketCard = () => {
     <div className="w-[425px] h-[90vh] ">
       <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
       <div className="flex flex-col gap-3 pt-10">
-        {isLoading ? (
+        {isLoading && (
+          <div className="flex items-center justify-start text-3xl flex-col mt-20">
+            <ul>
+              <ImSpinner8 className="animate-spin w-16 h-16" />
+            </ul>
+            <ul className="mt-2">Loading...</ul>
+          </div>
+        )}
+        {isEmpty && (
           <div>
             <div className="flex items-center justify-center text-3xl mt-4">
               발급 된 티켓이 없습니다
             </div>
             <div className=" whitespace-pre-wrap text-sm font-normal flex justify-center mt-2">
               {`티켓 구매후 민팅을 진행해주세요 티켓구매가 완료된 상태이시면
-                      구매내역을 확인후 민팅해주세요`}
+                     구매내역을 확인후 민팅해주세요`}
             </div>
-          </div>
-        ) : (
-          <div className="flex items-center justify-start text-3xl flex-col mt-20">
-            <ul>
-              <ImSpinner8 className="animate-spin w-16 h-16" />
-            </ul>
-            <ul className="mt-2">Loading...</ul>
           </div>
         )}
         {metadataArray.map((v, i) => (
@@ -107,7 +114,6 @@ const MyTicketCard = () => {
                       <CiCalendar />
                       2024.02.29 ~ 2024.03.02
                     </ul>
-                    <Refund tokenId={v.tokenId} getMyNft={getMyNft} />
                   </div>
                 </ul>
               </div>

@@ -64,31 +64,10 @@ const Ticketing = () => {
         )}
       </div>
 
-      <div className="bg-[#038BD5] flex items-center justify-center font-bold text-3xl py-4 header poppins">
-        <button
-          onClick={handleGoHome}
-          onMouseEnter={() => setHoverBack(true)}
-          onMouseLeave={() => setHoverBack(false)}
-          className={
-            hoverBack
-              ? "ml-3 fixed content text-sm left-0 border-[2px]  border-black rounded-full py-[6px] px-2 pb-[7px] mt-[2px] "
-              : "ml-3 fixed content text-sm left-0  border-[2px] border-b-[5px] border-black rounded-full py-[6px] px-2"
-          }
-        >
-          <FaLongArrowAltLeft />
-        </button>
-        TICKET
-      </div>
-
       {/*예매하기 버튼 화면 현재 concertInfo는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertInfo ? (
         <div key={concertInfo.ID}>
           <div className="header">
-            <img
-              src="../ticket-head.png"
-              alt="ticket"
-              className="z-10 fixed w-[425px] content"
-            />
             <ul className="w-[425px] overflow-hidden h-[200px] object-contain header h ">
               <img
                 className=" opacity-60 blur-sm "

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import MintModal from "../components/MintModal";
+import Mint from "../components/Mint";
 
 const PaymentSuccess = ({ toggleOpen }) => {
   useEffect(() => {
@@ -41,7 +41,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
         <ul className="w-[425px] h-[120px] flex items-center justify-center  bg-[#038BD5]">
           <p className="text-4xl">결제 성공 !!</p>
         </ul>
-        <MintModal />
+        <Mint />
       </div>
     </div>
   );

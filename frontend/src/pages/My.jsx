@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 
 import Account from "../components/Account";
 import Purchased from "../components/Purchased";
+import PurchasedModal from "../components/PurchasedModal";
 
 const My = () => {
-  const { account, setAccount } = useOutletContext();
+  const { account, setAccount, preEventContract } = useOutletContext();
   const navigate = useNavigate();
   const [hoverLogout, setHoverLogout] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [isModalPurchased, setIsModalPurchased] = useState(false);
 
   const [purchasedList, setPurchasedList] = useState([]);
 
@@ -40,6 +42,9 @@ const My = () => {
   const onClickModal = () => {
     setIsModal(!isModal);
   };
+  const onClickModalPurchased = () => {
+    setIsModalPurchased(!isModalPurchased);
+  };
 
   const handleLogout = () => {
     //localStorage에서 item 삭제
@@ -57,11 +62,6 @@ const My = () => {
 
   return (
     <div className="w-[425px] h-[80vh] mx-auto poppins overflow-y-auto">
-      <div className="flex items-center justify-center text-3xl font-bold h-[80px] pt-1 bg-[#038BD5]">
-        MY PAGE
-      </div>
-      <img src="ticket-head.png" alt="" />
-
       <div className="px-4 mt-4">
         <ul className="flex justify-between items-center">
           <button
@@ -97,11 +97,22 @@ const My = () => {
           </ul>
           <ul className="flex flex-col gap-2 border-t-2 border-black py-[2px]">
             {purchasedList.map((purchase) => (
-              <li key={purchase.ID} className="px-4 py-1 ">
-                <span> 공연: {purchase.CONTENT}</span>
-                <span className="ml-6">구매일자: {purchase.PURCHASE_DATE}</span>
-              </li>
+              <button
+                key={purchase.ID}
+                className="px-4 py-1 flex hover:bg-[#919191] hover:text-white duration-100 "
+                onClick={onClickModalPurchased}
+              >
+                <span className="truncate w-1/3 ml-5">{purchase.CONTENT}</span>
+                <span className="w-2/3 ml-10">{purchase.PURCHASE_DATE}</span>
+              </button>
             ))}
+            {isModalPurchased && (
+              <PurchasedModal
+                setIsModalPurchased={setIsModalPurchased}
+                isModalPurchased={isModalPurchased}
+                purchasedList={purchasedList}
+              />
+            )}
           </ul>
         </div>
       </div>
@@ -110,3 +121,6 @@ const My = () => {
 };
 
 export default My;
+{
+  /* <span className="ml-16">{purchase.PURCHASE_DATE}</span> */
+}

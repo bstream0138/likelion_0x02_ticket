@@ -1,46 +1,10 @@
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TicketBanner from "../components/TicketBanner";
-import { useEffect, useState } from "react";
-import { PiWalletBold, PiHashBold } from "react-icons/pi";
+import { PiHashBold } from "react-icons/pi";
 
 const Home = () => {
-  const { userInfo, account } = useOutletContext();
-  const [hoverMove, setHoverMove] = useState(false);
-
-  useEffect(() => {
-    console.log(userInfo);
-    console.log(account);
-  }, []);
-
   return (
-    <div className="w-[425px] h-[80vh] mx-auto z-10 poppins overflow-y-auto">
-      <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 ">
-        <img
-          src="logo.png"
-          alt="logo"
-          className="w-[180px] h-[140px] -rotate-12 sticky z-20 mb-2"
-        />
-        {account ? (
-          <div className="flex text-sm mr-6">
-            <PiWalletBold className="text-lg" /> : {account.substring(0, 7)}
-            ...{account.substring(account.length - 5)}
-          </div>
-        ) : (
-          <Link
-            to="/login"
-            className={
-              hoverMove
-                ? "flex items-center mr-6 mb-3 justify-end mt-[13px] border-2 border-[#bcbcbc] py-1 px-[10px] rounded-full text-black bg-white"
-                : "flex items-center mr-6 mb-3 justify-end mt-[10px] border-2 border-b-[5px] border-[#bcbcbc]  py-1 px-[10px] rounded-full text-black bg-white"
-            }
-            onMouseEnter={() => setHoverMove(true)}
-            onMouseLeave={() => setHoverMove(false)}
-          >
-            Login
-          </Link>
-        )}
-      </div>
-      <img src="ticket-head.png" alt="" className=" w-[425px]" />
+    <div className="w-[447px] h-[80vh] mx-auto z-10 poppins overflow-y-auto">
       <div className="w-[350px] h-[280px] ml-[36.5px] rounded-md mt-12">
         <TicketBanner />
       </div>
