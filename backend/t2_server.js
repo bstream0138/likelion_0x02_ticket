@@ -11,6 +11,8 @@ const port = process.env.SERVER_PORT || 3001;
 const authController = require('./t2_authController');
 const payController = require('./t2_payController');
 
+let kakaoAccessToken;
+
 const localDB = new sqlite3.Database(
     './local_database.db',
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,

@@ -8,8 +8,7 @@ const Ticketing = () => {
   const { index } = useParams();
 
   const { userInfo, account, concert } = useOutletContext();
-  // LoginPage에서 사용한 login 방법 확인
-  const loginMethod = localStorage.getItem("loginMethod");
+  
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
 
@@ -43,27 +42,7 @@ const Ticketing = () => {
 
   return (
     <div className="w-[425px] h-[80vh]  mx-auto overflow-y-auto">
-      <div>
-        {loginMethod === "K" ? (
-          <div>
-            <li className="text-lg font-semibold">UserID: {userInfo.userID}</li>
-            <li className="text-lg font-semibold">
-              UserName: {userInfo.userName}
-            </li>
-          </div>
-        ) : (
-          <div>
-            <h1 className="text-lg font-semibold">Metamask Account Info</h1>
-            <p className="text-lg">
-              <span>
-                {account.substring(0, 7)}...
-                {account.substring(account.length - 5)}
-              </span>
-            </p>
-          </div>
-        )}
-      </div>
-
+      
       {/*예매하기 버튼 화면 현재 concertInfo는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertInfo ? (
         <div key={concertInfo.ID}>
@@ -117,7 +96,7 @@ const Ticketing = () => {
           <div className="px-5 text-2xl font-bold mt-3">CASTING</div>
 
           {isModal && (
-            <Payment toggleOpen={toggleOpen} concertInfo={concertInfo} />
+            <Payment toggleOpen={toggleOpen} account={account} concertInfo={concertInfo} />
           )}
         </div>
       ) : (

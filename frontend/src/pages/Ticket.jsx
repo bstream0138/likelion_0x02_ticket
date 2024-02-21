@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import MyTicketCard from "../components/MyTicketCard";
 import CollectionCard from "../components/CollectionCard";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const Ticket = () => {
+  const { account, setAccount, preEventContract } = useOutletContext();
+  const navigate = useNavigate();
+
   const [isSelect, setIsSelect] = useState("A");
-  const { preEventContract } = useOutletContext();
   const [hoverTicket, setHoverTicket] = useState(false);
   const [hoverCollection, setHoverCollection] = useState(false);
 
@@ -15,6 +17,13 @@ const Ticket = () => {
       return;
     }
   }, [preEventContract]);
+
+  useEffect(() => {
+    if (!account) {
+      alert("You need to login");
+      navigate("/login");
+    }
+  }, [account]);
 
   return (
     <div className="w-[447px] h-[80vh] mx-auto poppins  overflow-y-auto">
