@@ -49,11 +49,23 @@ const localDB = new sqlite3.Database(
                     CUSTOMER_ID INTEGER,
                     CONCERT_ID INTEGER,
                     DATE TEXT,
-                    IS_MINTING INTERGER,
+                    IS_MINTED INTERGER,
                     IS_REFUNDED INTEGER,
                     FOREIGN KEY(CUSTOMER_ID) REFERENCES CUSTOMER(ID), 
                     FOREIGN KEY(CONCERT_ID) REFERENCES CONCERT(ID)
                 )
+                `);
+
+                // Insert sample data into CONCERT table
+                localDB.run(`
+                INSERT INTO CONCERT (IMAGE, TITLE, CONTENT, DATE, LOCATION, PRICE) VALUES 
+                ('/db_bts.jpg', 'BTS', '방탄소년단', '2024.02.21', '', 100000),
+                ('/IU.jpg', 'IU', '아이유', '2024.03.21', '', 110000),
+                ('/karina.jpg', 'aespa', '에스파', '2024.03.03', '', 140000),
+                ('/itzy.jpg', 'ITZY', '잇지', '2024.02.21', '', 130000),
+                ('/newjeans.jpeg', 'New jeans', '뉴진스', '2024.02.21', '', 150000),
+                ('/hyoshin.jpeg', 'Hyo Shin Park', '박효신', '2024.02.21', '', 170000),
+                ('/blackpink.jpeg', 'Black pink', '블랙핑크', '2024.02.21', '', 200000);
                 `);
             });
         }
@@ -122,7 +134,9 @@ app.get('/purchase_list', (req, res) => {
             c.IMAGE AS IMAGE, 
             c.CONTENT AS CONTENT, 
             c.DATE AS CONCERT_DATE,
-            p.DATE AS PURCHASE_DATE
+            p.DATE AS PURCHASE_DATE,
+            p.IS_REFUNDED,
+            p.IS_MINTED
         FROM PURCHASE p
         JOIN CONCERT c ON p.CONCERT_ID = c.ID
         WHERE p.CUSTOMER_ID = ?;
@@ -145,7 +159,7 @@ app.post('/purchase', (req, res) => {
     
     localDB.run(`
     INSERT INTO 
-    PURCHASE    (CUSTOMER_ID, CONCERT_ID, DATE, IS_MINTING, IS_REFUNDED ) 
+    PURCHASE    (CUSTOMER_ID, CONCERT_ID, DATE, IS_MINTED, IS_REFUNDED ) 
     VALUES      (?, ?, ?, 0, 0)
     `, [customerID, concertID, purchaseDate], 
     function(err) {
@@ -187,6 +201,52 @@ app.post('/store_kinfo', (req, res) => {
             }
     });
 
+});
+
+app.post('/refund', (req, res) => {
+    const {purchaseID} = req.body;
+
+    if (!purchaseID) {
+        return res.status(400).send('Purchase ID required');
+    }
+
+    localDB.get(
+        'UPDATE PURCHASE SET IS_REFUNDED = 1 WHERE ID = ?',
+        [purchaseID], (err) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('error updating purchase table:is_refunded');
+            }
+            if (this.changes > 0) {
+                res.json({});
+
+            } else {
+                res.status(404).send('purchase ID not found');
+            }
+    });
+});
+
+app.post('/mint', (req, res) => {
+    const {purchaseID} = req.body;
+
+    if (!purchaseID) {
+        return res.status(400).send('Purchase ID required');
+    }
+
+    localDB.get(
+        'UPDATE PURCHASE SET IS_MINTED = 1 WHERE ID = ?',
+        [purchaseID], (err) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('error updating purchase table:is_minted');
+            }
+            if (this.changes > 0) {
+                res.json({});
+
+            } else {
+                res.status(404).send('purchase ID not found');
+            }
+    });
 });
 
 app.get('/concert', (req,res) => {

@@ -3,6 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// 사용자의 실행환경이 PC인지 모바일인지 확인
+const checkIsMobile = () => {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+};
+
 const Payment = ({ toggleOpen, concertInfo }) => {
   const navigate = useNavigate();
 
@@ -22,12 +27,16 @@ const Payment = ({ toggleOpen, concertInfo }) => {
         const backendURL = "http://localhost:3001/payReady";
 
         const total_amount = quantity * price; // 총 결제 금액 계산
+        const isMobile = checkIsMobile();
+
+        console.log('Payment/isMobile: ', isMobile)
 
         // 결제 요청 정보
         const paymentRequest = {
           item_name: concertInfo.CONTENT,
           total_amount: total_amount, // 총 결제 금액
           quantity: quantity, // 상품 수량
+          is_mobile: isMobile,  // 모바일이면 1, PC이면 0
         };
 
         // 결제 준비 요청
@@ -36,8 +45,9 @@ const Payment = ({ toggleOpen, concertInfo }) => {
             "Content-Type": "application/json",
           },
         });
-        const { next_redirect_pc_url } = response.data;
-        window.location.href = next_redirect_pc_url;
+        console.log("KAKAO PAY RESPONSE: ",response);
+        const { next_redirect_url } = response.data;
+        window.location.href = next_redirect_url;
       } catch (error) {
         console.error(error);
       }

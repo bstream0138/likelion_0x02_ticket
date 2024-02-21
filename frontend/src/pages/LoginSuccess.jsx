@@ -53,8 +53,12 @@ const LoginSuccess = () => {
             })
             .then(response => response.json())
             .then(data => {
-              localStorage.setItem('customerID', data.ID);
-              setAccount(data.ADDR);
+              console.log(privateKey);
+              console.log(address);
+              const account = address;
+              setAccount(account);
+              localStorage.setItem('customerID', data.ID);              
+              localStorage.setItem('account', account);
             })
             .catch(error => { console.error(error);});
           })
@@ -64,6 +68,7 @@ const LoginSuccess = () => {
         // Metamask Login
         const account = queryParams.get("account");
         setAccount(account);
+        localStorage.setItem('account', account);
 
         try {
           const response = await fetch('http://localhost:3001/login', {
@@ -98,9 +103,11 @@ const LoginSuccess = () => {
 
     const web3 = new Web3(window.ethereum);
     setWeb3(web3);
+    console.log("LoginSuccess.jsx/useEffect/web3: ", web3);
 
     const preEventContract = new web3.eth.Contract(PreEventAbi, PRE_EVENT_CONTRACT);
     setPreEventContract(preEventContract);
+    console.log("LoginSuccess.jsx/useEffect/preEventContract: ", preEventContract);
 
   }, [current_url]);
 
