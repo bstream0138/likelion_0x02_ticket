@@ -20,4 +20,31 @@ pragma solidity >=0.8.2 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract PostTicket is ERC721Enumerable {}
+contract PostTicket is ERC721Enumerable {
+    string beforeURI; // ex) 감사 이미지, 가수 셀카 등등
+    string afterURI; // ex) 굿즈 이미지 등, 예정된 팬미팅 포스터 등등 
+    bool isRevealed;
+
+    constructor(string memory _name, string memory _symbol, string memory _beforeURI, string memory _afterURI) ERC721(_name, _symbol) {
+        beforeURI = _beforeURI;
+        afterURI = _afterURI;
+    }
+
+    // 티켓 발급
+    function mintTicket(address _addr) public {
+        uint tokenId = totalSupply() + 1;
+        _mint(_addr, tokenId);
+    }
+
+    function setStatus() public {
+        isRevealed = !isRevealed;
+    }
+
+    function tokenURI(uint _tokenId) public view override returns(string memory) {
+        if(!isRevealed) {
+            return string(abi.encodePacked(beforeURI));
+        } else {
+            return string(abi.encodePacked(afterURI));
+        }
+    }
+}

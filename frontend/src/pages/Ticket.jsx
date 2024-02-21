@@ -17,7 +17,7 @@ const Ticket = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] min-h-screen  mx-auto poppins">
+    <div className="w-[425px] h-[100vh] mx-auto poppins overflow-hidden">
       <div className="bg-[#038BD5] h-[80px] text-3xl flex items-center justify-center font-black ">
         TICKET
       </div>

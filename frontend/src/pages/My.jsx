@@ -56,7 +56,7 @@ const My = () => {
   }, [account]);
 
   return (
-    <div className="w-[425px] min-h-screen  mx-auto poppins">
+    <div className="w-[425px] h-[100vh] mx-auto poppins">
       <div className="flex items-center justify-center text-3xl font-bold h-[80px] pt-1 bg-[#038BD5]">
         MY PAGE
       </div>
@@ -92,13 +92,14 @@ const My = () => {
             </ul>
           )}
           <div className="mt-4 text-2xl font-semibold">Purchased</div>
-          <ul className="flex flex-col gap-2 border rounded-md py-[2px]">
+          <ul className="flex flex-col gap-2 py-[2px]">
             <Purchased />
           </ul>
-          <ul className="flex flex-col gap-2 border rounded-md py-[2px]">
+          <ul className="flex flex-col gap-2 border-t-2 border-black py-[2px]">
             {purchasedList.map((purchase) => (
-              <li key={purchase.ID} className="px-4 py-2">
-                공연: {purchase.CONTENT} 구매일자: {purchase.PURCHASE_DATE}
+              <li key={purchase.ID} className="px-4 py-1 ">
+                <span> 공연: {purchase.CONTENT}</span>
+                <span className="ml-6">구매일자: {purchase.PURCHASE_DATE}</span>
               </li>
             ))}
           </ul>
