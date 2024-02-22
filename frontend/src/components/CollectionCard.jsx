@@ -5,74 +5,77 @@ import axios from "axios";
 import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
+import Web3 from "web3";
+import PostEventAbi from "../abis/PostEventAbi.json";
+import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
 
 const CollectionCard = () => {
   const [isModal, setIsModal] = useState(false);
-  const { account, preEventContract } = useOutletContext();
+  const { account } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
-  const [purchasedList, setPurchasedList] = useState([]);
+  // const [purchasedList, setPurchasedList] = useState([]);
+
+  const _web3 = new Web3(window.ethereum);
+  const postEventContract = new _web3.eth.Contract(
+    PostEventAbi,
+    POST_EVENT_CONTRACT
+  );
 
   const isModalOpen = () => {
     setIsModal(!isModal);
   };
 
-  const getPurchased = async () => {
-    const customerID = localStorage.getItem("customerID");
-    if (!customerID) return;
+  // const getPurchased = async () => {
+  //   const customerID = localStorage.getItem("customerID");
+  //   if (!customerID) return;
 
-    try {
-      const response = await fetch(
-        `http://localhost:3001/purchase_list?customerID=${customerID}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPurchasedList(data);
-        console.log("getPurchased: ", data);
-      } else {
-        throw new Error("Failed to fetch purchase list");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3001/purchase_list?customerID=${customerID}`
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setPurchasedList(data);
+  //       console.log("getPurchased: ", data);
+  //     } else {
+  //       throw new Error("Failed to fetch purchase list");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const getMyNft = async () => {
     try {
-      if (!preEventContract) return;
+      if (!postEventContract) return;
 
       // 내가 가진 티켓 개수
-      const balance = await preEventContract.methods.balanceOf(account).call();
+      const balance = await postEventContract.methods.balanceOf(account).call();
 
       let temp = [];
       if (balance > 0) {
         setIsLoading(true);
         setIsEmpty(false);
         for (let i = 0; i < Number(balance); i++) {
-          const tokenId = await preEventContract.methods
+          const tokenId = await postEventContract.methods
             .tokenOfOwnerByIndex(account, i)
             .call();
-          const isCanceled = await preEventContract.methods
-            .isCanceled(tokenId)
+
+          const metadataURI = await postEventContract.methods
+            .tokenURI(Number(tokenId))
             .call();
 
-          if (!isCanceled) {
-            const metadataURI = await preEventContract.methods
-              .tokenURI(Number(!isCanceled))
-              .call();
+          const response = await axios.get(metadataURI);
+          // const purchase = purchasedList.find((p) => p.ID === tokenId);
 
-            const response = await axios.get(metadataURI);
-            // const purchase = purchasedList.find((p) => p.ID === tokenId);
-
-            temp.push({ ...response.data, tokenId: Number(tokenId) });
-            // console.log(response.data);
-          }
+          temp.push({ ...response.data, tokenId: Number(tokenId) });
+          console.log(response.data);
         }
-
         setMetadataArray(temp);
         setIsLoading(false);
       }
@@ -83,16 +86,16 @@ const CollectionCard = () => {
     }
   };
 
-  useEffect(() => {
-    if (purchasedList) return;
-    getPurchased();
-  }, [purchasedList]);
+  // useEffect(() => {
+  //   if (purchasedList) return;
+  //   getPurchased();
+  // }, [purchasedList]);
 
   useEffect(() => {
-    if (!preEventContract) return;
+    if (!postEventContract) return;
 
     getMyNft();
-  }, [preEventContract]);
+  }, []);
 
   return (
     <div className="w-[425px] h-[90vh]">
