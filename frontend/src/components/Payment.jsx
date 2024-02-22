@@ -22,43 +22,52 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
 
     // Backend 서버 구동 중이면, 카카오페이 결제 진행
     const connectDB = localStorage.getItem("connectDB");
-    if(connectDB === "X") {
+
+    const isDevEnv = process.env.REACT_APP_DEV_ENV;
+
+    if( isDevEnv ){
+      // 카카오페이 PASS
+      console.log('DevEnv - Pass the KakaoPay function.')
       navigate("/payment_success");
     } else {
-
-      // 페이지 전환 전에 account 정보 localStorage에 저장
-      localStorage.setItem('backupAccount', account);
-
-      try {
-        // 백엔드 서버의 결제 준비 API 주소
-        const backendURL = "http://localhost:3001/payReady";
-
-        const total_amount = quantity * price; // 총 결제 금액 계산
-        const isMobile = checkIsMobile();
-
-        console.log("Payment/isMobile: ", isMobile);
-
-        // 결제 요청 정보
-        const paymentRequest = {
-          item_name: concertInfo.CONTENT,
-          total_amount: total_amount, // 총 결제 금액
-          quantity: quantity, // 상품 수량
-          is_mobile: isMobile, // 모바일이면 true, PC이면 false
-        };
-
-        // 결제 준비 요청
-        const response = await axios.post(backendURL, paymentRequest, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("KAKAO PAY RESPONSE: ", response);
-        const { next_redirect_url } = response.data;
-        window.location.href = next_redirect_url;
-      } catch (error) {
-        console.error(error);
+      if(connectDB === "X") {
+        navigate("/payment_success");
+      } else {
+  
+        // 페이지 전환 전에 account 정보 localStorage에 저장
+        localStorage.setItem('backupAccount', account);
+  
+        try {
+          // 백엔드 서버의 결제 준비 API 주소
+          const backendURL = `${process.env.REACT_APP_BACKEND_URL}/payReady`;
+  
+          const total_amount = quantity * price; // 총 결제 금액 계산
+          const isMobile = checkIsMobile();
+  
+          console.log("Payment/isMobile: ", isMobile);
+  
+          // 결제 요청 정보
+          const paymentRequest = {
+            item_name: concertInfo.CONTENT,
+            total_amount: total_amount, // 총 결제 금액
+            quantity: quantity, // 상품 수량
+            is_mobile: isMobile, // 모바일이면 true, PC이면 false
+          };
+  
+          // 결제 준비 요청
+          const response = await axios.post(backendURL, paymentRequest, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("KAKAO PAY RESPONSE: ", response);
+          const { next_redirect_url } = response.data;
+          window.location.href = next_redirect_url;
+        } catch (error) {
+          console.error(error);
+        }
       }
-    } 
+    }
   };
 
   return (

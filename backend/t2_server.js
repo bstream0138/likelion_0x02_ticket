@@ -78,26 +78,26 @@ const localDB = new sqlite3.Database(
             });
         }
     });
-
-//app.use(cors());
+    
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: ['http://happyticket.duckdns.org', 'http://localhost:3000']
 }));
+
 
 // KakaoPay의 paymentRequest 등 JSON 구조체 처리 위해 추가
 app.use(express.json());
 
 // Server 동작 확인용
-app.get('/ping', (req,res) => {
+app.get('/api/ping', (req,res) => {
     console.log('t2_server.js/ping: check connection');
     res.status(200).send('ping');
 });
 
-app.get('/oauth', authController.kakaoLogin);
-app.post('/payReady', payController.kakaoPayReady);
-app.post('/PayApprove', payController.kakaoPayApprove);
+app.get('/api/oauth', authController.kakaoLogin);
+app.post('/api/payReady', payController.kakaoPayReady);
+app.post('/api/PayApprove', payController.kakaoPayApprove);
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     const { loginFrom, account } = req.body;
 
     console.log('t2_server.js/login:', req.body);
@@ -130,7 +130,7 @@ app.post('/login', (req, res) => {
 
 });
 
-app.get('/purchase_list', (req, res) => {
+app.get('/api/purchase_list', (req, res) => {
     const customerID = req.query.customerID;
     if (!customerID) {
         return res.status(400).send('Customer ID is required');
@@ -161,7 +161,7 @@ app.get('/purchase_list', (req, res) => {
 
 });
 
-app.post('/purchase', (req, res) => {
+app.post('/api/purchase', (req, res) => {
     const { customerID, concertID} = req.body;
     const purchaseDate = new Date().toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
     
@@ -181,7 +181,7 @@ app.post('/purchase', (req, res) => {
 });
 
 
-app.post('/store_kinfo', (req, res) => {
+app.post('/api/store_kinfo', (req, res) => {
     const {loginFrom, userID, userName, privateKey, address} = req.body;
 
     localDB.get(
@@ -211,7 +211,7 @@ app.post('/store_kinfo', (req, res) => {
 
 });
 
-app.post('/refund', (req, res) => {
+app.post('/api/refund', (req, res) => {
     const {purchaseID} = req.body;
 
     if (!purchaseID) {
@@ -234,7 +234,7 @@ app.post('/refund', (req, res) => {
     });
 });
 
-app.post('/mint', (req, res) => {
+app.post('/api/mint', (req, res) => {
     const {purchaseID} = req.body;
 
     if (!purchaseID) {
@@ -257,8 +257,8 @@ app.post('/mint', (req, res) => {
     });
 });
 
-app.get('/concert', (req,res) => {
-    console.log('/concert')
+app.get('/api/concert', (req,res) => {
+    console.log('/api/concert')
     localDB.all('SELECT * FROM CONCERT', [], (err, rows) => {
         if(err) {
             throw err;

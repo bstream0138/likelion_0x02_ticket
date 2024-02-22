@@ -32,7 +32,8 @@ const Layout = () => {
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");
       try {
-        const response = await fetch("http://localhost:3001/concert");
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/concert`);      
+        console.log('fetchConcert: ', response);
         if (response.ok) {
           console.log("Success.");
           const data = await response.json();

@@ -14,9 +14,9 @@ exports.kakaoPayReady = async (req, res) => {
     try {
         // 상품명, 결제금액
         const { item_name, total_amount, is_mobile } = req.body;
-        const approval_url = "http://localhost:3000/payment_success";
-        const fail_url = "http://localhost:3000/payment_fail";
-        const cancel_url = "http://localhost:3000/payment_cancel";
+        const approval_url = `${process.env.FRONTEND_URL}/payment_success`;
+        const fail_url = `${process.env.FRONTEND_URL}/payment_fail`;
+        const cancel_url = `${process.env.FRONTEND_URL}/payment_cancel`;
 
         // 결제 준비 요청
         const response = await axios.post('https://open-api.kakaopay.com/online/v1/payment/ready', {
