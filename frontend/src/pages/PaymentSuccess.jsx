@@ -16,7 +16,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
 
     const insertPurchase = async () => {
       try {
-        const response = await axios.post("http://localhost:3001/purchase", {
+        const response = await axios.post`${process.env.REACT_APP_BACKEND_URL}/purchase`, {
           customerID,
           concertID,
         });

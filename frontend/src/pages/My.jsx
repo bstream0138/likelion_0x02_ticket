@@ -24,7 +24,7 @@ const My = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/purchase_list?customerID=${customerID}`
+        `${process.env.REACT_APP_BACKEND_URL}/purchase_list?customerID=${customerID}`
       );
       if (response.ok) {
         const data = await response.json();

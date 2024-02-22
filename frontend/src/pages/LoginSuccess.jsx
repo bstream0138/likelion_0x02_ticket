@@ -38,7 +38,7 @@ const LoginSuccess = () => {
         if(userID && userName) {
           CreateAddress(userID, userName)
           .then(({privateKey, address}) => {
-            fetch("http://localhost:3001/store_kinfo", {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/store_kinfo`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const LoginSuccess = () => {
         localStorage.setItem('account', account);
 
         try {
-          const response = await fetch('http://localhost:3001/login', {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

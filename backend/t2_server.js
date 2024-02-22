@@ -257,7 +257,7 @@ app.post('/mint', (req, res) => {
     });
 });
 
-app.get('/api/concert', (req,res) => {
+app.get('/concert', (req,res) => {
     console.log('/api/concert')
     localDB.all('SELECT * FROM CONCERT', [], (err, rows) => {
         if(err) {
