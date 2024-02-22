@@ -78,11 +78,11 @@ const localDB = new sqlite3.Database(
             });
         }
     });
-
-//app.use(cors());
+    
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: ['http://happyticket.duckdns.org', 'http://localhost:3000']
 }));
+
 
 // KakaoPay의 paymentRequest 등 JSON 구조체 처리 위해 추가
 app.use(express.json());
