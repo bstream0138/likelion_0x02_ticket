@@ -5,12 +5,15 @@ exports.kakaoPayReady = async (req, res) => {
     console.log('Pay request: ', req.body);
 
     const frontend = req.query.frontend;
+    // frontend 호출자에 따른 redirectURL 변경
+    const refererURL = req.headers.referer;
     let redirectURL;
-    if( frontend === 'dev') {
+    if( refererURL.includes('localhost')) {
         redirectURL = 'http://localhost:3000'
     } else {
         redirectURL = 'http://happyticket.duckdns.org'
     }
+    console.log('kakaoLogin/kakaoPayReady:', redirectURL);
 
     //온라인 단건 결제 
     // 1) 결제준비 API - 결제 상세정보를 서버에 전달하고, 결제 고유 번호(tid)를 받음
