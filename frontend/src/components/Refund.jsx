@@ -69,7 +69,7 @@ const Refund = ({ tokenId }) => {
   return (
     <div>
       <button
-        className="border-2 border-black rounded-md px-2 text-2xl hover:bg-[#AB161E] duration-100 hover:text-white"
+        className="border-2 border-black rounded-md px-2 text-2xl hover:bg-[#AB161E] duration-100 py-2 hover:text-white flex items-center justify-center"
         onClick={openModal}
       >
         환불하기

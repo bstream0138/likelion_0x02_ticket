@@ -65,12 +65,12 @@ const MyTicketCard = () => {
               .call();
 
             const response = await axios.get(metadataURI);
-            const purchase = purchasedList.find((p) => p.ID === tokenId);
+            // const purchase = purchasedList.find((p) => p.ID === tokenId);
 
             temp.push({
               ...response.data,
               tokenId: Number(tokenId),
-              purchaseId: purchase.ID,
+              // purchaseId: purchase.ID,
             });
             console.log(response.data);
           }

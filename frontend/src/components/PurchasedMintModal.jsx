@@ -170,7 +170,7 @@ const PurchasedMintModal = () => {
                           onMouseEnter={() => setHoverToHome(true)}
                           onMouseLeave={() => setHoverToHome(false)}
                         >
-                          돌아가기
+                          홈으로
                         </Link>
                       </li>
                     </ul>
