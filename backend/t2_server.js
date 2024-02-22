@@ -2,6 +2,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // express 서버 설정
 const express = require('express');
+const axios = require('axios');
+
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 require('dotenv').config();
