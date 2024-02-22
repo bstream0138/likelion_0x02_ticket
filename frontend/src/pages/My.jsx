@@ -67,8 +67,8 @@ const My = () => {
           <button
             className={
               hoverLogout
-                ? "border-2 mt-[13px] border-black py-1 px-[10px] rounded-full text-2xl"
-                : "border-2 mt-[10px] border-b-[5px] border-black  py-1 px-[10px] rounded-full text-2xl"
+                ? "border-2 mt-[13px] border-black py-1 px-[10px] rounded-full text-2xl ml-2"
+                : "border-2 mt-[10px] border-b-[5px] border-black  py-1 px-[10px] rounded-full text-2xl ml-2"
             }
             onClick={handleLogout}
             onMouseEnter={() => setHoverLogout(true)}

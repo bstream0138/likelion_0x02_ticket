@@ -16,7 +16,7 @@ const Header = ({ account }) => {
           />
         </Link>
         {account ? (
-          <div className="flex text-sm mr-6">
+          <div className="flex text-sm mr-12">
             <PiWalletBold className="text-lg" /> : {account.substring(0, 7)}
             ...{account.substring(account.length - 5)}
           </div>
@@ -25,8 +25,8 @@ const Header = ({ account }) => {
             to="/login"
             className={
               hoverMove
-                ? "flex items-center mr-6 mb-3 justify-end mt-[13px] border-2 border-[#bcbcbc] py-1 px-[10px] rounded-full text-black bg-white"
-                : "flex items-center mr-6 mb-3 justify-end mt-[10px] border-2 border-b-[5px] border-[#bcbcbc]  py-1 px-[10px] rounded-full text-black bg-white"
+                ? "flex items-center mr-12 mb-3 justify-end mt-[6px] border-2 border-[#bcbcbc] py-1 px-[10px] rounded-full text-black bg-white"
+                : "flex items-center mr-12 mb-3 justify-end mt-[3px] border-2 border-b-[5px] border-[#bcbcbc]  py-1 px-[10px] rounded-full text-black bg-white"
             }
             onMouseEnter={() => setHoverMove(true)}
             onMouseLeave={() => setHoverMove(false)}

@@ -18,6 +18,27 @@ const MyTicketCard = () => {
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [purchasedList, setPurchasedList] = useState([]);
+
+  const getPurchased = async () => {
+    const customerID = localStorage.getItem("customerID");
+    if (!customerID) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/purchase_list?customerID=${customerID}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setPurchasedList(data);
+        console.log("getPurchased: ", data);
+      } else {
+        throw new Error("Failed to fetch purchase list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getMyNft = async () => {
     try {
@@ -44,8 +65,13 @@ const MyTicketCard = () => {
               .call();
 
             const response = await axios.get(metadataURI);
+            const purchase = purchasedList.find((p) => p.ID === tokenId);
 
-            temp.push({ ...response.data, tokenId: Number(tokenId) });
+            temp.push({
+              ...response.data,
+              tokenId: Number(tokenId),
+              purchaseId: purchase.ID,
+            });
             console.log(response.data);
           }
         }
@@ -59,6 +85,11 @@ const MyTicketCard = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (purchasedList) return;
+    getPurchased();
+  }, [purchasedList]);
 
   useEffect(() => {
     if (!preEventContract) return;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import Payment from "../components/Payment";
-import { FaLongArrowAltLeft } from "react-icons/fa";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 
 const Ticketing = () => {
@@ -15,13 +14,7 @@ const Ticketing = () => {
 
   const [concertInfo, setConcertInfo] = useState(null);
 
-  const [hoverBack, setHoverBack] = useState(false);
   const [hoverTicketing, setHoverTicketing] = useState(false);
-
-  // for Kakao Login
-  const handleGoHome = () => {
-    navigate("/");
-  };
 
   const toggleOpen = () => {
     if (!account) {

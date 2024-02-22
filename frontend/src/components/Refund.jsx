@@ -112,3 +112,5 @@ const Refund = ({ tokenId }) => {
 };
 
 export default Refund;
+
+//MyTicketCard의 tokenId와 purchasedModal의 Purchas.ID를 어떻게 매칭시켜야하나
