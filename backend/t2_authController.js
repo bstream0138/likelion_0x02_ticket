@@ -13,13 +13,14 @@ exports.kakaoLogin = async (req, res) => {
   console.log("Kakao code: ", code);
 
   // frontend 호출자에 따른 redirectURL 변경
-  const frontend = req.query.frontend;
+  const refererURL = req.headers.referer;
   let redirectURL;
-  if( frontend === 'dev') {
+  if( refererURL.includes('localhost')) {
       redirectURL = 'http://localhost:3000'
   } else {
       redirectURL = 'http://happyticket.duckdns.org'
   }
+  console.log('kakaoLogin/redirectURL:', redirectURL);
   
   try {
     const auth_data = new URLSearchParams({
