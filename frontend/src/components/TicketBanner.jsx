@@ -23,7 +23,7 @@ const TicketBanner = () => {
   };
 
   const { concert } = useOutletContext();
-  console.log(concert);
+  // console.log(concert);
 
   const onClickNext = () => {
     slideRef.current.slickNext();
