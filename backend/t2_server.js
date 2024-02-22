@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // express 서버 설정
 const express = require('express');
 const cors = require('cors');
