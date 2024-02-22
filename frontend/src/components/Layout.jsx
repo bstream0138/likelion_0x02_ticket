@@ -12,7 +12,6 @@ import { sample_concert } from "../sample/sample_concert";
 import Header from "./Header";
 
 const Layout = () => {
-  
   const [account, setAccount] = useState("");
   const [web3, setWeb3] = useState(null);
   const [preEventContract, setPreEventContract] = useState();
@@ -20,10 +19,15 @@ const Layout = () => {
   // concert 정보
   const [concert, setConcert] = useState([]);
 
+  // 사용자의 실행환경이 PC인지 모바일인지 확인
+  const checkIsMobile = () => {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  };
+
   useEffect(() => {
     //localStorage 초기화
     //localStorage.clear();
-    
+
     // DB CONCERT 테이블에서 공연 정보 가져오기
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");
@@ -47,22 +51,41 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="border-2 w-[450px] mx-auto border-black">
-      <Header account={account} />
-      <Outlet
-        context={{
-          account,
-          setAccount,
-          preEventContract,
-          setPreEventContract,
-          web3,
-          setWeb3,
-          concert,
-        }}
-      />
-
-      <MenuBar />
-    </div>
+    <>
+      {checkIsMobile() ? (
+        <div className="border-2 min-w-screen min-h-screen mx-auto border-black">
+          <Header account={account} />
+          <Outlet
+            context={{
+              account,
+              setAccount,
+              preEventContract,
+              setPreEventContract,
+              web3,
+              setWeb3,
+              concert,
+            }}
+          />
+          <MenuBar />
+        </div>
+      ) : (
+        <div className="border-2 w-[450px] mx-auto border-black">
+          <Header account={account} />
+          <Outlet
+            context={{
+              account,
+              setAccount,
+              preEventContract,
+              setPreEventContract,
+              web3,
+              setWeb3,
+              concert,
+            }}
+          />
+          <MenuBar />
+        </div>
+      )}
+    </>
   );
 };
 

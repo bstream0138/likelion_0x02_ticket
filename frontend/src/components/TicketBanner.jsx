@@ -23,7 +23,7 @@ const TicketBanner = () => {
   };
 
   const { concert } = useOutletContext();
-  console.log(concert);
+  // console.log(concert);
 
   const onClickNext = () => {
     slideRef.current.slickNext();
@@ -34,7 +34,7 @@ const TicketBanner = () => {
   };
 
   return (
-    <div className="flex  flex-col header w-[350px] h-[360px] bg-blue-100">
+    <div className="flex flex-col header w-[350px] h-[360px] bg-blue-100">
       <Slider {...settings} ref={slideRef}>
         {concert.map((v, index) => (
           <Link

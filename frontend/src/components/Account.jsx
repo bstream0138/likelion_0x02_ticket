@@ -99,14 +99,14 @@ const Account = ({ setIsModal }) => {
 
       // const nonce = await web3.eth.getTransactionCount(account, "latest");
       const gasPrice = await web3.eth.getGasPrice();
-      console.log(gasPrice);
+      // console.log(gasPrice);
 
       const tokenId = Number(tokenIdTo);
 
       const tx = {
         from: account,
         to: PRE_EVENT_CONTRACT,
-        gas: 150254n,
+        gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods
           .transferFrom(account, testTo, tokenId)

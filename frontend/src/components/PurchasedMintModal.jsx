@@ -37,7 +37,7 @@ const PurchasedMintModal = () => {
       const tx = {
         from: mintAccount.address,
         to: PRE_EVENT_CONTRACT,
-        gas: 150254n,
+        gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods.mintTicket(account).encodeABI(),
         // value: "0x0",
@@ -46,7 +46,7 @@ const PurchasedMintModal = () => {
         type: "0x02",
       };
 
-      console.log("tx:", tx);
+      // console.log("tx:", tx);
 
       web3.eth
         .estimateGas(tx)
@@ -80,7 +80,7 @@ const PurchasedMintModal = () => {
       // setMetadata(response.data);
       setMetadataArray([response.data, ...metadataArray]);
 
-      console.log("metadata:", response.data);
+      // console.log("metadata:", response.data);
     } catch (error) {
       console.error(error);
       setIsLoading(false);

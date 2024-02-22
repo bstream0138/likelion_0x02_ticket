@@ -46,7 +46,7 @@ const MyTicketCard = () => {
             const response = await axios.get(metadataURI);
 
             temp.push({ ...response.data, tokenId: Number(tokenId) });
-            console.log(response.data);
+            // console.log(response.data);
           }
         }
 
@@ -67,7 +67,7 @@ const MyTicketCard = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[90vh] ">
+    <div className="w-[425px] h-[90vh]">
       <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
