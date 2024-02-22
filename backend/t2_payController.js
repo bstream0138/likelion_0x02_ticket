@@ -15,10 +15,12 @@ exports.kakaoPayReady = async (req, res) => {
     }
     console.log('kakaoLogin/kakaoPayReady:', redirectURL);
 
+    /*
     const httpsAgent = new https.Agent({
         rejectUnauthorized: false,
 
     });
+    */
 
 
     //온라인 단건 결제 
@@ -49,7 +51,7 @@ exports.kakaoPayReady = async (req, res) => {
             "fail_url": fail_url,
             "cancel_url": cancel_url,
         }, {
-            httpsAgent,
+            //httpsAgent,
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
                 'Content-type': 'application/json'
