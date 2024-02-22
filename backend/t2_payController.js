@@ -1,5 +1,11 @@
 const axios = require('axios');
 const https = require('https');
+const crypto = require('crypto');
+
+const agent = new https.Agent({
+    rejectUnauthorized: false,
+    secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+});
 
 exports.kakaoPayReady = async (req, res) => {
 
@@ -14,14 +20,6 @@ exports.kakaoPayReady = async (req, res) => {
         redirectURL = 'https://happyticket.duckdns.org'
     }
     console.log('kakaoLogin/kakaoPayReady:', redirectURL);
-
-    /*
-    const httpsAgent = new https.Agent({
-        rejectUnauthorized: false,
-
-    });
-    */
-
 
     //온라인 단건 결제 
     // 1) 결제준비 API - 결제 상세정보를 서버에 전달하고, 결제 고유 번호(tid)를 받음
@@ -51,7 +49,7 @@ exports.kakaoPayReady = async (req, res) => {
             "fail_url": fail_url,
             "cancel_url": cancel_url,
         }, {
-            //httpsAgent,
+            httpsAgent: agent,
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
                 'Content-type': 'application/json'
@@ -70,6 +68,7 @@ exports.kakaoPayReady = async (req, res) => {
     }
 };
 
+/*
 exports.kakaoPayApprove = async (req, res) => {
 
     try {
@@ -98,4 +97,4 @@ exports.kakaoPayApprove = async (req, res) => {
         res.status(500).send('Internel Server Error');
     }
 };
-
+*/

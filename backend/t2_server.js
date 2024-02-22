@@ -1,4 +1,4 @@
-//process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // express 서버 설정
 const express = require('express');
@@ -99,7 +99,7 @@ app.get('/api/ping', (req,res) => {
 
 app.get('/api/oauth', authController.kakaoLogin);
 app.post('/api/payReady', payController.kakaoPayReady);
-app.post('/api/PayApprove', payController.kakaoPayApprove);
+//app.post('/api/payApprove', payController.kakaoPayApprove);
 
 app.post('/api/login', (req, res) => {
     const { loginFrom, account } = req.body;
