@@ -13,7 +13,7 @@ exports.kakaoLogin = async (req, res) => {
   console.log("Kakao code: ", code);
 
   // frontend 호출자에 따른 redirectURL 변경
-  const refererURL = req.headers.referer;
+  const refererURL = req.headers.referer || '';
   let redirectURL;
   if( refererURL.includes('localhost')) {
       redirectURL = 'http://localhost:3000'
