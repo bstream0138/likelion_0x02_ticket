@@ -128,7 +128,7 @@ const MyTicketCard = () => {
               <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
                 <ul className="mt-8 mr-3">
-                  Ticket ID : {v.tokenId}
+                  티켓 번호 : {v.tokenId}
                   <div className="mt-12 ml-2 px-5">
                     <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
                       <span className="mr-[-2px]">
