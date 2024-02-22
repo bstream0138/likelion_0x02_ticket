@@ -11,7 +11,7 @@ exports.kakaoPayReady = async (req, res) => {
     if( refererURL.includes('localhost')) {
         redirectURL = 'http://localhost:3000'
     } else {
-        redirectURL = 'http://happyticket.duckdns.org'
+        redirectURL = 'https://happyticket.duckdns.org'
     }
     console.log('kakaoLogin/kakaoPayReady:', redirectURL);
 

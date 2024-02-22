@@ -84,7 +84,7 @@ const localDB = new sqlite3.Database(
     });
     
 app.use(cors({
-    origin: ['http://happyticket.duckdns.org', 'http://localhost:3000']
+    origin: ['https://happyticket.duckdns.org', 'http://localhost:3000']
 }));
 
 
@@ -273,5 +273,5 @@ app.get('/api/concert', (req,res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Sample app listening at http://localhost:${port}`);
+    console.log(`Sample app listening at PORT:${port}`);
 });
