@@ -39,7 +39,7 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
   
         try {
           // 백엔드 서버의 결제 준비 API 주소
-          const backendURL = `${process.env.REACT_APP_BACKEND_URL}/payReady`;
+          const backendURL = `${process.env.REACT_APP_BACKEND_URL}/payReady?frontend=dev`;
   
           const total_amount = quantity * price; // 총 결제 금액 계산
           const isMobile = checkIsMobile();

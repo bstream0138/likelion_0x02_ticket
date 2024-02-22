@@ -4,6 +4,14 @@ exports.kakaoPayReady = async (req, res) => {
 
     console.log('Pay request: ', req.body);
 
+    const frontend = req.query.frontend;
+    let redirectURL;
+    if( frontend === 'dev') {
+        redirectURL = 'http://localhost:3000'
+    } else {
+        redirectURL = 'http://happyticket.duckdns.org'
+    }
+
     //온라인 단건 결제 
     // 1) 결제준비 API - 결제 상세정보를 서버에 전달하고, 결제 고유 번호(tid)를 받음
     // 2) 결제요청 API - 결제 준비 API 응답으로 받은 Redirect URL 중 접속 환경에 맞는 URL로 redirect
@@ -14,9 +22,9 @@ exports.kakaoPayReady = async (req, res) => {
     try {
         // 상품명, 결제금액
         const { item_name, total_amount, is_mobile } = req.body;
-        const approval_url = `${process.env.FRONTEND_URL}/payment_success`;
-        const fail_url = `${process.env.FRONTEND_URL}/payment_fail`;
-        const cancel_url = `${process.env.FRONTEND_URL}/payment_cancel`;
+        const approval_url = `${redirectURL}/payment_success`;
+        const fail_url = `${redirectURL}/payment_fail`;
+        const cancel_url = `${redirectURL}/payment_cancel`;
 
         // 결제 준비 요청
         const response = await axios.post('https://open-api.kakaopay.com/online/v1/payment/ready', {

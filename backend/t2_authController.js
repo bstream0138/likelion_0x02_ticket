@@ -11,6 +11,16 @@ const axios = require("axios");
 exports.kakaoLogin = async (req, res) => {
   const code = req.query.code;
   console.log("Kakao code: ", code);
+
+  // frontend 호출자에 따른 redirectURL 변경
+  const frontend = req.query.frontend;
+  let redirectURL;
+  if( frontend === 'dev') {
+      redirectURL = 'http://localhost:3000'
+  } else {
+      redirectURL = 'http://happyticket.duckdns.org'
+  }
+  
   try {
     const auth_data = new URLSearchParams({
       grant_type: "authorization_code",
@@ -55,7 +65,7 @@ exports.kakaoLogin = async (req, res) => {
       profile: userInfoResponse.data.properties.profile_image,
     };
     res.redirect(
-      `${process.env.FRONTEND_URL}/login_success?login_from=K&userID=${userInfo.id}&userName=${userInfo.name}&userImage=${userInfo.profile}`
+      `${redirectURL}/login_success?login_from=K&userID=${userInfo.id}&userName=${userInfo.name}&userImage=${userInfo.profile}`
     );
   } catch (error) {
     console.error(error);
