@@ -4,8 +4,10 @@ import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 
+import Web3 from "web3";
+
 const Mint = () => {
-  const { account, preEventContract, web3 } = useOutletContext();
+  const { preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +20,13 @@ const Mint = () => {
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
+  const web3 = new Web3(window.ethereum);
+  const account = localStorage.getItem('backupAccount');
+  console.log("Mint/account(2): ", account);
+  console.log("Mint/web3(2): ", web3);
+  
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-  // console.log(mintAccount);
+
 
   const onClickMint = async () => {
     try {

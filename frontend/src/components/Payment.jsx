@@ -8,7 +8,7 @@ const checkIsMobile = () => {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 };
 
-const Payment = ({ toggleOpen, concertInfo }) => {
+const Payment = ({ toggleOpen, account, concertInfo }) => {
   const navigate = useNavigate();
 
   // 아래는 카카오페이 테스트를 위한 샘플 상품 코드
@@ -19,9 +19,16 @@ const Payment = ({ toggleOpen, concertInfo }) => {
     // 카카오로그인이면 카카오페이로 이동, 메타마스크 로그인이면 바로 결제 성공
     const loginFrom = localStorage.getItem("loginFrom");
     localStorage.setItem("concertID", concertInfo.ID);
-    localStorage.setItem("paymentAttempt", 1);
 
-    if (loginFrom === "KK") {
+    // Backend 서버 구동 중이면, 카카오페이 결제 진행
+    const connectDB = localStorage.getItem("connectDB");
+    if(connectDB === "X") {
+      navigate("/payment_success");
+    } else {
+
+      // 페이지 전환 전에 account 정보 localStorage에 저장
+      localStorage.setItem('backupAccount', account);
+
       try {
         // 백엔드 서버의 결제 준비 API 주소
         const backendURL = "http://localhost:3001/payReady";
@@ -51,14 +58,7 @@ const Payment = ({ toggleOpen, concertInfo }) => {
       } catch (error) {
         console.error(error);
       }
-    } else if (loginFrom === "K") {
-      navigate("/payment_success");
-    } else if (loginFrom === "M") {
-      navigate("/payment_success");
-    } else {
-      alert("You need to login");
-      navigate("/login");
-    }
+    } 
   };
 
   return (

@@ -5,6 +5,9 @@ import Account from "../components/Account";
 import Purchased from "../components/Purchased";
 import PurchasedModal from "../components/PurchasedModal";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const My = () => {
   const { account, setAccount, preEventContract } = useOutletContext();
   const navigate = useNavigate();
@@ -62,6 +65,7 @@ const My = () => {
 
   return (
     <div className="w-[425px] h-[80vh] mx-auto poppins overflow-y-auto">
+      <ToastContainer toastStyle={{ backgroundColor: "crimson" }} />
       <div className="px-4 mt-4">
         <ul className="flex justify-between items-center">
           <button

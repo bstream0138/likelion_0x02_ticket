@@ -1,10 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
+
 import Mint from "../components/Mint";
+import Web3 from "web3";
 
 const PaymentSuccess = ({ toggleOpen }) => {
+  const { account, setAccount, preEventContract, web3, setWeb3 } = useOutletContext();
+  
   useEffect(() => {
     // 결제 성공 시, localStorage의 customerID와 concertID로 구매 정보 생성
     const customerID = localStorage.getItem("customerID");
@@ -32,6 +36,13 @@ const PaymentSuccess = ({ toggleOpen }) => {
     if (customerID && concertID) {
       insertPurchase();
     }
+
+
+    const _web3 = new Web3(window.ethereum);
+    setWeb3(_web3);
+    const _account = localStorage.getItem('backupAccount');
+    setAccount(_account);
+
   }, []);
 
   return (
