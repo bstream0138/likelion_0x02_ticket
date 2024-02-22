@@ -63,9 +63,7 @@ const TicketBanner = () => {
           </Link>
         ))}
       </Slider>
-      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-10">
-        {" "}
-      </div>
+      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-20"></div>
       <div className="mt-4 self-center flex gap-3">
         <button
           onMouseEnter={() => setHoverPrev(true)}

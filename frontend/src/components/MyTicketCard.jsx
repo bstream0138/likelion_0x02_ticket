@@ -11,14 +11,15 @@ import { ImSpinner8 } from "react-icons/im";
 
 const MyTicketCard = () => {
   const [isModal, setIsModal] = useState(false);
-  const isModalOpen = () => {
-    setIsModal(!isModal);
-  };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [purchasedList, setPurchasedList] = useState([]);
+
+  const isModalOpen = () => {
+    setIsModal(!isModal);
+  };
 
   const getPurchased = async () => {
     const customerID = localStorage.getItem("customerID");
@@ -126,20 +127,28 @@ const MyTicketCard = () => {
             >
               <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
-                <ul className="mt-5">
-                  TokenID : {v.tokenId}
-                  <div className="mt-5 px-5">
-                    <ul className="text-sm font-semibold flex items-center gap-1 ">
-                      <CiMicrophoneOn />
-                      IU
+                <ul className="mt-8 mr-3">
+                  Ticket ID : {v.tokenId}
+                  <div className="mt-12 ml-2 px-5">
+                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+                      <span className="mr-[-2px]">
+                        <CiMicrophoneOn />
+                      </span>
+                      <span className="mr-[10px]">IU</span>
                     </ul>
-                    <ul className="text-sm mt-[2px] flex items-center gap-1">
-                      <CiLocationOn />
-                      장소
+                    <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                      <span>
+                        <CiLocationOn />
+                      </span>
+                      <span className="text-xs ">잠실종합운동장</span>
                     </ul>
-                    <ul className="text-sm flex items-center gap-1">
-                      <CiCalendar />
-                      2024.02.29 ~ 2024.03.02
+                    <ul className="text-sm flex items-center font-light gap-1">
+                      <span className="ml-[1px]">
+                        <CiCalendar />
+                      </span>
+                      <span className="text-xs mt-[1px]">
+                        2024.02.29 - 2024.03.02
+                      </span>
                     </ul>
                   </div>
                 </ul>

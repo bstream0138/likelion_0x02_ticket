@@ -141,7 +141,7 @@ const Account = ({ setIsModal }) => {
 
   return (
     <>
-      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black">
+      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black ">
         <button className="fixed right-2" onClick={() => setIsModal(false)}>
           x
         </button>
@@ -237,7 +237,7 @@ const Account = ({ setIsModal }) => {
           )}
         </div>
       </div>
-      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 -z-40"></div>
+      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-40"></div>
     </>
   );
 };

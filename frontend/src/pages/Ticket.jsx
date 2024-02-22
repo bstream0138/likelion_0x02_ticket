@@ -50,7 +50,7 @@ const Ticket = () => {
               : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
           }
         >
-          (Collection)
+          Collection
         </button>
       </ul>
       {isSelect === "A" && <MyTicketCard />}
