@@ -4,8 +4,8 @@ import { PiHashBold } from "react-icons/pi";
 
 const Home = () => {
   return (
-    <div className="w-[447px] h-[80vh] mx-auto z-10 poppins overflow-y-auto">
-      <div className="w-[350px] h-[280px] ml-[36.5px] rounded-md mt-12">
+    <div className="min-w-screen min-h-screen mx-auto z-10 poppins overflow-y-auto">
+      <div className="w-[350px] h-[280px] mx-auto rounded-md mt-12">
         <TicketBanner />
       </div>
       <div className="mt-[162px] border-t-2 border-black"></div>

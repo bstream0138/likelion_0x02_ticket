@@ -59,8 +59,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-[80vh] flex-col items-center justify-center space-y-4">
-      <div className="text-center mt-12">
+    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen space-y-4">
+      <div className="text-center">
         <a
           href={KAKAO_AUTH_URL}
           className="flex inline-block w-48 bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg"
@@ -69,7 +69,7 @@ const LoginPage = () => {
           Kakao
         </a>
       </div>
-      <div className="text-center mt-12">
+      <div className="text-center">
         <button
           onClick={connectMetamask}
           className="flex inline-block w-48 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg"

@@ -34,14 +34,14 @@ const Ticketing = () => {
   }, [index, concert, navigate]);
 
   return (
-    <div className="w-[425px] h-[80vh]  mx-auto overflow-y-auto">
+    <div className="min-h-screen min-w-screen mx-auto overflow-y-auto">
       {/*예매하기 버튼 화면 현재 concertInfo는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertInfo ? (
         <div key={concertInfo.ID}>
           <div className="header">
-            <ul className="w-[425px] overflow-hidden h-[200px] object-contain header h ">
+            <ul className="min-w-screen h-[200px] overflow-hidden object-contain header">
               <img
-                className=" opacity-60 blur-sm "
+                className="opacity-60 blur-sm"
                 src={concertInfo.IMAGE}
                 alt=""
               />

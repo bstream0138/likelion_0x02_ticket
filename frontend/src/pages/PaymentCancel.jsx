@@ -9,7 +9,7 @@ const PaymentCancel = ({ toggleOpen }) => {
   localStorage.removeItem("concertID");
 
   return (
-    <div className="w-[425px] h-[80vh]  mx-auto ">
+    <div className="min-h-screen min-w-screen mx-auto">
       <div className="pt-10">
         <img src="fail-border.png" alt="" />
         <ul className="w-[425px] h-[370px] flex items-center justify-center flex-col gap-12  bg-[#AB161E]">

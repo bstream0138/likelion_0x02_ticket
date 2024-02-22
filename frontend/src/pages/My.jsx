@@ -5,8 +5,8 @@ import Account from "../components/Account";
 import Purchased from "../components/Purchased";
 import PurchasedModal from "../components/PurchasedModal";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const My = () => {
   const { account, setAccount, preEventContract } = useOutletContext();
@@ -64,7 +64,7 @@ const My = () => {
   }, [account]);
 
   return (
-    <div className="w-[425px] h-[80vh] mx-auto poppins overflow-y-auto">
+    <div className="min-h-screen min-w-screen mx-auto px-2 poppins overflow-y-auto">
       <ToastContainer toastStyle={{ backgroundColor: "crimson" }} />
       <div className="px-4 mt-4">
         <ul className="flex justify-between items-center">
@@ -103,11 +103,11 @@ const My = () => {
             {purchasedList.map((purchase) => (
               <button
                 key={purchase.ID}
-                className="px-4 py-1 flex hover:bg-[#919191] hover:text-white duration-100 "
+                className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
                 onClick={onClickModalPurchased}
               >
-                <span className="truncate w-1/3 ml-5">{purchase.CONTENT}</span>
-                <span className="w-2/3 ml-10">{purchase.PURCHASE_DATE}</span>
+                <span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
+                <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
               </button>
             ))}
             {isModalPurchased && (

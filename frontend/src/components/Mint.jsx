@@ -21,12 +21,11 @@ const Mint = () => {
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
   const web3 = new Web3(window.ethereum);
-  const account = localStorage.getItem('backupAccount');
-  console.log("Mint/account(2): ", account);
-  console.log("Mint/web3(2): ", web3);
-  
-  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
+  const account = localStorage.getItem("backupAccount");
+  // console.log("Mint/account(2): ", account);
+  // console.log("Mint/web3(2): ", web3);
 
+  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
 
   const onClickMint = async () => {
     try {
@@ -95,7 +94,7 @@ const Mint = () => {
   };
 
   return (
-    <div className="w-[425px] h-[290px]  bg-[#038BD5]  ">
+    <div className="w-[425px] h-[290px] bg-[#038BD5]">
       <ul className="flex items-center justify-center h-full gap-4 flex-col">
         <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?
 티켓 민팅 후 환불이 불가능합니다

@@ -13,7 +13,7 @@ const Ticket = () => {
 
   useEffect(() => {
     if (!preEventContract) {
-      console.log("contract :", preEventContract);
+      // console.log("contract :", preEventContract);
       return;
     }
   }, [preEventContract]);
@@ -26,7 +26,7 @@ const Ticket = () => {
   }, [account]);
 
   return (
-    <div className="w-[447px] h-[80vh] mx-auto poppins  overflow-y-auto">
+    <div className="min-h-screen min-w-screen mx-auto poppins overflow-y-auto">
       <ul className="grid grid-cols-2 justify-items-center py-3 mt-4">
         <button
           className={
