@@ -22,7 +22,12 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
 
     // Backend 서버 구동 중이면, 카카오페이 결제 진행
     const connectDB = localStorage.getItem("connectDB");
-    if(connectDB === "X" || connectDB === "M" ) {
+
+    // 카카오페이 PASS
+    navigate("/payment_success");
+
+    /*
+    if(connectDB === "X") {
       navigate("/payment_success");
     } else {
 
@@ -58,7 +63,8 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
       } catch (error) {
         console.error(error);
       }
-    } 
+    }
+    */ 
   };
 
   return (
