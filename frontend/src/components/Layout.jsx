@@ -28,7 +28,7 @@ const Layout = () => {
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");
       try {
-        const response = await fetch("http://localhost:3001/concert");
+        const response = await fetch("http://localhost:3001/api/concert");
         if (response.ok) {
           console.log("Success.");
           const data = await response.json();
