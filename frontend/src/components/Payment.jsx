@@ -64,7 +64,8 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
         console.error(error);
       }
     }
-    */ 
+    */
+
   };
 
   return (
