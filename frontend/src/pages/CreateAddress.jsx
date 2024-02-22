@@ -11,7 +11,7 @@ const CreateAddress = ({ userInfo }) => {
   const addressGenerate = async () => {
     const web3 = new Web3("http://127.0.0.1:7545");
 
-    console.log(web3.currentProvider);
+    // console.log(web3.currentProvider);
 
     const privateKey = web3.utils.sha3(timeStamp + userInfo.userID);
     //keccak 256으로 UID와 generate한 시간으로 생성
@@ -19,8 +19,8 @@ const CreateAddress = ({ userInfo }) => {
 
     const addressFromPrivateKey =
       web3.eth.accounts.privateKeyToAccount(privateKey);
-    console.log("web3.eth.accounts: ", web3.eth.accounts);
-    console.log("addressFromPrivateKey: ", addressFromPrivateKey);
+    // console.log("web3.eth.accounts: ", web3.eth.accounts);
+    // console.log("addressFromPrivateKey: ", addressFromPrivateKey);
     setGeneratedAccount(addressFromPrivateKey);
   };
 

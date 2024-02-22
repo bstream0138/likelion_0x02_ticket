@@ -99,14 +99,14 @@ const Account = ({ setIsModal }) => {
 
       // const nonce = await web3.eth.getTransactionCount(account, "latest");
       const gasPrice = await web3.eth.getGasPrice();
-      console.log(gasPrice);
+      // console.log(gasPrice);
 
       const tokenId = Number(tokenIdTo);
 
       const tx = {
         from: account,
         to: PRE_EVENT_CONTRACT,
-        gas: 150254n,
+        gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods
           .transferFrom(account, testTo, tokenId)
@@ -141,7 +141,7 @@ const Account = ({ setIsModal }) => {
 
   return (
     <>
-      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black">
+      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black ">
         <button className="fixed right-2" onClick={() => setIsModal(false)}>
           x
         </button>
@@ -237,7 +237,7 @@ const Account = ({ setIsModal }) => {
           )}
         </div>
       </div>
-      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 -z-40"></div>
+      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-40"></div>
     </>
   );
 };

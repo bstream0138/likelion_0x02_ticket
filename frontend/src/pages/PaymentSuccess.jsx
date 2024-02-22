@@ -7,8 +7,9 @@ import Mint from "../components/Mint";
 import Web3 from "web3";
 
 const PaymentSuccess = ({ toggleOpen }) => {
-  const { account, setAccount, preEventContract, web3, setWeb3 } = useOutletContext();
-  
+  const { account, setAccount, preEventContract, web3, setWeb3 } =
+    useOutletContext();
+
   useEffect(() => {
     // 결제 성공 시, localStorage의 customerID와 concertID로 구매 정보 생성
     const customerID = localStorage.getItem("customerID");
@@ -30,29 +31,27 @@ const PaymentSuccess = ({ toggleOpen }) => {
       }
     };
 
-    console.log("PaymentSuccess/useEffect/customerID: ", customerID);
-    console.log("PaymentSuccess/useEffect/concertID: ", concertID);
+    // console.log("PaymentSuccess/useEffect/customerID: ", customerID);
+    // console.log("PaymentSuccess/useEffect/concertID: ", concertID);
 
     if (customerID && concertID) {
       insertPurchase();
     }
 
-
     const _web3 = new Web3(window.ethereum);
     setWeb3(_web3);
-    const _account = localStorage.getItem('backupAccount');
+    const _account = localStorage.getItem("backupAccount");
     setAccount(_account);
-
   }, []);
 
   return (
-    <div className="w-[425px] h-[80vh]  mx-auto ">
+    <div className="min-h-screen min-w-screen mx-auto">
       <div className="pt-10">
         <img src="ticket-border.png" alt="" />
         <ul className="w-[425px] h-[120px] flex items-center justify-center  bg-[#038BD5]">
           <p className="text-4xl">결제 성공 !!</p>
         </ul>
-        <Mint />
+        {/* <Mint /> */}
       </div>
     </div>
   );

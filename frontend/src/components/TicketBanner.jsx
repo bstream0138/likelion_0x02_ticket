@@ -23,7 +23,7 @@ const TicketBanner = () => {
   };
 
   const { concert } = useOutletContext();
-  console.log(concert);
+  // console.log(concert);
 
   const onClickNext = () => {
     slideRef.current.slickNext();
@@ -34,7 +34,7 @@ const TicketBanner = () => {
   };
 
   return (
-    <div className="flex  flex-col header w-[350px] h-[360px] bg-blue-100">
+    <div className="flex flex-col header w-[350px] h-[360px] bg-blue-100">
       <Slider {...settings} ref={slideRef}>
         {concert.map((v, index) => (
           <Link
@@ -63,9 +63,7 @@ const TicketBanner = () => {
           </Link>
         ))}
       </Slider>
-      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-10">
-        {" "}
-      </div>
+      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-20"></div>
       <div className="mt-4 self-center flex gap-3">
         <button
           onMouseEnter={() => setHoverPrev(true)}

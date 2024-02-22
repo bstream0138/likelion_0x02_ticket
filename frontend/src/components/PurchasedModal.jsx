@@ -20,11 +20,7 @@ const PurchasedModal = ({
         <ul className="flex gap-4">
           <PurchasedMintModal />
           {purchasedList.map((purchase) => (
-            <Refund
-              key={purchase.ID}
-              PURCHASE_DATE={purchase.PURCHASE_DATE}
-              CONTENT={purchase.CONTENT}
-            />
+            <Refund key={purchase.ID} />
           ))}
         </ul>
         <div className="w-[300px] h-[10px]"></div>

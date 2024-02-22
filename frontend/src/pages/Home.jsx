@@ -4,12 +4,12 @@ import { PiHashBold } from "react-icons/pi";
 
 const Home = () => {
   return (
-    <div className="w-[447px] h-[80vh] mx-auto z-10 poppins overflow-y-auto">
-      <div className="w-[350px] h-[280px] ml-[36.5px] rounded-md mt-12">
+    <div className="min-w-screen min-h-screen mx-auto  poppins overflow-y-auto">
+      <div className="w-[350px] h-[280px] mx-auto rounded-md mt-12">
         <TicketBanner />
       </div>
       <div className="mt-[162px] border-t-2 border-black"></div>
-      <ul className="flex items-center mt-4 mx-10 gap-3">
+      <ul className="flex items-center mt-4 mx-12">
         <Link
           to="/ticketing/1"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
@@ -33,7 +33,7 @@ const Home = () => {
           박효신
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 ">
+      <ul className="flex items-center mt-4 mx-auto px-2  ">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -59,7 +59,7 @@ const Home = () => {
           aespa
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3 ">
+      <ul className="flex items-center mt-4 mx-auto ">
         <button className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -67,7 +67,7 @@ const Home = () => {
           BLACKPINK IN YOUR AREA
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3">
+      <ul className="flex items-center mt-4 mx-auto px-3">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -93,7 +93,7 @@ const Home = () => {
           Drama
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto gap-3">
+      <ul className="flex items-center mt-4 mx-auto px-4">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />

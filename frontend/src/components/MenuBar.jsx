@@ -10,7 +10,7 @@ const MenuBar = () => {
           src="bottom-border.png"
           alt="bottom"
         />
-        <ul className="flex bg-[#FBAE16] items-center h-full  justify-between px-6">
+        <ul className="flex bg-[#FBAE16] items-center h-full  justify-between px-6 pt-1">
           <ul className="">
             <Link
               className="hover:text-white duration-150 flex flex-col justify-center items-center"

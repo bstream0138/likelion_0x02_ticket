@@ -11,13 +11,35 @@ import { ImSpinner8 } from "react-icons/im";
 
 const MyTicketCard = () => {
   const [isModal, setIsModal] = useState(false);
-  const isModalOpen = () => {
-    setIsModal(!isModal);
-  };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [purchasedList, setPurchasedList] = useState([]);
+
+  const isModalOpen = () => {
+    setIsModal(!isModal);
+  };
+
+  const getPurchased = async () => {
+    const customerID = localStorage.getItem("customerID");
+    if (!customerID) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/purchase_list?customerID=${customerID}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setPurchasedList(data);
+        console.log("getPurchased: ", data);
+      } else {
+        throw new Error("Failed to fetch purchase list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getMyNft = async () => {
     try {
@@ -44,9 +66,10 @@ const MyTicketCard = () => {
               .call();
 
             const response = await axios.get(metadataURI);
+            // const purchase = purchasedList.find((p) => p.ID === tokenId);
 
             temp.push({ ...response.data, tokenId: Number(tokenId) });
-            console.log(response.data);
+            // console.log(response.data);
           }
         }
 
@@ -61,13 +84,18 @@ const MyTicketCard = () => {
   };
 
   useEffect(() => {
+    if (purchasedList) return;
+    getPurchased();
+  }, [purchasedList]);
+
+  useEffect(() => {
     if (!preEventContract) return;
 
     getMyNft();
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[90vh] ">
+    <div className="w-[425px] h-[90vh]">
       <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
@@ -99,20 +127,28 @@ const MyTicketCard = () => {
             >
               <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
-                <ul className="mt-5">
-                  TokenID : {v.tokenId}
-                  <div className="mt-5 px-5">
-                    <ul className="text-sm font-semibold flex items-center gap-1 ">
-                      <CiMicrophoneOn />
-                      IU
+                <ul className="mt-8 mr-3">
+                  티켓 번호 : {v.tokenId}
+                  <div className="mt-12 ml-2 px-5">
+                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+                      <span className="mr-[-2px]">
+                        <CiMicrophoneOn />
+                      </span>
+                      <span className="mr-[10px]">IU</span>
                     </ul>
-                    <ul className="text-sm mt-[2px] flex items-center gap-1">
-                      <CiLocationOn />
-                      장소
+                    <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                      <span>
+                        <CiLocationOn />
+                      </span>
+                      <span className="text-xs ">잠실종합운동장</span>
                     </ul>
-                    <ul className="text-sm flex items-center gap-1">
-                      <CiCalendar />
-                      2024.02.29 ~ 2024.03.02
+                    <ul className="text-sm flex items-center font-light gap-1">
+                      <span className="ml-[1px]">
+                        <CiCalendar />
+                      </span>
+                      <span className="text-xs mt-[1px]">
+                        2024.02.29 - 2024.03.02
+                      </span>
                     </ul>
                   </div>
                 </ul>
