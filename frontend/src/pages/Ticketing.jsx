@@ -6,7 +6,7 @@ import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 const Ticketing = () => {
   const { index } = useParams();
 
-  const { userInfo, account, concert } = useOutletContext();
+  const { account, concert } = useOutletContext();
 
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
@@ -15,6 +15,7 @@ const Ticketing = () => {
 
   const [hoverTicketing, setHoverTicketing] = useState(false);
 
+  //티켓 예매 버튼
   const toggleOpen = () => {
     if (!account) {
       alert("You need to login");
@@ -23,6 +24,7 @@ const Ticketing = () => {
     setIsModal(!isModal);
   };
 
+  //티켓 배너의 이미지와 예매 페이지 매칭
   useEffect(() => {
     const idx = parseInt(index, 10);
 

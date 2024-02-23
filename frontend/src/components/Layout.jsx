@@ -32,8 +32,10 @@ const Layout = () => {
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/concert`);      
-        console.log('fetchConcert: ', response);
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/concert`
+        );
+        console.log("fetchConcert: ", response);
         if (response.ok) {
           console.log("Success.");
           const data = await response.json();
@@ -51,6 +53,7 @@ const Layout = () => {
     fetchConcert();
   }, []);
 
+  //모바일이면 미니멈스크린 PC의경우 픽셀고정
   return (
     <>
       {checkIsMobile() ? (

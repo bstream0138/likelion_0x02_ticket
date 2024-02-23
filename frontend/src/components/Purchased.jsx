@@ -9,7 +9,7 @@ const Purchased = () => {
 
     await preEventContract.methods.isCanceled(tokenId).call();
   };
-
+  //purchase 상단 메뉴바
   return (
     <ul className="flex flex-col gap-2 mb-2 border-t-2 border-black py-[2px]">
       <ul className="flex items-center justify-between mt-4">

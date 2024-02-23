@@ -5,6 +5,7 @@ import axios from "axios";
 import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
+import MyTicketCardModal from "./MyTicketCardModal";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
@@ -96,7 +97,9 @@ const MyTicketCard = () => {
 
   return (
     <div className="w-[425px] h-[90vh]">
-      <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
+      <div className="w-[425px]  flex items-center ml-2 justify-center text-center text-3xl mt-2 py-2 border-b-2 border-b-black">
+        MY TICKET
+      </div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
           <div className="flex items-center justify-start text-3xl flex-col mt-20">
@@ -127,9 +130,9 @@ const MyTicketCard = () => {
             >
               <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
-                <ul className="mt-8 mr-3">
+                <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}
-                  <div className="mt-12 ml-2 px-5">
+                  <div className="mt-10 ml-5 px-5">
                     <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
                       <span className="mr-[-2px]">
                         <CiMicrophoneOn />
@@ -157,6 +160,11 @@ const MyTicketCard = () => {
           </div>
         ))}
       </div>
+      {isModal && (
+        <div className="bg-black bg-opacity-45 top-0 left-0 fixed h-full w-full">
+          <MyTicketCardModal isModalOpen={isModalOpen} />
+        </div>
+      )}
     </div>
   );
 };

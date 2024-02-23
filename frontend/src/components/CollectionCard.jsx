@@ -25,7 +25,7 @@ const CollectionCard = () => {
     PostEventAbi,
     POST_EVENT_CONTRACT
   );
-
+  //모달
   const isModalOpen = () => {
     setIsModal(!isModal);
   };
@@ -49,7 +49,7 @@ const CollectionCard = () => {
   //     console.error(error);
   //   }
   // };
-
+  //고객이 가진 NFT티켓 불러오기
   const getMyNft = async () => {
     try {
       if (!postEventContract) return;
@@ -99,7 +99,9 @@ const CollectionCard = () => {
 
   return (
     <div className="w-[425px] h-[90vh]">
-      <div className="w-[425px] text-center text-3xl mt-2">Collection</div>
+      <div className="w-[425px] text-center text-3xl mt-2 py-2 border-b-2 ml-2 border-b-black">
+        Collection
+      </div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
           <div className="flex items-center justify-start text-3xl flex-col mt-20">
@@ -121,7 +123,7 @@ const CollectionCard = () => {
           </div>
         )}
         {metadataArray.map((v, i) => (
-          <div key={i} className="header">
+          <div key={i} className="header poppins">
             <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-black top-0 left-0 -z-30 content"></div>
 
             <button
@@ -130,28 +132,17 @@ const CollectionCard = () => {
             >
               <img src={v.image} alt={v.name} className="w-[145px]" />
               <div className="w-[255px] bg-white h-[200px]">
-                <ul className="mt-8 mr-3">
+                <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}
-                  <div className="mt-12 ml-2 px-5">
-                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+                  <div className="mt-5 ml-2 px-5">
+                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px] justify-center mr-1 ">
                       <span className="mr-[-2px]">
                         <CiMicrophoneOn />
                       </span>
-                      <span className="mr-[10px]">IU</span>
+                      <span className="mr-[10px] mt-[3px] ">IU</span>
                     </ul>
-                    <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
-                      <span>
-                        <CiLocationOn />
-                      </span>
-                      <span className="text-xs ">잠실종합운동장</span>
-                    </ul>
-                    <ul className="text-sm flex items-center font-light gap-1">
-                      <span className="ml-[1px]">
-                        <CiCalendar />
-                      </span>
-                      <span className="text-xs mt-[1px]">
-                        2024.02.29 - 2024.03.02
-                      </span>
+                    <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                      <span>{v.description}</span>
                     </ul>
                   </div>
                 </ul>

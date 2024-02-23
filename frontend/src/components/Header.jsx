@@ -1,6 +1,6 @@
 import { PiWalletBold } from "react-icons/pi";
-import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = ({ account }) => {
   const [hoverMove, setHoverMove] = useState(false);

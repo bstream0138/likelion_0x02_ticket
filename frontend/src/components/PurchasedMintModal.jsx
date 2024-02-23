@@ -4,7 +4,7 @@ import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 
-const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
+const PurchasedMintModal = ({ purchaseID, isMinted, isRefunded }) => {
   const { account, preEventContract, web3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
@@ -21,9 +21,9 @@ const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // console.log(mintAccount);
 
+  console.log("PurchasedMintModal/purchase: ", purchaseID);
 
-  console.log('PurchasedMintModal/purchase: ', purchaseID)
-
+  //purchase 구매내역에서의 모달 기능
   const onClickMint = async () => {
     try {
       if (!preEventContract || !account || !mintAccount) return;
@@ -71,7 +71,10 @@ const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
       //app.post('/api/refund', (req, res) => {
       //const {purchaseID} = req.body;
       try {
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/mint`, {purchaseID});
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/mint`,
+          { purchaseID }
+        );
 
         if (response.data) {
           console.log("Purchase ticket is minted: ", response.data);
@@ -79,7 +82,7 @@ const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
       } catch (error) {
         console.error("[ERR] PurchasedMintModal.jsx/onClickMint: ", error);
       }
-      
+
       setIsModalOpen(true);
       setIsLoading(false);
 
@@ -103,14 +106,15 @@ const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
     }
   };
 
+  //purchase my페이지에서의 모달에서 민팅 성공후 모달
   const onClickPurchsedModalOpen = () => {
     setIsPurchasedModalOpen(!isPurchasedModalOpen);
   };
 
   return (
     <div>
-      {(!isMinted&&!isRefunded)? (
-          <>
+      {!isMinted && !isRefunded ? (
+        <>
           <button
             onClick={onClickPurchsedModalOpen}
             className="hover:bg-[#038BD5] hover:text-white text-2xl border-2 border-black rounded-md px-2"
@@ -202,13 +206,12 @@ const PurchasedMintModal = ({purchaseID, isMinted, isRefunded }) => {
             </div>
           )}
         </>
-
-      ):(
-        <button>ㅋㅋㅋ</button>
+      ) : (
+        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+          민팅하기
+        </button>
       )}
-
     </div>
-    
   );
 };
 

@@ -10,8 +10,7 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
   const [hoverRefund, setHoverRefund] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
-  console.log('Purchase Value: ', purchaseID, isMinted, isRefunded);
+  console.log("Purchase Value: ", purchaseID, isMinted, isRefunded);
 
   const openModal = () => {
     setRefundModal(!refundModal);
@@ -23,13 +22,16 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
   // const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // // console.log(mintAccount);
 
+  //환불 기능 canceled 로 푸쉬후 환불된 NFT인지 확인
   const onClickRefund = async () => {
     try {
       setIsLoading(true);
 
-      if(isMinted) {
+      if (isMinted) {
         // NFT가 민팅된 경우, 환불
-        await preEventContract.methods.cancel(purchaseID).send({ from: account });
+        await preEventContract.methods
+          .cancel(purchaseID)
+          .send({ from: account });
         // const tx = {
         //   from: mintAccount.address,
         //   to: PRE_EVENT_CONTRACT,
@@ -61,15 +63,17 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
         // console.log("tx receipt:", receipt);
 
         await preEventContract.methods.isCanceled(purchaseID).call();
-        
       } else {
         // NFT가 민팅되지 않은 경우, 환불
         //app.post('/api/refund', (req, res) => {
         //const {purchaseID} = req.body;
         const updatePurchaseRefundInfo = async () => {
           try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/refund`, {purchaseID});
-    
+            const response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/refund`,
+              { purchaseID }
+            );
+
             if (response.data) {
               console.log("Purchase refunded: ", response.data);
             }
@@ -84,7 +88,6 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
       alert("환불이 완료되었습니다.");
       setIsLoading(false);
       setRefundModal(false);
-
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -93,9 +96,11 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
 
   return (
     <div>
-      {isRefunded? (
-        <button>ㅎㅎㅎ</button>
-      ):(
+      {isRefunded ? (
+        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+          환불하기
+        </button>
+      ) : (
         <>
           <button
             className="border-2 border-black rounded-md px-2 text-2xl hover:bg-[#AB161E] duration-100 py-2 hover:text-white flex items-center justify-center"
@@ -137,9 +142,7 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
             </div>
           )}
         </>
-        )
-      }
-      
+      )}
     </div>
   );
 };

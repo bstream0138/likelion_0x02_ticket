@@ -37,7 +37,7 @@ const Account = ({ setIsModal }) => {
     myBalance();
   }, [account, web3]);
 
-  //잔액 send 테스트
+  //남은 잔액 보내기
   const sendEth = async (e) => {
     e.preventDefault();
     if (!testTo || !testAmount) return;
@@ -92,6 +92,7 @@ const Account = ({ setIsModal }) => {
     }
   };
 
+  //NFT 내보내기
   const transferNFT = async (e) => {
     try {
       e.preventDefault();

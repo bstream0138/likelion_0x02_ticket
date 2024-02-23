@@ -49,6 +49,7 @@ const My = () => {
     setIsModalPurchased(!isModalPurchased);
   };
 
+  //로그아웃
   const handleLogout = () => {
     //localStorage에서 item 삭제
     localStorage.clear();
@@ -56,6 +57,7 @@ const My = () => {
     navigate("/");
   };
 
+  //로그인 안되있을시 로그인페이지로
   useEffect(() => {
     if (!account) {
       alert("You need to login");
@@ -95,7 +97,9 @@ const My = () => {
               </li>
             </ul>
           )}
-          <div className="mt-4 text-2xl font-semibold">Purchased</div>
+          <div className="mt-4 text-2xl font-semibold text-white py-1 pl-1 rounded-t-md bg-[#034ECC]">
+            Purchased
+          </div>
           <ul className="flex flex-col gap-2 py-[2px]">
             <Purchased />
           </ul>
@@ -106,7 +110,7 @@ const My = () => {
                 className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
                 onClick={onClickModalPurchased}
               >
-                <span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
+                /<span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
                 <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
               </button>
             ))}
@@ -125,6 +129,3 @@ const My = () => {
 };
 
 export default My;
-{
-  /* <span className="ml-16">{purchase.PURCHASE_DATE}</span> */
-}

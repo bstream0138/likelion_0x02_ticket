@@ -4,20 +4,21 @@ import CollectionCard from "../components/CollectionCard";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 const Ticket = () => {
-  const { account, setAccount, preEventContract } = useOutletContext();
+  const { account } = useOutletContext();
   const navigate = useNavigate();
 
   const [isSelect, setIsSelect] = useState("A");
   const [hoverTicket, setHoverTicket] = useState(false);
   const [hoverCollection, setHoverCollection] = useState(false);
 
-  useEffect(() => {
-    if (!preEventContract) {
-      // console.log("contract :", preEventContract);
-      return;
-    }
-  }, [preEventContract]);
+  // useEffect(() => {
+  //   if (!preEventContract) {
+  //     // console.log("contract :", preEventContract);
+  //     return;
+  //   }
+  // }, [preEventContract]);
 
+  //로그인 안됬을시 로그인 페이지로
   useEffect(() => {
     if (!account) {
       alert("You need to login");
