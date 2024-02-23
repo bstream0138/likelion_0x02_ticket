@@ -11,8 +11,8 @@ const PaymentCancel = ({ toggleOpen }) => {
   return (
     <div className="min-h-screen min-w-screen mx-auto">
       <div className="pt-10">
-        <img src="fail-border.png" alt="" />
-        <ul className="w-[425px] h-[370px] flex items-center justify-center flex-col gap-12  bg-[#AB161E]">
+        <img className="mx-auto w-[425px]" src="fail-border.png" alt="" />
+        <ul className="w-[425px] h-[370px] flex items-center justify-center mx-auto flex-col gap-12  bg-[#AB161E]">
           <p className="text-4xl">결제 실패 또는 취소</p>
           <button
             className={
@@ -27,7 +27,7 @@ const PaymentCancel = ({ toggleOpen }) => {
             돌아가기
           </button>
         </ul>
-        <img src="fail-head.png" alt="" />
+        <img className="mx-auto w-[425px]" src="fail-head.png" alt="" />
       </div>
     </div>
   );

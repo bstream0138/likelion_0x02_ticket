@@ -110,7 +110,7 @@ const My = () => {
                 className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
                 onClick={onClickModalPurchased}
               >
-                /<span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
+                <span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
                 <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
               </button>
             ))}

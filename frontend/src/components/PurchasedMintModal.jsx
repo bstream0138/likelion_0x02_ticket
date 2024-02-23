@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+import preEventAbi from "../abis/PreEventAbi.json";
+import Web3 from "web3";
 
-const PurchasedMintModal = ({ purchaseID, isMinted, isRefunded }) => {
-  const { account, preEventContract, web3 } = useOutletContext();
+const PurchasedMintModal = ({ purchasedList }) => {
+  const { account } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,13 +17,21 @@ const PurchasedMintModal = ({ purchaseID, isMinted, isRefunded }) => {
   const navigate = useNavigate();
   const [hoverToHome, setHoverToHome] = useState(false);
   const [hoverViewTicket, setHoverViewTicket] = useState(false);
+  const purchsedId = purchasedList.ID;
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+
+  const web3 = new Web3(window.ethereum);
+
+  const preEventContract = new web3.eth.Contract(
+    preEventAbi,
+    PRE_EVENT_CONTRACT
+  );
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // console.log(mintAccount);
 
-  console.log("PurchasedMintModal/purchase: ", purchaseID);
+  console.log("PurchasedMintModal/purchase: ", purchsedId);
 
   //purchase 구매내역에서의 모달 기능
   const onClickMint = async () => {
@@ -73,7 +83,7 @@ const PurchasedMintModal = ({ purchaseID, isMinted, isRefunded }) => {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/mint`,
-          { purchaseID }
+          { purchsedId }
         );
 
         if (response.data) {
@@ -113,11 +123,11 @@ const PurchasedMintModal = ({ purchaseID, isMinted, isRefunded }) => {
 
   return (
     <div>
-      {!isMinted && !isRefunded ? (
+      {!purchasedList.IS_REFUNDED && !purchasedList.IS_MINTED ? (
         <>
           <button
             onClick={onClickPurchsedModalOpen}
-            className="hover:bg-[#038BD5] hover:text-white text-2xl border-2 border-black rounded-md px-2"
+            className="hover:bg-[#038BD5] hover:text-white text-2xl border-2 py-2 border-black rounded-md px-2"
           >
             민팅하기
           </button>

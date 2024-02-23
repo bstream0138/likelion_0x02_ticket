@@ -4,13 +4,14 @@ import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import axios from "axios";
 
-const Refund = ({ purchaseID, isMinted, isRefunded }) => {
+const Refund = ({ purchasedList }) => {
   const { preEventContract, account } = useOutletContext();
   const [refundModal, setRefundModal] = useState(false);
   const [hoverRefund, setHoverRefund] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("Purchase Value: ", purchaseID, isMinted, isRefunded);
+  // console.log("Purchase Value: ", purchaseID, isMinted, isRefunded);
+  const purchsedId = purchasedList.ID;
 
   const openModal = () => {
     setRefundModal(!refundModal);
@@ -27,10 +28,10 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
     try {
       setIsLoading(true);
 
-      if (isMinted) {
+      if (purchasedList.IS_MINTED) {
         // NFT가 민팅된 경우, 환불
         await preEventContract.methods
-          .cancel(purchaseID)
+          .cancel(purchasedList.ID)
           .send({ from: account });
         // const tx = {
         //   from: mintAccount.address,
@@ -62,7 +63,7 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
         // );
         // console.log("tx receipt:", receipt);
 
-        await preEventContract.methods.isCanceled(purchaseID).call();
+        await preEventContract.methods.isCanceled(purchasedList.ID).call();
       } else {
         // NFT가 민팅되지 않은 경우, 환불
         //app.post('/api/refund', (req, res) => {
@@ -71,7 +72,7 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
           try {
             const response = await axios.post(
               `${process.env.REACT_APP_BACKEND_URL}/refund`,
-              { purchaseID }
+              { purchsedId }
             );
 
             if (response.data) {
@@ -96,7 +97,7 @@ const Refund = ({ purchaseID, isMinted, isRefunded }) => {
 
   return (
     <div>
-      {isRefunded ? (
+      {purchasedList.IS_REFUNDED ? (
         <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
           환불하기
         </button>

@@ -22,20 +22,10 @@ const PurchasedModal = ({
           x
         </button>
         <ul className="flex gap-4">
-          {purchasedList.map((purchase) => (
-            <>
-              <PurchasedMintModal
-                purchaseID={purchase.ID}
-                isMinted={purchase.IS_MINTED}
-                isRefunded={purchase.IS_REFUNDED}
-              />
-              <Refund
-                purchaseID={purchase.ID}
-                isMinted={purchase.IS_MINTED}
-                isRefunded={purchase.IS_REFUNDED}
-              />
-            </>
-          ))}
+          <>
+            <PurchasedMintModal purchasedList={purchasedList} />
+            <Refund purchasedList={purchasedList} />
+          </>
         </ul>
         <div className="w-[300px] h-[10px]"></div>
       </div>
@@ -45,3 +35,7 @@ const PurchasedModal = ({
 };
 
 export default PurchasedModal;
+
+// purchaseID={purchase.ID}
+// isMinted={purchase.IS_MINTED}
+// isRefunded={purchase.IS_REFUNDED}
