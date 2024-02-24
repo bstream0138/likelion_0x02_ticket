@@ -130,7 +130,13 @@ const PurchasedMintModal = ({
         <>
           <button
             onClick={onClickPurchsedModalOpen}
-            className="hover:bg-[#038BD5] hover:text-white text-2xl border-2 py-2 border-black rounded-md px-2"
+            className={
+              hoverMint
+                ? "flex items-center mt-[12px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                : "flex items-center mt-[9px] justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-3xl  hover:bg-[#038BD5] hover:text-white ] duration-10"
+            }
+            onMouseEnter={() => setHoverMint(true)}
+            onMouseLeave={() => setHoverMint(false)}
           >
             민팅하기
           </button>

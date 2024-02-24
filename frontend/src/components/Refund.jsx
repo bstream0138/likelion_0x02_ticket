@@ -103,7 +103,13 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
       ) : (
         <>
           <button
-            className="border-2 border-black rounded-md px-2 text-2xl hover:bg-[#AB161E] duration-100 py-2 hover:text-white flex items-center justify-center"
+            className={
+              hoverRefund
+                ? "flex items-center mt-[12px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-3xl  hover:bg-[#AB161E] duration-100  hover:text-white "
+                : "flex items-center mt-[9px] justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-3xl  hover:bg-[#AB161E] duration-100  hover:text-white"
+            }
+            onMouseEnter={() => setHoverRefund(true)}
+            onMouseLeave={() => setHoverRefund(false)}
             onClick={openModal}
           >
             환불하기

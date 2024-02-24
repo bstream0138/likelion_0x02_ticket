@@ -71,8 +71,8 @@ const TicketBanner = () => {
           onClick={onClickPrev}
           className={
             hoverPrev
-              ? "border-[2px]  border-black rounded-full py-[6px] px-2 pb-[7px] mt-[2px]"
-              : "border-[2px] border-b-[5px] border-black rounded-full py-[6px] px-2"
+              ? "border-[2px]  border-black rounded-full py-[6px] px-2 pb-[7px] mt-[2px] duration-100"
+              : "border-[2px] border-b-[5px] border-black rounded-full py-[6px] px-2 duration-100"
           }
         >
           <FaLongArrowAltLeft />
@@ -84,8 +84,8 @@ const TicketBanner = () => {
           onClick={onClickNext}
           className={
             hoverNext
-              ? "border-[2px]  border-black rounded-full py-[6px] px-2 pb-[7px] mt-[2px]"
-              : "border-[2px] border-b-[5px] border-black rounded-full py-[6px] px-2"
+              ? "border-[2px]  border-black rounded-full py-[6px] px-2 pb-[7px] mt-[2px] duration-100"
+              : "border-[2px] border-b-[5px] border-black rounded-full py-[6px] px-2 duration-100"
           }
         >
           <FaLongArrowAltRight />

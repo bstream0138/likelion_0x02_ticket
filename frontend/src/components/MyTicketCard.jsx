@@ -96,8 +96,8 @@ const MyTicketCard = () => {
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[90vh]">
-      <div className="w-[425px]  flex items-center ml-2 justify-center text-center text-3xl mt-2 py-2 border-b-2 border-b-black">
+    <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
+      <div className=" flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 w-[370px] border-b-black">
         MY TICKET
       </div>
       <div className="flex flex-col gap-3 pt-10">
@@ -122,8 +122,6 @@ const MyTicketCard = () => {
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header">
-            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-black top-0 left-0 -z-30 content"></div>
-
             <button
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
@@ -133,7 +131,7 @@ const MyTicketCard = () => {
                 alt={v.name}
                 className="w-[145px] object-cover"
               />
-              <div className="w-[255px] bg-white h-[200px]">
+              <div className="w-[255px] bg-white hover:bg-[#b3b3b3] hover:text-white duration-150 h-[200px]">
                 <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}
                   <div className="mt-10 ml-5 px-5">
@@ -161,6 +159,7 @@ const MyTicketCard = () => {
                 </ul>
               </div>
             </button>
+            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
           </div>
         ))}
       </div>

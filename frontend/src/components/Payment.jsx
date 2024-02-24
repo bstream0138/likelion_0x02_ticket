@@ -9,6 +9,8 @@ const checkIsMobile = () => {
 };
 
 const Payment = ({ toggleOpen, account, concertInfo }) => {
+  const [hoverPurchase, setHoverPurchase] = useState();
+  const [hoverBack, setHoverBack] = useState();
   const navigate = useNavigate();
 
   // 아래는 카카오페이 테스트를 위한 샘플 상품 코드
@@ -23,12 +25,11 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
     // Backend 서버 구동 중이면, 카카오페이 결제 진행
     const connectDB = localStorage.getItem("connectDB");
 
-    if(connectDB === "X") {
+    if (connectDB === "X") {
       navigate("/payment_success");
     } else {
-
       // 페이지 전환 전에 account 정보 localStorage에 저장
-      localStorage.setItem('backupAccount', account);
+      localStorage.setItem("backupAccount", account);
 
       try {
         // 백엔드 서버의 결제 준비 API 주소
@@ -79,18 +80,33 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
           </div>
         </div>
         <div className="space-y-4 w-full max-w-xs">
-          <button
-            className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg shadow-lg"
-            onClick={handlePayment}
-          >
-            구매하기
-          </button>
-          <button
-            className="w-full bg-gray-500 text-white font-bold py-3 rounded shadow"
-            onClick={toggleOpen}
-          >
-            뒤로가기
-          </button>
+          <div>
+            <button
+              className={
+                hoverPurchase
+                  ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                  : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10"
+              }
+              onMouseEnter={() => setHoverPurchase(true)}
+              onMouseLeave={() => setHoverPurchase(false)}
+              onClick={handlePayment}
+            >
+              구매하기
+            </button>
+
+            <button
+              className={
+                hoverBack
+                  ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 text-white bg-[#8a8a8a] "
+                  : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl text-white bg-[#8a8a8a]  duration-100"
+              }
+              onMouseEnter={() => setHoverBack(true)}
+              onMouseLeave={() => setHoverBack(false)}
+              onClick={toggleOpen}
+            >
+              뒤로가기
+            </button>
+          </div>
         </div>
       </div>
     </div>

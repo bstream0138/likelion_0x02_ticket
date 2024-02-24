@@ -3,10 +3,10 @@ import { IoHomeSharp, IoPerson, IoTicketOutline } from "react-icons/io5";
 
 const MenuBar = () => {
   return (
-    <div className="sticky bottom-0 poppins text-xl">
-      <div className="w-[447px] mx-auto bottom-0 sticky h-[70px] z-10 header ">
+    <div className="sticky bottom-0 min-w-screen mx-auto md:w-[450px] poppins text-xl">
+      <div className=" md:w-[450px] miw-screen mx-auto bottom-0 sticky h-[70px] z-10 header ">
         <img
-          className="fixed -top-1 content"
+          className="fixed -top-[2px] content"
           src="bottom-border.png"
           alt="bottom"
         />

@@ -145,13 +145,17 @@ const PaymentSuccess = ({ toggleOpen }) => {
 
   return (
     <>
-      <div className="min-h-screen min-w-screen mx-auto">
+      <div className="min-h-screen  min-w-screen  md:w-[450px] mx-auto">
         <div className="pt-10">
-          <img className="mx-auto w-[425px]" src="ticket-border.png" alt="" />
-          <ul className="w-[425px] h-[120px] flex items-center justify-center mx-auto bg-[#038BD5]">
+          <img
+            className="mx-auto md:w-[450px] min-w-screen "
+            src="ticket-border.png"
+            alt=""
+          />
+          <ul className="md:w-[450px] min-w-screen  h-[120px] flex items-center justify-center mx-auto bg-[#038BD5]">
             <p className="text-4xl">결제 성공 !!</p>
           </ul>
-          <div className="w-[425px] h-[290px] mx-auto bg-[#038BD5]">
+          <div className="md:w-[450px] min-w-screen h-[290px] mx-auto bg-[#038BD5]">
             <ul className="flex items-center justify-center h-full gap-4 flex-col">
               <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?
 티켓 민팅 후 환불이 불가능합니다
@@ -230,7 +234,11 @@ const PaymentSuccess = ({ toggleOpen }) => {
                 )}
               </div>
             </ul>
-            <img className="mx-auto w-[425px]" src="ticket-head.png" alt="" />
+            <img
+              className="mx-auto md:w-[450px] min-w-screen "
+              src="ticket-head.png"
+              alt=""
+            />
           </div>
         </div>
       </div>

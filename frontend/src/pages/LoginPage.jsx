@@ -59,7 +59,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen space-y-4">
+    <div className="flex flex-col items-center justify-center min-h-screen  min-w-screen  md:w-[450px] mx-auto space-y-4">
       <div className="text-center">
         <a
           href={KAKAO_AUTH_URL}

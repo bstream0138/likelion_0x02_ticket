@@ -66,15 +66,15 @@ const My = () => {
   }, [account]);
 
   return (
-    <div className="min-h-screen min-w-screen mx-auto px-2 poppins overflow-y-auto">
+    <div className="min-h-screen min-w-screen  md:w-[450px] mx-auto px-2 poppins overflow-y-auto">
       <ToastContainer toastStyle={{ backgroundColor: "crimson" }} />
       <div className="px-4 mt-4">
         <ul className="flex justify-between items-center">
           <button
             className={
               hoverLogout
-                ? "border-2 mt-[13px] border-black py-1 px-[10px] rounded-full text-2xl ml-2"
-                : "border-2 mt-[10px] border-b-[5px] border-black  py-1 px-[10px] rounded-full text-2xl ml-2"
+                ? "border-2 mt-[13px] border-black py-1 px-[10px] rounded-full text-2xl ml-2 duration-100"
+                : "border-2 mt-[10px] border-b-[5px] border-black  py-1 px-[10px] rounded-full text-2xl ml-2 duration-100"
             }
             onClick={handleLogout}
             onMouseEnter={() => setHoverLogout(true)}

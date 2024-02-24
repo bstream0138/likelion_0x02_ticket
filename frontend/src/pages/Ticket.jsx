@@ -27,13 +27,13 @@ const Ticket = () => {
   }, [account]);
 
   return (
-    <div className="min-h-screen min-w-screen mx-auto poppins overflow-y-auto">
+    <div className="min-h-screen min-w-screen md:[450px] mx-auto poppins overflow-y-auto">
       <ul className="grid grid-cols-2 justify-items-center py-3 mt-4">
         <button
           className={
             hoverTicket
-              ? "flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full "
-              : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+              ? "flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
+              : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
           }
           onClick={() => setIsSelect("A")}
           onMouseEnter={() => setHoverTicket(true)}
@@ -47,8 +47,8 @@ const Ticket = () => {
           onMouseLeave={() => setHoverCollection(false)}
           className={
             hoverCollection
-              ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full"
-              : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full"
+              ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
+              : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
           }
         >
           Collection

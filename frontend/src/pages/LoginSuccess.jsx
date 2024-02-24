@@ -118,7 +118,7 @@ const LoginSuccess = () => {
   }, [current_url]);
 
   return (
-    <div className="w-[425px] min-h-screen bg-blue-200 mx-auto z-10 flex justify-center items-center">
+    <div className=" min-w-screen min-h-screen  md:w-[450px] bg-blue-200 mx-auto z-10 flex justify-center items-center">
       <p className="text-2xl">로그인 성공</p>
     </div>
   );

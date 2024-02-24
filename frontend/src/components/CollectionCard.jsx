@@ -98,8 +98,8 @@ const CollectionCard = () => {
   }, []);
 
   return (
-    <div className="w-[425px] h-[90vh]">
-      <div className="w-[425px] text-center text-3xl mt-2 py-2 border-b-2 ml-2 border-b-black">
+    <div className="min-w-screen min-h-screen mx-auto md:w-[450px] h-[90vh]">
+      <div className="w-[370px] flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 border-b-black">
         Collection
       </div>
       <div className="flex flex-col gap-3 pt-10">
@@ -124,18 +124,18 @@ const CollectionCard = () => {
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header poppins">
-            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-white top-0 left-0 -z-30  content"></div>
-
             <button
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
-              <img
-                src={v.image}
-                alt={v.name}
-                className="w-[145px] object-cover "
-              />
-              <div className="w-[255px] bg-white h-[200px]">
+              <div className="bg-white w-[145px] h-full">
+                <img
+                  src={v.image}
+                  alt={v.name}
+                  className="w-[145px] object-cover "
+                />
+              </div>
+              <div className="w-[255px] bg-white hover:bg-[#b3b3b3] duration-150 hover:text-white h-[200px]">
                 <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}
                   <div className="mt-5 ml-2 px-5">
@@ -152,6 +152,7 @@ const CollectionCard = () => {
                 </ul>
               </div>
             </button>
+            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
           </div>
         ))}
       </div>

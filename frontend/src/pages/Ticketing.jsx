@@ -36,7 +36,7 @@ const Ticketing = () => {
   }, [index, concert, navigate]);
 
   return (
-    <div className="min-h-screen min-w-screen mx-auto overflow-y-auto">
+    <div className="min-h-screen min-w-screen md:w-[450px] mx-auto overflow-y-auto">
       {/*예매하기 버튼 화면 현재 concertInfo는 tokenId를 구별해서 홈화면에서 누른 이미지에 맞는 공연의 공연정보를 가져와야함 하지만 현재 3번만 가져오는 오류 */}
       {concertInfo ? (
         <div key={concertInfo.ID}>
@@ -56,22 +56,25 @@ const Ticketing = () => {
               />
               <div className="w-[153px] h-[209px] fixed bg-black -top-[124px] left-[32px] content -z-30 rounded-md"></div>
             </div>
+            <div className="flex justify-end  w-[340px] mx-auto ">
+              <ul className=" pt-4 flex  ">
+                <button
+                  className={
+                    hoverTicketing
+                      ? "flex items-center mt-[3px] justify-end border-2 border-black py-1 px-[10px] rounded-full text-4xl duration-100"
+                      : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full text-4xl duration-100"
+                  }
+                  onClick={toggleOpen}
+                  onMouseEnter={() => setHoverTicketing(true)}
+                  onMouseLeave={() => setHoverTicketing(false)}
+                >
+                  Ticketing
+                </button>
+              </ul>
+            </div>
           </div>
-          <ul className=" pt-4 flex justify-end px-4 pr-[60px]">
-            <button
-              className={
-                hoverTicketing
-                  ? "flex items-center mt-[3px] justify-end border-2 border-black py-1 px-[10px] rounded-full text-3xl "
-                  : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full text-3xl "
-              }
-              onClick={toggleOpen}
-              onMouseEnter={() => setHoverTicketing(true)}
-              onMouseLeave={() => setHoverTicketing(false)}
-            >
-              Ticketing
-            </button>
-          </ul>
-          <div className="mt-8 px-5">
+
+          <div className="mt-10 px-5 ml-3">
             <ul className="text-3xl">{concertInfo.TITLE}</ul>
             <ul className="text-xs font-normal flex items-center gap-1 mt-3 ml-[1px]">
               <CiMicrophoneOn />
@@ -87,7 +90,7 @@ const Ticketing = () => {
             </ul>
           </div>
 
-          <div className="px-5 text-2xl font-bold mt-3">CASTING</div>
+          <div className="px-5 text-2xl font-bold mt-3 ml-3">CASTING</div>
 
           {isModal && (
             <Payment
