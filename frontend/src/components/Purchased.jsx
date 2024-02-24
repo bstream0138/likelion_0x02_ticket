@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const Purchased = () => {
-  const { preEventContract, account } = useOutletContext();
+  // const { preEventContract, account } = useOutletContext();
 
-  const isRefunded = async () => {
-    const tokenId = await preEventContract.methods.balanceOf(account).call();
+  // const isRefunded = async () => {
+  //   const tokenId = await preEventContract.methods.balanceOf(account).call();
 
-    await preEventContract.methods.isCanceled(tokenId).call();
-  };
+  //   await preEventContract.methods.isCanceled(tokenId).call();
+  // };
   //purchase 상단 메뉴바
   return (
     <ul className="flex flex-col gap-2 mb-2 border-t-2 border-black py-[2px]">

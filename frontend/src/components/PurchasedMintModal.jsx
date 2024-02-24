@@ -6,7 +6,11 @@ import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
 
-const PurchasedMintModal = ({ purchasedList }) => {
+const PurchasedMintModal = ({
+  purchasedID,
+  purchasedMinted,
+  purchasedRefunded,
+}) => {
   const { account } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
@@ -17,7 +21,6 @@ const PurchasedMintModal = ({ purchasedList }) => {
   const navigate = useNavigate();
   const [hoverToHome, setHoverToHome] = useState(false);
   const [hoverViewTicket, setHoverViewTicket] = useState(false);
-  const purchsedId = purchasedList.ID;
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
@@ -31,7 +34,7 @@ const PurchasedMintModal = ({ purchasedList }) => {
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // console.log(mintAccount);
 
-  console.log("PurchasedMintModal/purchase: ", purchsedId);
+  console.log("PurchasedMintModal/purchase: ", purchasedID);
 
   //purchase 구매내역에서의 모달 기능
   const onClickMint = async () => {
@@ -83,7 +86,7 @@ const PurchasedMintModal = ({ purchasedList }) => {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/mint`,
-          { purchsedId }
+          { purchasedID }
         );
 
         if (response.data) {
@@ -123,7 +126,7 @@ const PurchasedMintModal = ({ purchasedList }) => {
 
   return (
     <div>
-      {!purchasedList.IS_REFUNDED && !purchasedList.IS_MINTED ? (
+      {!purchasedMinted && !purchasedRefunded ? (
         <>
           <button
             onClick={onClickPurchsedModalOpen}

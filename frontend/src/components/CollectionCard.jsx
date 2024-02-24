@@ -124,13 +124,17 @@ const CollectionCard = () => {
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header poppins">
-            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-black top-0 left-0 -z-30 content"></div>
+            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-white top-0 left-0 -z-30  content"></div>
 
             <button
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
-              <img src={v.image} alt={v.name} className="w-[145px]" />
+              <img
+                src={v.image}
+                alt={v.name}
+                className="w-[145px] object-cover "
+              />
               <div className="w-[255px] bg-white h-[200px]">
                 <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}

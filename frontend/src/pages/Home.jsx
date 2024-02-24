@@ -8,7 +8,7 @@ const Home = () => {
       <div className="w-[350px] h-[280px] mx-auto rounded-md mt-12">
         <TicketBanner />
       </div>
-      <div className="mt-[162px] border-t-2 border-black"></div>
+      <div className="mt-[162px] border-t-2 w-[400px] mx-auto border-black"></div>
       <ul className="flex items-center mt-4 mx-12">
         <Link
           to="/ticketing/1"

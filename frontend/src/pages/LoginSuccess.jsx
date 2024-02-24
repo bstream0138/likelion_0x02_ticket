@@ -13,14 +13,7 @@ import { CreateAddress } from "../components/CreateAddress";
 // 회원 정보 처리 후, App에서 사용할 각종 context 정보 처리
 
 const LoginSuccess = () => {
-  const {
-    account,
-    setAccount,
-    web3,
-    setWeb3,
-    preEventContract,
-    setPreEventContract,
-  } = useOutletContext();
+  const { setAccount, setWeb3, setPreEventContract } = useOutletContext();
 
   const current_url = useLocation();
   const navigate = useNavigate();

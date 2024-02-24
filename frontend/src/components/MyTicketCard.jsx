@@ -128,7 +128,11 @@ const MyTicketCard = () => {
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
-              <img src={v.image} alt={v.name} className="w-[145px]" />
+              <img
+                src={v.image}
+                alt={v.name}
+                className="w-[145px] object-cover"
+              />
               <div className="w-[255px] bg-white h-[200px]">
                 <ul className="mt-10 mr-3">
                   티켓 번호 : {v.tokenId}

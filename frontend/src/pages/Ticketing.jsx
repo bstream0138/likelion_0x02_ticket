@@ -50,7 +50,7 @@ const Ticketing = () => {
             </ul>
             <div className="header">
               <img
-                className="fixed -top-[120px] left-[30px] w-[150px] h-[208px] content rounded-md "
+                className="fixed -top-[120px] left-[30px] w-[150px] h-[208px] content rounded-md object-cover"
                 src={concertInfo.IMAGE}
                 alt=""
               />

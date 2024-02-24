@@ -84,7 +84,7 @@ const My = () => {
           </button>
           <button
             onClick={onClickModal}
-            className="mt-[18px] mr-2 hover:underline"
+            className="mt-[18px] mr-2 text-xl hover:underline hover:text-[#034ECC] duration-100"
           >
             Show Wallet&Send
           </button>
@@ -104,23 +104,32 @@ const My = () => {
             <Purchased />
           </ul>
           <ul className="flex flex-col gap-2 border-t-2 border-black py-[2px]">
-            {purchasedList.map((purchase) => (
-              <button
-                key={purchase.ID}
-                className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
-                onClick={onClickModalPurchased}
-              >
-                <span className="truncate w-1/3 ml-8">{purchase.CONTENT}</span>
-                <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
-              </button>
-            ))}
-            {isModalPurchased && (
-              <PurchasedModal
-                setIsModalPurchased={setIsModalPurchased}
-                isModalPurchased={isModalPurchased}
-                purchasedList={purchasedList}
-              />
-            )}
+            {purchasedList.map((purchase) => {
+              return (
+                <>
+                  <button
+                    key={purchase.ID}
+                    className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
+                    onClick={onClickModalPurchased}
+                  >
+                    <span className="truncate w-1/3 ml-8">
+                      {purchase.CONTENT}
+                    </span>
+                    <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
+                  </button>
+                  {isModalPurchased && (
+                    <PurchasedModal
+                      setIsModalPurchased={setIsModalPurchased}
+                      isModalPurchased={isModalPurchased}
+                      key={Purchased.ID}
+                      purchasedID={purchase.ID}
+                      purchasedMinted={purchase.IS_MINTED}
+                      purchasedRefunded={purchase.IS_REFUNDED}
+                    />
+                  )}
+                </>
+              );
+            })}
           </ul>
         </div>
       </div>
