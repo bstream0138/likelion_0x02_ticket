@@ -1,18 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Main from "./components/Main";
+import ForceDirected from "./components/ForceDirected";
+import TemporalForceDirected from "./components/TemporalForceDirected";
+import ExplorerSummary from "./components/ExplorerSummary";
+import ChartContainer from "./components/ChartContainer";
 
-import Main from "./pages/Main";
-import ForceDirected from "./pages/ForceDirected";
-import TemporalForceDirected from "./pages/TemporalForceDirected";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/force" element={<ForceDirected />} />
-        <Route path="/temporal" element={<TemporalForceDirected />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="dashboard">
+      <ExplorerSummary />
+      <div className="main-section">
+        <EventList />
+        <ChartContainer />
+      </div>
+    </div>
   );
 };
 
