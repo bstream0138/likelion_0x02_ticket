@@ -3,9 +3,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+import preEventAbi from "../abis/PreEventAbi.json";
+import Web3 from "web3";
 
-const PurchasedMintModal = () => {
-  const { account, preEventContract, web3 } = useOutletContext();
+const PurchasedMintModal = ({
+  purchasedID,
+  purchasedMinted,
+  purchasedRefunded,
+}) => {
+  const { account } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +24,19 @@ const PurchasedMintModal = () => {
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
+  const web3 = new Web3(window.ethereum);
+
+  const preEventContract = new web3.eth.Contract(
+    preEventAbi,
+    PRE_EVENT_CONTRACT
+  );
+
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   // console.log(mintAccount);
 
+  console.log("PurchasedMintModal/purchase: ", purchasedID);
+
+  //purchase 구매내역에서의 모달 기능
   const onClickMint = async () => {
     try {
       if (!preEventContract || !account || !mintAccount) return;
@@ -64,6 +80,22 @@ const PurchasedMintModal = () => {
       );
       console.log("tx receipt:", receipt);
 
+      // Minting 성공했으므로, DB의 구매내역에서 isMinted 값 갱신
+      //app.post('/api/refund', (req, res) => {
+      //const {purchaseID} = req.body;
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/mint`,
+          { purchasedID }
+        );
+
+        if (response.data) {
+          console.log("Purchase ticket is minted: ", response.data);
+        }
+      } catch (error) {
+        console.error("[ERR] PurchasedMintModal.jsx/onClickMint: ", error);
+      }
+
       setIsModalOpen(true);
       setIsLoading(false);
 
@@ -87,103 +119,118 @@ const PurchasedMintModal = () => {
     }
   };
 
+  //purchase my페이지에서의 모달에서 민팅 성공후 모달
   const onClickPurchsedModalOpen = () => {
     setIsPurchasedModalOpen(!isPurchasedModalOpen);
   };
 
   return (
-    <>
-      <button
-        onClick={onClickPurchsedModalOpen}
-        className="hover:bg-[#038BD5] hover:text-white text-2xl border-2 border-black rounded-md px-2"
-      >
-        민팅하기
-      </button>
-      {isPurchasedModalOpen && (
-        <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
-          <div className="w-[300px] h-[300px] fixed  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border-2 border-black bg-white  ">
-            <button
-              className="fixed top-0 right-2"
-              onClick={() => {
-                setIsPurchasedModalOpen(!isPurchasedModalOpen);
-              }}
-            >
-              x
-            </button>
-            <ul className="flex items-center justify-center h-full gap-4 flex-col">
-              <div className="flex flex-col gap-4 items-center mt-14 justify-center">
-                <div>민팅을 진행하시겠습니까?</div>
+    <div>
+      {!purchasedMinted && !purchasedRefunded ? (
+        <>
+          <button
+            onClick={onClickPurchsedModalOpen}
+            className={
+              hoverMint
+                ? "flex items-center mt-[12px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                : "flex items-center mt-[9px] justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-3xl  hover:bg-[#038BD5] hover:text-white ] duration-10"
+            }
+            onMouseEnter={() => setHoverMint(true)}
+            onMouseLeave={() => setHoverMint(false)}
+          >
+            민팅하기
+          </button>
+          {isPurchasedModalOpen && (
+            <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
+              <div className="w-[300px] h-[300px] fixed  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border-2 border-black bg-white  ">
                 <button
-                  className={
-                    hoverMint
-                      ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
-                      : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
-                  }
-                  onClick={onClickMint}
-                  onMouseEnter={() => setHoverMint(true)}
-                  onMouseLeave={() => setHoverMint(false)}
+                  className="fixed top-0 right-2"
+                  onClick={() => {
+                    setIsPurchasedModalOpen(!isPurchasedModalOpen);
+                  }}
                 >
-                  민팅하기
+                  x
                 </button>
-              </div>
-              <div className=" w-[425px] h-[50px]">
-                {isLoading && (
-                  <ul className="flex justify-center items-center flex-col">
-                    <li>
-                      <ImSpinner8 className="animate-spin h-10 w-10" />
-                    </li>
-                    <li className="mt-2">민팅을 진행중...</li>
-                  </ul>
-                )}
-                {isModalOpen && (
-                  <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
-                    <ul className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
-                      <button
-                        className="fixed top-0 right-2"
-                        onClick={() => {
-                          setIsModalOpen(!isModalOpen);
-                        }}
-                      >
-                        x
-                      </button>
-                      <li>민팅이 완료되었습니다!</li>
-                      <li className="flex gap-3 mt-3">
-                        <Link
-                          to="/ticket"
-                          className={
-                            hoverViewTicket
-                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold "
-                          }
-                          onMouseEnter={() => setHoverViewTicket(true)}
-                          onMouseLeave={() => setHoverViewTicket(false)}
-                        >
-                          티켓보기
-                        </Link>
-                        <Link
-                          to="/"
-                          className={
-                            hoverToHome
-                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold"
-                          }
-                          onMouseEnter={() => setHoverToHome(true)}
-                          onMouseLeave={() => setHoverToHome(false)}
-                        >
-                          돌아가기
-                        </Link>
-                      </li>
-                    </ul>
-                    <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-"></div>
+                <ul className="flex items-center justify-center h-full gap-4 flex-col">
+                  <div className="flex flex-col gap-4 items-center mt-14 justify-center">
+                    <div>민팅을 진행하시겠습니까?</div>
+                    <button
+                      className={
+                        hoverMint
+                          ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-2xl "
+                          : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-2xl "
+                      }
+                      onClick={onClickMint}
+                      onMouseEnter={() => setHoverMint(true)}
+                      onMouseLeave={() => setHoverMint(false)}
+                    >
+                      민팅하기
+                    </button>
                   </div>
-                )}
+                  <div className=" w-[425px] h-[50px]">
+                    {isLoading && (
+                      <ul className="flex justify-center items-center flex-col">
+                        <li>
+                          <ImSpinner8 className="animate-spin h-10 w-10" />
+                        </li>
+                        <li className="mt-2">민팅을 진행중...</li>
+                      </ul>
+                    )}
+                    {isModalOpen && (
+                      <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
+                        <ul className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
+                          <button
+                            className="fixed top-0 right-2"
+                            onClick={() => {
+                              setIsModalOpen(!isModalOpen);
+                            }}
+                          >
+                            x
+                          </button>
+                          <li>민팅이 완료되었습니다!</li>
+                          <li className="flex gap-3 mt-3">
+                            <Link
+                              to="/ticket"
+                              className={
+                                hoverViewTicket
+                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
+                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold "
+                              }
+                              onMouseEnter={() => setHoverViewTicket(true)}
+                              onMouseLeave={() => setHoverViewTicket(false)}
+                            >
+                              티켓보기
+                            </Link>
+                            <Link
+                              to="/"
+                              className={
+                                hoverToHome
+                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
+                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold"
+                              }
+                              onMouseEnter={() => setHoverToHome(true)}
+                              onMouseLeave={() => setHoverToHome(false)}
+                            >
+                              홈으로
+                            </Link>
+                          </li>
+                        </ul>
+                        <div className="bg-black w-[305px] ml-2 h-[305px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-"></div>
+                      </div>
+                    )}
+                  </div>
+                </ul>
               </div>
-            </ul>
-          </div>
-          <div className="w-[305px] h-[305px] bg-black ml-14 mt-14"></div>
-        </div>
+              <div className="w-[305px] h-[305px] bg-black ml-14 mt-14"></div>
+            </div>
+          )}
+        </>
+      ) : (
+        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+          민팅하기
+        </button>
       )}
-    </>
+    </div>
   );
 };
 

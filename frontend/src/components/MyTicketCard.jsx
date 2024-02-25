@@ -5,19 +5,42 @@ import axios from "axios";
 import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
+import MyTicketCardModal from "./MyTicketCardModal";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
 
 const MyTicketCard = () => {
   const [isModal, setIsModal] = useState(false);
-  const isModalOpen = () => {
-    setIsModal(!isModal);
-  };
   const { account, preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [purchasedList, setPurchasedList] = useState([]);
+
+  const isModalOpen = () => {
+    setIsModal(!isModal);
+  };
+
+  const getPurchased = async () => {
+    const customerID = localStorage.getItem("customerID");
+    if (!customerID) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/purchase_list?customerID=${customerID}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setPurchasedList(data);
+        console.log("getPurchased: ", data);
+      } else {
+        throw new Error("Failed to fetch purchase list");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getMyNft = async () => {
     try {
@@ -44,6 +67,7 @@ const MyTicketCard = () => {
               .call();
 
             const response = await axios.get(metadataURI);
+            // const purchase = purchasedList.find((p) => p.ID === tokenId);
 
             temp.push({ ...response.data, tokenId: Number(tokenId) });
             // console.log(response.data);
@@ -61,14 +85,21 @@ const MyTicketCard = () => {
   };
 
   useEffect(() => {
+    if (purchasedList) return;
+    getPurchased();
+  }, [purchasedList]);
+
+  useEffect(() => {
     if (!preEventContract) return;
 
     getMyNft();
   }, [preEventContract]);
 
   return (
-    <div className="w-[425px] h-[90vh]">
-      <div className="w-[425px] text-center text-3xl mt-2">MY TICKET</div>
+    <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
+      <div className=" flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 w-[370px] border-b-black">
+        MY TICKET
+      </div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
           <div className="flex items-center justify-start text-3xl flex-col mt-20">
@@ -91,36 +122,52 @@ const MyTicketCard = () => {
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header">
-            <div className="w-[384px] h-[202px] ml-[24px] mt-[4px] fixed bg-black top-0 left-0 -z-30 content"></div>
-
             <button
               className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
-              <img src={v.image} alt={v.name} className="w-[145px]" />
-              <div className="w-[255px] bg-white h-[200px]">
-                <ul className="mt-5">
-                  TokenID : {v.tokenId}
-                  <div className="mt-5 px-5">
-                    <ul className="text-sm font-semibold flex items-center gap-1 ">
-                      <CiMicrophoneOn />
-                      IU
+              <img
+                src={v.image}
+                alt={v.name}
+                className="w-[145px] object-cover"
+              />
+              <div className="w-[255px] bg-white hover:bg-[#b3b3b3] hover:text-white duration-150 h-[200px]">
+                <ul className="mt-10 mr-3">
+                  티켓 번호 : {v.tokenId}
+                  <div className="mt-10 ml-5 px-5">
+                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+                      <span className="mr-[-2px]">
+                        <CiMicrophoneOn />
+                      </span>
+                      <span className="mr-[10px]">IU</span>
                     </ul>
-                    <ul className="text-sm mt-[2px] flex items-center gap-1">
-                      <CiLocationOn />
-                      장소
+                    <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                      <span>
+                        <CiLocationOn />
+                      </span>
+                      <span className="text-xs ">잠실종합운동장</span>
                     </ul>
-                    <ul className="text-sm flex items-center gap-1">
-                      <CiCalendar />
-                      2024.02.29 ~ 2024.03.02
+                    <ul className="text-sm flex items-center font-light gap-1">
+                      <span className="ml-[1px]">
+                        <CiCalendar />
+                      </span>
+                      <span className="text-xs mt-[1px]">
+                        2024.02.29 - 2024.03.02
+                      </span>
                     </ul>
                   </div>
                 </ul>
               </div>
             </button>
+            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
           </div>
         ))}
       </div>
+      {isModal && (
+        <div className="bg-black bg-opacity-45 top-0 left-0 fixed h-full w-full">
+          <MyTicketCardModal isModalOpen={isModalOpen} />
+        </div>
+      )}
     </div>
   );
 };

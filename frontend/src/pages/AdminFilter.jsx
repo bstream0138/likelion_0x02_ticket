@@ -3,6 +3,7 @@ import PreEventAbi from "../abis/PreEventAbi.json";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { Web3 } from "web3";
 
+//이벤트 필터 테스트
 const AdminFilter = () => {
   const [transferEvent, setTransferEvent] = useState();
 

@@ -13,14 +13,7 @@ import { CreateAddress } from "../components/CreateAddress";
 // 회원 정보 처리 후, App에서 사용할 각종 context 정보 처리
 
 const LoginSuccess = () => {
-  const {
-    account,
-    setAccount,
-    web3,
-    setWeb3,
-    preEventContract,
-    setPreEventContract,
-  } = useOutletContext();
+  const { setAccount, setWeb3, setPreEventContract } = useOutletContext();
 
   const current_url = useLocation();
   const navigate = useNavigate();
@@ -39,7 +32,7 @@ const LoginSuccess = () => {
         if (userID && userName) {
           CreateAddress(userID, userName)
             .then(({ privateKey, address }) => {
-              fetch("http://localhost:3001/store_kinfo", {
+              fetch(`${process.env.REACT_APP_BACKEND_URL}/store_kinfo`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -76,16 +69,19 @@ const LoginSuccess = () => {
         localStorage.setItem("account", account);
 
         try {
-          const response = await fetch("http://localhost:3001/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              loginFrom: "M",
-              account: account,
-            }),
-          });
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/login`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                loginFrom: "M",
+                account: account,
+              }),
+            }
+          );
           if (response.ok) {
             const data = await response.json();
             console.log(data);
@@ -122,7 +118,7 @@ const LoginSuccess = () => {
   }, [current_url]);
 
   return (
-    <div className="w-[425px] min-h-screen bg-blue-200 mx-auto z-10 flex justify-center items-center">
+    <div className=" min-w-screen min-h-screen  md:w-[450px] bg-blue-200 mx-auto z-10 flex justify-center items-center">
       <p className="text-2xl">로그인 성공</p>
     </div>
   );

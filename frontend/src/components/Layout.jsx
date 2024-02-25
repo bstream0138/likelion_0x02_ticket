@@ -32,7 +32,10 @@ const Layout = () => {
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");
       try {
-        const response = await fetch("http://localhost:3001/concert");
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/concert`
+        );
+        console.log("fetchConcert: ", response);
         if (response.ok) {
           console.log("Success.");
           const data = await response.json();
@@ -50,41 +53,24 @@ const Layout = () => {
     fetchConcert();
   }, []);
 
+  //모바일이면 미니멈스크린 PC의경우 픽셀고정
   return (
     <>
-      {checkIsMobile() ? (
-        <div className="border-2 min-w-screen min-h-screen mx-auto border-black">
-          <Header account={account} />
-          <Outlet
-            context={{
-              account,
-              setAccount,
-              preEventContract,
-              setPreEventContract,
-              web3,
-              setWeb3,
-              concert,
-            }}
-          />
-          <MenuBar />
-        </div>
-      ) : (
-        <div className="border-2 w-[450px] mx-auto border-black">
-          <Header account={account} />
-          <Outlet
-            context={{
-              account,
-              setAccount,
-              preEventContract,
-              setPreEventContract,
-              web3,
-              setWeb3,
-              concert,
-            }}
-          />
-          <MenuBar />
-        </div>
-      )}
+      <div className="border-2 min-w-screen min-h-screen mx-auto md:w-[450px] border-black">
+        <Header account={account} />
+        <Outlet
+          context={{
+            account,
+            setAccount,
+            preEventContract,
+            setPreEventContract,
+            web3,
+            setWeb3,
+            concert,
+          }}
+        />
+        <MenuBar />
+      </div>
     </>
   );
 };

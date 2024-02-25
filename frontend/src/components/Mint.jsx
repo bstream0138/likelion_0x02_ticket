@@ -6,6 +6,7 @@ import { ImSpinner8 } from "react-icons/im";
 
 import Web3 from "web3";
 
+//결제 성공후 민팅 모달 => 결제 성공페이지에 합침 성공시 삭제 가능
 const Mint = () => {
   const { preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);

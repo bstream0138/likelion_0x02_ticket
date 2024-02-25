@@ -18,7 +18,7 @@ const LoginPage = () => {
   // 카카오 로그인 관련
   const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&frontend=dev`;
 
   const connectMetamask = async () => {
     if (window.ethereum) {
@@ -59,7 +59,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen space-y-4">
+    <div className="flex flex-col items-center justify-center min-h-screen  min-w-screen  md:w-[450px] mx-auto space-y-4">
       <div className="text-center">
         <a
           href={KAKAO_AUTH_URL}

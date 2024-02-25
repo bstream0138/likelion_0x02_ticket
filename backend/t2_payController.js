@@ -1,8 +1,25 @@
 const axios = require('axios');
+const https = require('https');
+const crypto = require('crypto');
+
+const agent = new https.Agent({
+    rejectUnauthorized: false,
+    secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+});
 
 exports.kakaoPayReady = async (req, res) => {
 
     console.log('Pay request: ', req.body);
+
+    // frontend 호출자에 따른 redirectURL 변경
+    const refererURL = req.headers.referer;
+    let redirectURL;
+    if( refererURL.includes('localhost')) {
+        redirectURL = 'http://localhost:3000'
+    } else {
+        redirectURL = 'https://happyticket.duckdns.org'
+    }
+    console.log('kakaoLogin/kakaoPayReady:', redirectURL);
 
     //온라인 단건 결제 
     // 1) 결제준비 API - 결제 상세정보를 서버에 전달하고, 결제 고유 번호(tid)를 받음
@@ -14,9 +31,9 @@ exports.kakaoPayReady = async (req, res) => {
     try {
         // 상품명, 결제금액
         const { item_name, total_amount, is_mobile } = req.body;
-        const approval_url = "http://localhost:3000/payment_success";
-        const fail_url = "http://localhost:3000/payment_fail";
-        const cancel_url = "http://localhost:3000/payment_cancel";
+        const approval_url = `${redirectURL}/payment_success`;
+        const fail_url = `${redirectURL}/payment_fail`;
+        const cancel_url = `${redirectURL}/payment_cancel`;
 
         // 결제 준비 요청
         const response = await axios.post('https://open-api.kakaopay.com/online/v1/payment/ready', {
@@ -32,9 +49,11 @@ exports.kakaoPayReady = async (req, res) => {
             "fail_url": fail_url,
             "cancel_url": cancel_url,
         }, {
+            httpsAgent: agent,
             headers: {
                 Authorization: `DEV_SECRET_KEY ${process.env.PAY_DEV_SECRET_KEY}`,
                 'Content-type': 'application/json'
+
             },
         });
 
@@ -49,6 +68,7 @@ exports.kakaoPayReady = async (req, res) => {
     }
 };
 
+/*
 exports.kakaoPayApprove = async (req, res) => {
 
     try {
@@ -77,4 +97,4 @@ exports.kakaoPayApprove = async (req, res) => {
         res.status(500).send('Internel Server Error');
     }
 };
-
+*/
