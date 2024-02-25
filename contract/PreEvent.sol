@@ -1,76 +1,87 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.2 <0.9.0;
 
-/*
-[Pre-Event Ticket : 최초 발행부터 유저에게까지 + 웰컴이벤트 : Reveal] - 소비자와 우리의 소통
-
-<주최자>
-1. 주최자가 우리에게 정보 제공 : 티켓 이름, 심볼, 그림(비포, 애프터URI) -> Constructor input
---> 총 수량을 함부로 정하는 것은 위험함. 수량은 정하지 말 것.
-
-<소비자>
-1. 충전 완료한 자체토큰으로 티켓 예매 -> 예매완료 시 '티켓 받기' 버튼 활성화 -> '티켓 받기' 클릭 시 우리가 mintTicket() 함수 실행
-
-2. 예매 취소(환불 요청) -> 환불처리가 완료된 티켓의 tokenId를 blacklist에 넣기(blacklist에 올린 티켓은 모든 거래 불가)
-
-<우리>
-1. 주최자 의뢰대로 정해진 시간에 티켓 발행(Deploy) 및 예매 종료
-2. 시간에 맞춰 reveal 시키기(Pre-Event)
-*/
-
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./CanceledTicket.sol";
-
+// my ticket 역할의 Pre-Ticket
 contract PreTicket is ERC721Enumerable, Ownable {
-    string beforeURI; // 초기 발행 시 티켓 이미지 ex) 가수 사진 + 공연시간,장소 적힌 평범한 이미지
-    string afterURI; // pre event용 티켓 이미지 ex) 콘서트 포스터 사진
+    string musician;
+    string metadataURI;
     bool isRevealed;
 
-    // tokenId => bool
+    // 환불리스트, 입장리스트 (tokenId => bool)
     mapping(uint => bool) internal isCanceledTicket;
-
-    event Canceled(uint indexed _tokenId);
+    mapping(uint => bool) internal isEnteredTicket;
     
-    modifier notCanceled(uint _tokenId) {
-        require(!isCanceledTicket[_tokenId], "CanceledTicket: ticket is canceled");
+    // 입장여부 확인 modifier, 입장한 티켓이라면 error
+    modifier notEntered(uint _tokenId) {
+        require(!isEnteredTicket[_tokenId], "This is already entered ticket");
         _;
     }
 
-    constructor(string memory _name, string memory _symbol, string memory _beforeURI, string memory _afterURI) ERC721(_name, _symbol) Ownable(msg.sender) {
-        beforeURI = _beforeURI;
-        afterURI = _afterURI;
+    // 환불여부 확인 modifier, 환불된 티켓이라면 error
+    modifier notCanceled(uint _tokenId) {
+        require(!isCanceledTicket[_tokenId], "This is canceled ticket");
+        _;
     }
 
-    // 티켓 발급
-    function mintTicket(address _addr) public onlyOwner {
+    // 주최자의 의뢰대로 인풋값 입력, admin = 배포자
+    constructor(string memory _name, string memory _symbol, string memory _metadataURI) ERC721(_name, _symbol) Ownable(msg.sender) {
+        musician = _name;
+        metadataURI = _metadataURI;
+    }
+
+    // 티켓 발급 : admin만 원하는 address로 민팅, 가스비 사용하므로 admin만 실행 가능
+    function mintTicket(address _addr) external onlyOwner {
+        require(!isRevealed, "Can not mint after revealed");
         uint tokenId = totalSupply() + 1;
         _mint(_addr, tokenId);
     }
 
-    function reveal() public onlyOwner {
+    // 리빌 : 웰컴메시지 역할, 정해진 시간에만 입장 가능하게끔(추가설명은 아래 enter 함수로..), 가스비 사용하므로 admin만 실행 가능
+    function reveal() external onlyOwner {
         isRevealed = true;
     }
 
-    function tokenURI(uint _tokenId) public view override returns(string memory) {
-        if(!isRevealed) {
-            return string(abi.encodePacked(beforeURI));
-        } else {
-            return string(abi.encodePacked(afterURI));
-        }
+    // 입장 : 웰컴메시지를 받은(=reveal이 된) 티켓만 입장 가능, 가스비 사용하므로 admin만 실행 가능
+    function enter(uint _tokenId) external onlyOwner notCanceled(_tokenId) notEntered(_tokenId) {
+        require(isRevealed, "Ticket is not revealed yet");
+        isEnteredTicket[_tokenId] = true;
     }
-    
+
+    // 환불 : 해당 tokenId를 가진 티켓 취소 후 티켓 소각, 가스비 사용하므로 admin만 실행 가능
+    function cancel(uint _tokenId) external onlyOwner notCanceled(_tokenId) notEntered(_tokenId) {
+        isCanceledTicket[_tokenId] = true;
+        // _burn(_tokenId);
+    }
+
+    // 환불과 함께 바로 소각 할 것인지(환불완료 그림 확인 불가), 환불과 소각을 따로 둘 것인지(환불완료 그림 확인 가능)
+    // + ticket -> collection 이동 시 pre-ticket을 소각할 것인지, 단순하게 안보이게 할 것인지
+    function burnTicket(uint _tokenId) external onlyOwner {
+        _burn(_tokenId);
+    }
+
+    // 입장한 티켓인지 tokenId로 확인
+    function isEntered(uint _tokenId) external view returns(bool) {
+        return isEnteredTicket[_tokenId];
+    }
+
     // 취소된 티켓인지 tokenId로 확인
     function isCanceled(uint _tokenId) external view returns(bool) {
         return isCanceledTicket[_tokenId];
     }
 
-    // 해당 tokenId를 가진 티켓 취소
-    function cancel(uint _tokenId) external {
-        require(msg.sender == ownerOf(_tokenId), "You are not owner of this ticket");
-        isCanceledTicket[_tokenId] = true;
-        emit Canceled(_tokenId);
+    // 각 상황에 맞게 총 4가지 URI(before, after, entered, canceled)
+    function tokenURI(uint _tokenId) public view override returns(string memory) {
+        if(!isRevealed && !isEnteredTicket[_tokenId] && !isCanceledTicket[_tokenId]) {
+            return string(abi.encodePacked(metadataURI, '/', musician, '_Before.json'));
+        } else if(isRevealed && !isEnteredTicket[_tokenId] && !isCanceledTicket[_tokenId]) {
+            return string(abi.encodePacked(metadataURI, '/', musician, '_After.json'));
+        } else if(isRevealed && isEnteredTicket[_tokenId] && !isCanceledTicket[_tokenId]) {
+            return string(abi.encodePacked(metadataURI, '/', musician, '_Entered.json'));
+        } else {
+            return string(abi.encodePacked(metadataURI, '/', musician, '_Canceled.json'));
+        }
     }
 }
