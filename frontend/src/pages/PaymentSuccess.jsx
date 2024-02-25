@@ -40,8 +40,9 @@ const PaymentSuccess = ({ toggleOpen }) => {
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
 
-  const onClickMint = async () => {
+  const onClickMint = async (e) => {
     try {
+      e.preventDefault();
       if (!preEventContract || !account || !mintAccount) return;
 
       setIsLoading(true);
@@ -157,9 +158,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
           </ul>
           <div className="md:w-[450px] min-w-screen h-[290px] mx-auto bg-[#038BD5]">
             <ul className="flex items-center justify-center h-full gap-4 flex-col">
-              <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?
-티켓 민팅 후 환불이 불가능합니다
-`}</div>
+              <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?`}</div>
               <div className="text-xs text-center">
                 민팅은 MY메뉴의 구매내역에서도 가능합니다
               </div>

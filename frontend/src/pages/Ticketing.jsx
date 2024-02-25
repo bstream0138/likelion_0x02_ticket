@@ -91,7 +91,9 @@ const Ticketing = () => {
           </div>
 
           <div className="px-5 text-2xl font-bold mt-3 ml-3">CASTING</div>
-
+          <ul className="w-[100px] h-[100px] object-contain ml-9 ">
+            <img className="w-[100px]" src="../iucasting.png" alt="iu" />
+          </ul>
           {isModal && (
             <Payment
               toggleOpen={toggleOpen}

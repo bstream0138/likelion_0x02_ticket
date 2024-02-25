@@ -18,9 +18,9 @@ const MyTicketCard = () => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [purchasedList, setPurchasedList] = useState([]);
 
-  const isModalOpen = () => {
-    setIsModal(!isModal);
-  };
+  // const isModalOpen = () => {
+  //   setIsModal(!isModal);
+  // };
 
   const getPurchased = async () => {
     const customerID = localStorage.getItem("customerID");
@@ -97,9 +97,7 @@ const MyTicketCard = () => {
 
   return (
     <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
-      <div className=" flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 w-[370px] border-b-black">
-        MY TICKET
-      </div>
+      <div className=" flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 w-[370px] border-b-black"></div>
       <div className="flex flex-col gap-3 pt-10">
         {isLoading && (
           <div className="flex items-center justify-start text-3xl flex-col mt-20">
@@ -122,19 +120,16 @@ const MyTicketCard = () => {
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header">
-            <button
-              className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
-              onClick={isModalOpen}
-            >
+            <button className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex ">
               <img
                 src={v.image}
                 alt={v.name}
                 className="w-[145px] object-cover"
               />
-              <div className="w-[255px] bg-white hover:bg-[#b3b3b3] hover:text-white duration-150 h-[200px]">
-                <ul className="mt-10 mr-3">
+              <div className="w-[255px] bg-white  h-[200px]">
+                <ul className="mt-6 mr-3">
                   티켓 번호 : {v.tokenId}
-                  <div className="mt-10 ml-5 px-5">
+                  <div className="mt-6 ml-5 px-5">
                     <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
                       <span className="mr-[-2px]">
                         <CiMicrophoneOn />
@@ -157,17 +152,22 @@ const MyTicketCard = () => {
                     </ul>
                   </div>
                 </ul>
+                <ul className="mt-3 flex items-center justify-center">
+                  <button
+                    key={v.tokenId}
+                    className={
+                      "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+                    }
+                  >
+                    공연 입장
+                  </button>
+                </ul>
               </div>
             </button>
             <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
           </div>
         ))}
       </div>
-      {isModal && (
-        <div className="bg-black bg-opacity-45 top-0 left-0 fixed h-full w-full">
-          <MyTicketCardModal isModalOpen={isModalOpen} />
-        </div>
-      )}
     </div>
   );
 };
