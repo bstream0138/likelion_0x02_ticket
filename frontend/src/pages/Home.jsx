@@ -8,8 +8,8 @@ const Home = () => {
       <div className="w-[350px] h-[280px] mx-auto rounded-md mt-12">
         <TicketBanner />
       </div>
-      <div className="mt-[162px] border-t-2 w-[370px] mx-auto  border-black"></div>
-      <ul className="flex items-center mt-4 mx-6">
+      <div className="mt-[162px] border-t-2 w-[370px] mx-auto border-black"></div>
+      <ul className="flex items-center mt-4 mx-6  text-[16px] ">
         <Link
           to="/ticketing/1"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
@@ -33,7 +33,7 @@ const Home = () => {
           Hype Boy
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-2  ">
+      <ul className="flex items-center mt-4 mx-auto px-2 text-[16px]  ">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -59,7 +59,7 @@ const Home = () => {
           aespa
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto ">
+      <ul className="flex items-center mt-4 mx-auto text-[16px] ">
         <button className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -67,7 +67,7 @@ const Home = () => {
           BLACKPINK IN YOUR AREA
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-3">
+      <ul className="flex items-center mt-4 mx-auto px-3 text-[16px]">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />
@@ -93,7 +93,7 @@ const Home = () => {
           Drama
         </button>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-4">
+      <ul className="flex items-center mt-4 mx-auto px-4 text-[16px]">
         <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
           <span className="mb-1">
             <PiHashBold />

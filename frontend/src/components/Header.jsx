@@ -17,7 +17,8 @@ const Header = ({ account }) => {
         </Link>
         {account ? (
           <div className="flex text-sm mr-12">
-            <PiWalletBold className="text-lg" /> : {account.substring(0, 7)}
+            <PiWalletBold className="text-sm mt-[1px]" /> :{" "}
+            {account.substring(0, 7)}
             ...{account.substring(account.length - 5)}
           </div>
         ) : (

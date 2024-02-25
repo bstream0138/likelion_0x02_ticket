@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
+import { ImSpinner8 } from "react-icons/im";
 
 const Account = ({ setIsModal }) => {
   const { account, web3, preEventContract } = useOutletContext();
@@ -13,10 +14,11 @@ const Account = ({ setIsModal }) => {
   const [testAmount, setTestAmount] = useState(0);
   const [hoverNftSend, setHoverNftSend] = useState(false);
   const [hoverEthSend, setHoverEthSend] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const privateKey =
-    "0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f";
   //유저가 생성한 비공개키 넣기
+  const privateKey =
+    "0x2cef6d0d87fab4ee4048e178dca810c36e72360b3f2650179b8606f827d4acfe";
   // 1. 0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee;
   // 2. 0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f;
 
@@ -42,7 +44,10 @@ const Account = ({ setIsModal }) => {
     e.preventDefault();
     if (!testTo || !testAmount) return;
 
+    setIsLoading(true);
+
     const amountToWei = web3.utils.toWei(testAmount.toString(), "ether");
+    const gasPrice = await web3.eth.getGasPrice();
     const estimatedGas = await web3.eth.estimateGas({
       from: account,
       to: testTo,
@@ -54,17 +59,18 @@ const Account = ({ setIsModal }) => {
       to: testTo,
       value: amountToWei,
       gas: estimatedGas,
+      gasPrice: gasPrice,
     };
 
     try {
-      const receipt = await web3.eth.sendTransaction({
-        from: account,
-        to: testTo,
-        value: amountToWei,
-        gas: estimatedGas,
-      });
+      // const receipt = await web3.eth.sendTransaction({
+      //   from: account,
+      //   to: testTo,
+      //   value: amountToWei,
+      //   gas: estimatedGas,
+      // });
 
-      console.log(`Transaction successful : ${receipt}`);
+      // console.log(`Transaction successful : ${receipt}`);
       await updateBalance();
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
@@ -74,14 +80,20 @@ const Account = ({ setIsModal }) => {
       );
 
       console.log("영수증 :", txReceipt);
+      setIsLoading(false);
+
+      setTestAmount(0);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
   //잔액정보를 새로 불러와서 sendEth에서 써야 오류 안일어남
   const updateBalance = async () => {
     if (!account) return;
+
+    setIsLoading(true);
 
     try {
       const balanceWei = await web3.eth.getBalance(account);
@@ -97,10 +109,9 @@ const Account = ({ setIsModal }) => {
     try {
       e.preventDefault();
       if (!account || !testTo || tokenIdTo === undefined) return;
+      setIsLoading(true);
 
       // const nonce = await web3.eth.getTransactionCount(account, "latest");
-      const gasPrice = await web3.eth.getGasPrice();
-      // console.log(gasPrice);
 
       const tokenId = Number(tokenIdTo);
 
@@ -135,8 +146,11 @@ const Account = ({ setIsModal }) => {
       );
 
       console.log("영수증 :", txReceipt);
+      setIsLoading(false);
+      setTokenIdTo("");
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -235,6 +249,14 @@ const Account = ({ setIsModal }) => {
                 send
               </button>
             </form>
+          )}
+          {isLoading && (
+            <ul className="flex justify-center mt-10 items-center flex-col">
+              <li>
+                <ImSpinner8 className="animate-spin h-10 w-10" />
+              </li>
+              <li className="mt-2">잠시만 기다려주세요</li>
+            </ul>
           )}
         </div>
       </div>

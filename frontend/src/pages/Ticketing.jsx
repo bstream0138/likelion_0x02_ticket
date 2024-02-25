@@ -75,16 +75,16 @@ const Ticketing = () => {
           </div>
 
           <div className="mt-10 px-5 ml-3">
-            <ul className="text-3xl">{concertInfo.TITLE}</ul>
-            <ul className="text-xs font-normal flex items-center gap-1 mt-3 ml-[1px]">
+            <ul className="text-3xl border-black">{concertInfo.TITLE}</ul>
+            <ul className="text-xl font-normal flex items-center gap-[1px] mt-3">
               <CiMicrophoneOn />
               {concertInfo.CONTENT}
             </ul>
-            <ul className="text-sm mt-1 flex items-center gap-1">
+            <ul className="text-sm flex items-center mt-2 ml-[1px] gap-1">
               <CiLocationOn />
-              장소
+              잠실종합운동장
             </ul>
-            <ul className="text-sm flex items-center gap-1">
+            <ul className="text-sm flex items-center gap-1 mt-1 ml-[2px]">
               <CiCalendar />
               {concertInfo.DATE}
             </ul>
