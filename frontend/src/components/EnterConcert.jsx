@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 
@@ -8,22 +9,14 @@ const EnterConcert = ({
   account,
   web3,
   privateKey,
-  isLoading,
-  setIsLoading,
+  isEntered,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const onClickEnter = async () => {
     try {
       if (!preEventContract) return;
 
       setIsLoading(true);
-
-      const balance = await preEventContract.methods.balanceOf(account).call();
-      // const tokenId = Number(balance);
-      // const nonce = await web3.eth.getTransactionCount(account, "latest");
-
-      const tokenId = await preEventContract.methods
-        .tokenOfOwnerByIndex(account, Number(balance) - 1)
-        .call();
 
       const tx = {
         from: mintAccount.address,
@@ -67,19 +60,21 @@ const EnterConcert = ({
       {isLoading ? (
         <ul className="flex justify-center items-center flex-col">
           <li>
-            <ImSpinner8 className="animate-spin h-6 w-6" />
+            <ImSpinner8 className="animate-spin h-4 w-4" />
           </li>
-          <li className="mt-1 text-sm">공연 입장 중</li>
+          <li className="mt-1 text-xs">공연 입장</li>
         </ul>
       ) : (
         <button
           key={tokenId}
           className={
-            "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+            isEntered
+              ? "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px]  focus:bg-[#038BD5]  py-1 px-[6px] rounded-md text-md font-semibold duration-150 cursor-not-allowed border-[#919191] text-[#919191]"
+              : "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
           }
-          onClick={onClickEnter}
+          onClick={() => onClickEnter(tokenId)}
         >
-          컬렉션 보관
+          공연 입장
         </button>
       )}
     </>

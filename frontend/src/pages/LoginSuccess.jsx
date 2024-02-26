@@ -14,9 +14,13 @@ import { CreateAddress } from "../components/CreateAddress";
 
 const LoginSuccess = () => {
   const { setAccount, setWeb3, setPreEventContract } = useOutletContext();
+  const [kakaoImage, setKakaoImage] = useState();
+  const [kakaoId, setKakaoId] = useState();
+  const [kakaoName, setKakaoName] = useState();
 
   const current_url = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(current_url.search);
@@ -29,6 +33,12 @@ const LoginSuccess = () => {
         const userID = queryParams.get("userID");
         const userName = queryParams.get("userName");
         const userImage = queryParams.get("userImage");
+<<<<<<< HEAD
+=======
+        setKakaoName(userName);
+        setKakaoId(userID);
+        setKakaoImage(userImage);
+>>>>>>> origin/main
 
         if (userID && userName) {
           CreateAddress(userID, userName)
@@ -44,6 +54,7 @@ const LoginSuccess = () => {
                   userName,
                   privateKey,
                   address,
+                  userImage,
                 }),
               })
                 .then((response) => response.json())
@@ -118,10 +129,25 @@ const LoginSuccess = () => {
     // console.log("LoginSuccess.jsx/useEffect/preEventContract: ", preEventContract);
   }, [current_url]);
 
-  return (
-    <div className=" min-w-screen min-h-screen  md:w-[450px] bg-white mx-auto z-10 flex justify-center items-center">
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
-      <p className="text-2xl">로그인 성공</p>
+  return (
+    <div className=" min-w-screen min-h-screen  md:w-[450px] mt-20 mx-auto z-10 flex justify-start items-center flex-col">
+      <p className="text-4xl border-2 px-2 py-2 border-black border-b-4 border-r-4 rounded-md">
+        로그인 성공
+      </p>
+      <ul className="flex flex-col items-center justify-center mt-10 ">
+        <img
+          src={kakaoImage}
+          alt="profileImage"
+          className="w-20 rounded-full border-2 shadow-xl"
+        />
+        <li className="mt-2 text-xl">
+          <span className="font-semibold">{kakaoName}</span> 님 환영합니다!
+        </li>
+      </ul>
     </div>
   );
 };

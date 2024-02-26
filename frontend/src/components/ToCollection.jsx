@@ -1,6 +1,7 @@
 import axios from "axios";
 import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+import { useState } from "react";
 
 const ToCollection = ({
   tokenId,
@@ -9,12 +10,12 @@ const ToCollection = ({
   account,
   web3,
   privateKey,
-  setIsLoading,
-  setIsModalOpen,
   metadataArray,
   setMetadataArray,
-  isLoading,
+  isEntered,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const onClickPostMint = async () => {
     try {
       if (!postEventContract || !account || !mintAccount) return;
@@ -77,15 +78,17 @@ const ToCollection = ({
       {isLoading ? (
         <ul className="flex justify-center items-center flex-col">
           <li>
-            <ImSpinner8 className="animate-spin h-6 w-6" />
+            <ImSpinner8 className="animate-spin h-4 w-4" />
           </li>
-          <li className="mt-1 text-sm">컬렉션으로 이동</li>
+          <li className="mt-1 text-xs">컬렉션으로 이동</li>
         </ul>
       ) : (
         <button
           key={tokenId}
           className={
-            "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+            isEntered
+              ? "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+              : "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px]  focus:bg-[#038BD5]  py-1 px-[6px] rounded-md text-md font-semibold duration-150 cursor-not-allowed border-[#919191] text-[#919191]"
           }
           onClick={onClickPostMint}
         >
