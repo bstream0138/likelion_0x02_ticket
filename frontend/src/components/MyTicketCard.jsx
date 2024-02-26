@@ -4,8 +4,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
-import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
+import {
+  POST_EVENT_CONTRACT,
+  PRE_EVENT_CONTRACT,
+} from "../abis/contractAddress";
 import postEventAbi from "../abis/PostEventAbi.json";
+import preEventAbi from "../abis/PreEventAbi.json";
 import PreTicket from "./PreTicket";
 // import MyTicketCardModal from "./MyTicketCardModal";
 
@@ -14,7 +18,6 @@ import PreTicket from "./PreTicket";
 
 const MyTicketCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
@@ -31,6 +34,10 @@ const MyTicketCard = () => {
   const postEventContract = new web3.eth.Contract(
     postEventAbi,
     POST_EVENT_CONTRACT
+  );
+  const preEventContract = new web3.eth.Contract(
+    preEventAbi,
+    PRE_EVENT_CONTRACT
   );
   const account = localStorage.getItem("account");
   // console.log("Mint/account(2): ", account);
@@ -113,7 +120,7 @@ const MyTicketCard = () => {
   useEffect(() => {
     if (!preEventContract) return;
     getMyNft();
-  }, [preEventContract]);
+  }, []);
 
   useEffect(() => {
     if (purchasedList) return;
