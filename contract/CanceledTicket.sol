@@ -25,7 +25,7 @@ abstract contract CanceledTicket is Ownable {
         emit Canceled(_tokenId);
     }
 
-    // 해당 tokenId를 가진 
+    // 해당 tokenId를 가진 취소된 티켓 다시 복구
     function unCancel(uint _tokenId) external onlyOwner {
         isCanceledTicket[_tokenId] = false;
         emit UnCanceled(_tokenId);

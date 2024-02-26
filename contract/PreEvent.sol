@@ -39,26 +39,26 @@ contract PreTicket is ERC721Enumerable, Ownable {
         _mint(_addr, tokenId);
     }
 
-    // 리빌 : 웰컴메시지 역할, 정해진 시간에만 입장 가능하게끔(추가설명은 아래 enter 함수로..), 가스비 사용하므로 admin만 실행 가능
-    function reveal() external onlyOwner {
-        isRevealed = true;
+    // 리빌(before -> after) : 웰컴메시지 역할, 정해진 시간에만 입장 가능하게끔(추가설명은 아래 enter 함수로..), 가스비 사용하므로 admin만 실행 가능
+    function reveal(bool _reveal) external onlyOwner {
+        // isRevealed = true;
+        isRevealed = _reveal; // 시연용
     }
 
-    // 입장 : 웰컴메시지를 받은(=reveal이 된) 티켓만 입장 가능, 가스비 사용하므로 admin만 실행 가능
+    // 입장(after -> entered) : 웰컴메시지를 받은(=reveal이 된) 티켓만 입장 가능, 가스비 사용하므로 admin만 실행 가능
     function enter(uint _tokenId) external onlyOwner notCanceled(_tokenId) notEntered(_tokenId) {
         require(isRevealed, "Ticket is not revealed yet");
         isEnteredTicket[_tokenId] = true;
     }
 
-    // 환불 : 해당 tokenId를 가진 티켓 취소 후 티켓 소각, 가스비 사용하므로 admin만 실행 가능
+    // 환불(before/after -> canceled) : 해당 tokenId를 가진 티켓 취소, 가스비 사용하므로 admin만 실행 가능
     function cancel(uint _tokenId) external onlyOwner notCanceled(_tokenId) notEntered(_tokenId) {
         isCanceledTicket[_tokenId] = true;
-        // _burn(_tokenId);
     }
 
-    // 환불과 함께 바로 소각 할 것인지(환불완료 그림 확인 불가), 환불과 소각을 따로 둘 것인지(환불완료 그림 확인 가능)
-    // + ticket -> collection 이동 시 pre-ticket을 소각할 것인지, 단순하게 안보이게 할 것인지
+    // 소각 : 사용 불가한 티켓(입장 완료 후, 환불 완료 후) 삭제
     function burnTicket(uint _tokenId) external onlyOwner {
+        require(isEnteredTicket[_tokenId] || isCanceledTicket[_tokenId], "Can not burn before entered or canceled");
         _burn(_tokenId);
     }
 

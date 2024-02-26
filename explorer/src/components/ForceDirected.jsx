@@ -14,8 +14,8 @@ const ForceDirected = () => {
   const color = d3.scaleOrdinal(d3.schemeCategory10);
 
   useEffect(() => {
-    const width = 1000;
-    const height = 1000;
+    const width = 800;
+    const height = 400;
 
     // 애니메이션
     const simulation = d3
