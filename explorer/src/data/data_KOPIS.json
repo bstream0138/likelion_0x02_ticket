@@ -1,0 +1,122 @@
+[
+    {
+        "period": "2023.01",
+        "performance_count": 998,
+        "premiere_count": 763,
+        "performance_times": 8191,
+        "sales_count": 2138106,
+        "cancellation_count": 872905,
+        "total_ticket_sales_count": 1265201,
+        "total_ticket_sales_amount": 75578891
+    },
+    {
+        "period": "2023.02",
+        "performance_count": 1286,
+        "premiere_count": 1084,
+        "performance_times": 8166,
+        "sales_count": 2257537,
+        "cancellation_count": 872810,
+        "total_ticket_sales_count": 1384727,
+        "total_ticket_sales_amount": 77460969
+    },
+    {
+        "period": "2023.03",
+        "performance_count": 1661,
+        "premiere_count": 1469,
+        "performance_times": 8015,
+        "sales_count": 1912633,
+        "cancellation_count": 662885,
+        "total_ticket_sales_count": 1249748,
+        "total_ticket_sales_amount": 66136251
+    },
+    {
+        "period": "2023.04",
+        "performance_count": 1842,
+        "premiere_count": 1594,
+        "performance_times": 9189,
+        "sales_count": 2404155,
+        "cancellation_count": 926863,
+        "total_ticket_sales_count": 1477292,
+        "total_ticket_sales_amount": 76582834
+    },
+    {
+        "period": "2023.05",
+        "performance_count": 1861,
+        "premiere_count": 1621,
+        "performance_times": 9697,
+        "sales_count": 2903699,
+        "cancellation_count": 1105276,
+        "total_ticket_sales_count": 1798423,
+        "total_ticket_sales_amount": 96449523
+    },
+    {
+        "period": "2023.06",
+        "performance_count": 2011,
+        "premiere_count": 1753,
+        "performance_times": 9208,
+        "sales_count": 2610923,
+        "cancellation_count": 885904,
+        "total_ticket_sales_count": 1725019,
+        "total_ticket_sales_amount": 111308051
+    },
+    {
+        "period": "2023.07",
+        "performance_count": 2017,
+        "premiere_count": 1733,
+        "performance_times": 10465,
+        "sales_count": 2903739,
+        "cancellation_count": 1067826,
+        "total_ticket_sales_count": 1835913,
+        "total_ticket_sales_amount": 116488087
+    },
+    {
+        "period": "2023.08",
+        "performance_count": 1812,
+        "premiere_count": 1548,
+        "performance_times": 10979,
+        "sales_count": 3055357,
+        "cancellation_count": 1169720,
+        "total_ticket_sales_count": 1885637,
+        "total_ticket_sales_amount": 122726381
+    },
+    {
+        "period": "2023.09",
+        "performance_count": 2093,
+        "premiere_count": 1863,
+        "performance_times": 8884,
+        "sales_count": 2585154,
+        "cancellation_count": 903729,
+        "total_ticket_sales_count": 1681425,
+        "total_ticket_sales_amount": 88892537
+    },
+    {
+        "period": "2023.10",
+        "performance_count": 2228,
+        "premiere_count": 1974,
+        "performance_times": 10072,
+        "sales_count": 2835064,
+        "cancellation_count": 1010777,
+        "total_ticket_sales_count": 1824287,
+        "total_ticket_sales_amount": 108621587
+    },
+    {
+        "period": "2023.11",
+        "performance_count": 2406,
+        "premiere_count": 2169,
+        "performance_times": 9798,
+        "sales_count": 2597934,
+        "cancellation_count": 895136,
+        "total_ticket_sales_count": 1702798,
+        "total_ticket_sales_amount": 103616898
+    },
+    {
+        "period": "2023.12",
+        "performance_count": 2804,
+        "premiere_count": 2537,
+        "performance_times": 13923,
+        "sales_count": 5106081,
+        "cancellation_count": 1967662,
+        "total_ticket_sales_count": 3138419,
+        "total_ticket_sales_amount": 225835573
+    }
+]

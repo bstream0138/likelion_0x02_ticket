@@ -1,18 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.2 <0.9.0;
 
-/*
-<임시로 만든 파일입니다>
-
-[자체토큰] : 토큰은 관리자만 발행 가능
-
-<소비자>
-1. 현금으로 우리에게 결제
-
-<우리>
-1. 소비자 결제 금액 확인 후 토큰 전송
-*/
-
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 // 그냥 이렇게 해도 문제 없는지?
