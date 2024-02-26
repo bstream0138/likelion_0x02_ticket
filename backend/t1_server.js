@@ -41,6 +41,7 @@ app.get('/api/ping', async (req,res) => {
 
 // Kakao API
 app.get('/api/oauth', authController.kakaoLogin);
+app.post('/api/logout', authController.kakaoLogout);
 app.post('/api/payReady', payController.kakaoPayReady);
 //app.post('/api/payApprove', payController.kakaoPayApprove);
 

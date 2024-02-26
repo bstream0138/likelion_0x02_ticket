@@ -28,6 +28,7 @@ const LoginSuccess = () => {
         // Kakao Login
         const userID = queryParams.get("userID");
         const userName = queryParams.get("userName");
+        const userImage = queryParams.get("userImage");
 
         if (userID && userName) {
           CreateAddress(userID, userName)
@@ -118,7 +119,8 @@ const LoginSuccess = () => {
   }, [current_url]);
 
   return (
-    <div className=" min-w-screen min-h-screen  md:w-[450px] bg-blue-200 mx-auto z-10 flex justify-center items-center">
+    <div className=" min-w-screen min-h-screen  md:w-[450px] bg-white mx-auto z-10 flex justify-center items-center">
+
       <p className="text-2xl">로그인 성공</p>
     </div>
   );

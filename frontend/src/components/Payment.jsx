@@ -14,7 +14,7 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
   const navigate = useNavigate();
 
   // 아래는 카카오페이 테스트를 위한 샘플 상품 코드
-  const price = 150000;
+  const price = concertInfo.PRICE;
   const [quantity, setQuantity] = useState(1);
 
   const handlePayment = async () => {

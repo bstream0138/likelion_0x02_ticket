@@ -73,3 +73,25 @@ exports.kakaoLogin = async (req, res) => {
     res.status(500).send("Internel Server Error");
   }
 };
+
+exports.kakaoLogout = async (req, res) => {
+  const accessToken = req.body.accessToken; // frontend에서 보낸 accessToken
+
+  try {
+      const logoutResponse = await axios.post('https://kapi.kakao.com/v1/user/logout', {}, {
+          headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+      });
+
+      console.log('Logout successful:', logoutResponse.data);
+      res.status(200).send('Logout successful');
+  } catch (error) {
+      console.error('Logout failed:', error);
+      res.status(500).send('Logout failed');
+  }
+
+
+};
+
