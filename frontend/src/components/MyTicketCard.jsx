@@ -5,22 +5,39 @@ import axios from "axios";
 import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
-import MyTicketCardModal from "./MyTicketCardModal";
+import Web3 from "web3";
+import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
+import postEventAbi from "../abis/PostEventAbi.json";
+// import MyTicketCardModal from "./MyTicketCardModal";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
 
 const MyTicketCard = () => {
-  const [isModal, setIsModal] = useState(false);
-  const { account, preEventContract } = useOutletContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { preEventContract } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [purchasedList, setPurchasedList] = useState([]);
+  const [isEntered, setisEntered] = useState(false);
 
   // const isModalOpen = () => {
   //   setIsModal(!isModal);
   // };
+
+  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+
+  const web3 = new Web3(window.ethereum);
+  const postEventContract = new web3.eth.Contract(
+    postEventAbi,
+    POST_EVENT_CONTRACT
+  );
+  const account = localStorage.getItem("backupAccount");
+  // console.log("Mint/account(2): ", account);
+  // console.log("Mint/web3(2): ", web3);
+
+  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
 
   const getPurchased = async () => {
     const customerID = localStorage.getItem("customerID");
@@ -81,6 +98,88 @@ const MyTicketCard = () => {
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+    }
+  };
+
+  const onClickPostMint = async () => {
+    try {
+      if (!postEventContract || !account || !mintAccount) return;
+
+      setIsLoading(true);
+
+      // const gasPrice = await web3.eth.getGasPrice();
+      const balance = await postEventContract.methods
+        .balanceOf(mintAccount.address)
+        .call();
+      // const tokenId = Number(balance);
+      // const nonce = await web3.eth.getTransactionCount(account, "latest");
+
+      const tx = {
+        from: mintAccount.address,
+        to: POST_EVENT_CONTRACT,
+        gas: 150254n,
+        // gasPrice: gasPrice,
+        data: postEventContract.methods
+          .mintTicket(account, metadataArray.tokenId)
+          .encodeABI(),
+        // value: "0x0",
+        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        maxFeePerGas: web3.utils.toWei("120", "gwei"),
+        type: "0x02",
+      };
+
+      console.log("tx:", tx);
+
+      web3.eth
+        .estimateGas(tx)
+        .then((gasAmount) => {
+          console.log("Estiamte Gas:", gasAmount);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+
+      const receipt = await web3.eth.sendSignedTransaction(
+        signedTx.rawTransaction
+      );
+      console.log("tx receipt:", receipt);
+
+      setIsModalOpen(true);
+      setIsLoading(false);
+
+      const tokenId = await postEventContract.methods
+        .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
+        .call();
+
+      const metadataURI = await postEventContract.methods
+        .tokenURI(Number(tokenId))
+        .call();
+
+      const response = await axios.get(metadataURI);
+
+      // setMetadata(response.data);
+      setMetadataArray([response.data, ...metadataArray]);
+
+      console.log("metadata:", response.data);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  };
+
+  const onClickEnter = async () => {
+    try {
+      await preEventContract.methods.enter(metadataArray.tokenId).call();
+
+      const checkEnter = await preEventContract.methods
+        .isEntered(metadataArray.tokenId)
+        .call();
+
+      setisEntered(checkEnter);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -153,14 +252,27 @@ const MyTicketCard = () => {
                   </div>
                 </ul>
                 <ul className="mt-3 flex items-center justify-center">
-                  <button
-                    key={v.tokenId}
-                    className={
-                      "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
-                    }
-                  >
-                    공연 입장
-                  </button>
+                  {isEntered ? (
+                    <button
+                      key={v.tokenId}
+                      className={
+                        "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+                      }
+                      onClick={onClickPostMint}
+                    >
+                      컬렉션 보관
+                    </button>
+                  ) : (
+                    <button
+                      key={v.tokenId}
+                      className={
+                        "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+                      }
+                      onClick={onClickEnter}
+                    >
+                      공연 입장
+                    </button>
+                  )}
                 </ul>
               </div>
             </button>

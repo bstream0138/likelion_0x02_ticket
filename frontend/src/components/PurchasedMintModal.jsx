@@ -221,7 +221,7 @@ const PurchasedMintModal = ({
                   </div>
                 </ul>
               </div>
-              <div className="w-[305px] h-[305px] bg-black ml-14 mt-14"></div>
+              <div className="w-[305px] h-[305px] bg-black ml-3 mt-3"></div>
             </div>
           )}
         </>

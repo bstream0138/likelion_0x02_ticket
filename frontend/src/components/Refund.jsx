@@ -3,9 +3,10 @@ import { useOutletContext } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import axios from "axios";
+import Web3 from "web3";
 
 const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
-  const { preEventContract, account } = useOutletContext();
+  const { preEventContract } = useOutletContext();
   const [refundModal, setRefundModal] = useState(false);
   const [hoverRefund, setHoverRefund] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,11 +17,13 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
     setRefundModal(!refundModal);
   };
 
-  // 주석 친것들 가스비 대신 지불을 위한 함수들
-  // const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+  const web3 = new Web3(window.ethereum);
+  // const account = localStorage.getItem("backupAccount");
 
-  // const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-  // // console.log(mintAccount);
+  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+
+  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
+  // console.log(mintAccount);
 
   //환불 기능 canceled 로 푸쉬후 환불된 NFT인지 확인
   const onClickRefund = async () => {
@@ -29,38 +32,41 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
 
       if (purchasedMinted) {
         // NFT가 민팅된 경우, 환불
-        await preEventContract.methods
-          .cancel(purchasedID)
-          .send({ from: account });
-        // const tx = {
-        //   from: mintAccount.address,
-        //   to: PRE_EVENT_CONTRACT,
-        //   gas: 150254n,
-        //   // gasPrice: gasPrice,
-        //   data: preEventContract.methods.cancel(tokenId).encodeABI(),
-        //   // value: "0x0",
-        //   maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        //   maxFeePerGas: web3.utils.toWei("120", "gwei"),
-        //   type: "0x02",
-        // };
+        // await preEventContract.methods
+        //   .cancel(purchasedID)
+        //   .send({ from: account });
+        const tx = {
+          from: mintAccount.address,
+          to: PRE_EVENT_CONTRACT,
+          gas: 150254n,
+          // gasPrice: gasPrice,
+          data: preEventContract.methods.cancel(purchasedID).encodeABI(),
+          // value: "0x0",
+          maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+          maxFeePerGas: web3.utils.toWei("120", "gwei"),
+          type: "0x02",
+        };
 
-        // console.log("tx:", tx);
+        console.log("tx:", tx);
 
-        // web3.eth
-        //   .estimateGas(tx)
-        //   .then((gasAmount) => {
-        //     console.log("Estiamte Gas:", gasAmount);
-        //   })
-        //   .catch((error) => {
-        //     console.error(error);
-        //   });
+        web3.eth
+          .estimateGas(tx)
+          .then((gasAmount) => {
+            console.log("Estiamte Gas:", gasAmount);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
-        // const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const signedTx = await web3.eth.accounts.signTransaction(
+          tx,
+          privateKey
+        );
 
-        // const receipt = await web3.eth.sendSignedTransaction(
-        //   signedTx.rawTransaction
-        // );
-        // console.log("tx receipt:", receipt);
+        const receipt = await web3.eth.sendSignedTransaction(
+          signedTx.rawTransaction
+        );
+        console.log("tx receipt:", receipt);
 
         await preEventContract.methods.isCanceled(purchasedID).call();
       } else {

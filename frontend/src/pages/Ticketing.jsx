@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import Payment from "../components/Payment";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 
 const Ticketing = () => {
   const { index } = useParams();
-
   const { account, concert } = useOutletContext();
-
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
-
   const [concertInfo, setConcertInfo] = useState(null);
-
   const [hoverTicketing, setHoverTicketing] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   //티켓 예매 버튼
   const toggleOpen = () => {
