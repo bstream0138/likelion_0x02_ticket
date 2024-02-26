@@ -19,111 +19,159 @@ const Home = () => {
           </span>
           IU
         </Link>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <Link
+          to="/ticketing/1"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           The Golden Hour
-        </button>
+        </Link>
 
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        <Link
+          to="ticketing/4"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           Hype Boy
-        </button>
+        </Link>
       </ul>
       <ul className="flex items-center mt-4 mx-auto px-2 text-[16px]  ">
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <Link
+          to="ticketing/4"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           New Jeans
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/0"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           BTS
-        </button>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/6"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           Black Pink
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/2"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           aespa
-        </button>
+        </Link>
       </ul>
       <ul className="flex items-center mt-4 mx-auto text-[16px] ">
-        <button className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150">
+        <Link
+          to="ticketing/6"
+          className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           BLACKPINK IN YOUR AREA
-        </button>
+        </Link>
       </ul>
       <ul className="flex items-center mt-4 mx-auto px-3 text-[16px]">
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <Link
+          to="ticketing/5"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           박효신
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/3"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           Sneakers
-        </button>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/0"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           Butter
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/2"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           Drama
-        </button>
+        </Link>
       </ul>
       <ul className="flex items-center mt-4 mx-auto px-4 text-[16px]">
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        <Link
+          to="ticketing/3"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           유나
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/2"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           카리나
-        </button>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/0"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           V
-        </button>
-        <button className="hashtag hover:bg-[#038BD5] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/3"
+          className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           대장님
-        </button>
-        <button className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150">
+        </Link>
+        <Link
+          to="ticketing/4"
+          className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
+        >
           <span className="mb-1">
             <PiHashBold />
           </span>
           해린
-        </button>
+        </Link>
       </ul>
     </div>
   );

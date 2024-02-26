@@ -31,24 +31,20 @@ const Ticket = () => {
       <ul className="grid grid-cols-2 justify-items-center py-3 mt-4">
         <button
           className={
-            hoverTicket
-              ? "flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
-              : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
+            isSelect === "A"
+              ? " bg-[#0073DC] text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
+              : "flex items-center hover:bg-[#0073DC] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
           }
           onClick={() => setIsSelect("A")}
-          onMouseEnter={() => setHoverTicket(true)}
-          onMouseLeave={() => setHoverTicket(false)}
         >
           My Ticket
         </button>
         <button
           onClick={() => setIsSelect("B")}
-          onMouseEnter={() => setHoverCollection(true)}
-          onMouseLeave={() => setHoverCollection(false)}
           className={
-            hoverCollection
-              ? "flex items-center  justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
-              : "flex items-center   justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
+            isSelect === "B"
+              ? " bg-[#0073DC] text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
+              : "flex items-center hover:bg-[#0073DC] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
           }
         >
           Collection
