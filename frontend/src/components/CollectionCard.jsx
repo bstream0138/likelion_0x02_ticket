@@ -101,14 +101,6 @@ const CollectionCard = () => {
     <div className="min-w-screen min-h-screen mx-auto md:w-[450px] h-[90vh]">
       <div className="w-[370px] flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 border-b-black"></div>
       <div className="flex flex-col gap-3 pt-10">
-        {isLoading && (
-          <div className="flex items-center justify-start text-3xl flex-col mt-20">
-            <ul>
-              <ImSpinner8 className="animate-spin w-16 h-16" />
-            </ul>
-            <ul className="mt-2">Loading...</ul>
-          </div>
-        )}
         {isEmpty && (
           <div>
             <div className="flex items-center justify-center text-3xl mt-4">
@@ -153,6 +145,14 @@ const CollectionCard = () => {
           </div>
         ))}
       </div>
+      {isLoading && (
+        <div className="flex items-center justify-start text-3xl flex-col mt-20">
+          <ul>
+            <ImSpinner8 className="animate-spin w-16 h-16" />
+          </ul>
+          <ul className="mt-2">Loading...</ul>
+        </div>
+      )}
     </div>
   );
 };

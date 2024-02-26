@@ -6,8 +6,13 @@ import Refund from "./Refund";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
-import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
+import {
+  POST_EVENT_CONTRACT,
+  PRE_EVENT_CONTRACT,
+} from "../abis/contractAddress";
 import postEventAbi from "../abis/PostEventAbi.json";
+import EnterConcert from "./EnterConcert";
+import ToCollection from "./ToCollection";
 // import MyTicketCardModal from "./MyTicketCardModal";
 
 //Ticket 페이지에서의 MyTicketCard 화면
@@ -20,7 +25,7 @@ const MyTicketCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [purchasedList, setPurchasedList] = useState([]);
-  const [isEntered, setisEntered] = useState(false);
+  const [isEntered, setIsEntered] = useState(false);
 
   // const isModalOpen = () => {
   //   setIsModal(!isModal);
@@ -33,7 +38,7 @@ const MyTicketCard = () => {
     postEventAbi,
     POST_EVENT_CONTRACT
   );
-  const account = localStorage.getItem("backupAccount");
+  const account = localStorage.getItem("account");
   // console.log("Mint/account(2): ", account);
   // console.log("Mint/web3(2): ", web3);
 
@@ -74,20 +79,24 @@ const MyTicketCard = () => {
           const tokenId = await preEventContract.methods
             .tokenOfOwnerByIndex(account, i)
             .call();
+
           const isCanceled = await preEventContract.methods
             .isCanceled(tokenId)
             .call();
 
-          if (!isCanceled) {
+          const checkEnter = await preEventContract.methods
+            .isEntered(tokenId)
+            .call();
+
+          if (!isCanceled && !checkEnter) {
             const metadataURI = await preEventContract.methods
-              .tokenURI(Number(!isCanceled))
+              .tokenURI(Number(tokenId))
               .call();
 
             const response = await axios.get(metadataURI);
             // const purchase = purchasedList.find((p) => p.ID === tokenId);
 
             temp.push({ ...response.data, tokenId: Number(tokenId) });
-            // console.log(response.data);
           }
         }
 
@@ -101,87 +110,19 @@ const MyTicketCard = () => {
     }
   };
 
-  const onClickPostMint = async () => {
-    try {
-      if (!postEventContract || !account || !mintAccount) return;
+  useEffect(() => {
+    if (!preEventContract || !account) return;
+    const enterTicket = async () => {
+      const balance = await preEventContract.methods.balanceOf(account).call();
 
-      setIsLoading(true);
-
-      // const gasPrice = await web3.eth.getGasPrice();
-      const balance = await postEventContract.methods
-        .balanceOf(mintAccount.address)
+      const tokenId = await preEventContract.methods
+        .tokenOfOwnerByIndex(account, Number(balance) - 1)
         .call();
-      // const tokenId = Number(balance);
-      // const nonce = await web3.eth.getTransactionCount(account, "latest");
+    };
 
-      const tx = {
-        from: mintAccount.address,
-        to: POST_EVENT_CONTRACT,
-        gas: 150254n,
-        // gasPrice: gasPrice,
-        data: postEventContract.methods
-          .mintTicket(account, metadataArray.tokenId)
-          .encodeABI(),
-        // value: "0x0",
-        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        maxFeePerGas: web3.utils.toWei("120", "gwei"),
-        type: "0x02",
-      };
-
-      console.log("tx:", tx);
-
-      web3.eth
-        .estimateGas(tx)
-        .then((gasAmount) => {
-          console.log("Estiamte Gas:", gasAmount);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
-
-      const receipt = await web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
-      );
-      console.log("tx receipt:", receipt);
-
-      setIsModalOpen(true);
-      setIsLoading(false);
-
-      const tokenId = await postEventContract.methods
-        .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
-        .call();
-
-      const metadataURI = await postEventContract.methods
-        .tokenURI(Number(tokenId))
-        .call();
-
-      const response = await axios.get(metadataURI);
-
-      // setMetadata(response.data);
-      setMetadataArray([response.data, ...metadataArray]);
-
-      console.log("metadata:", response.data);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  };
-
-  const onClickEnter = async () => {
-    try {
-      await preEventContract.methods.enter(metadataArray.tokenId).call();
-
-      const checkEnter = await preEventContract.methods
-        .isEntered(metadataArray.tokenId)
-        .call();
-
-      setisEntered(checkEnter);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    enterTicket();
+    console.log(enterTicket());
+  }, [preEventContract, account]);
 
   useEffect(() => {
     if (purchasedList) return;
@@ -198,14 +139,6 @@ const MyTicketCard = () => {
     <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
       <div className=" flex items-center mx-auto justify-center text-center text-3xl mt-2 py-2 border-b-2 w-[370px] border-b-black"></div>
       <div className="flex flex-col gap-3 pt-10">
-        {isLoading && (
-          <div className="flex items-center justify-start text-3xl flex-col mt-20">
-            <ul>
-              <ImSpinner8 className="animate-spin w-16 h-16" />
-            </ul>
-            <ul className="mt-2">Loading...</ul>
-          </div>
-        )}
         {isEmpty && (
           <div>
             <div className="flex items-center justify-center text-3xl mt-4">
@@ -217,69 +150,85 @@ const MyTicketCard = () => {
             </div>
           </div>
         )}
-        {metadataArray.map((v, i) => (
-          <div key={i} className="header">
-            <button className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex ">
-              <img
-                src={v.image}
-                alt={v.name}
-                className="w-[145px] object-cover"
-              />
-              <div className="w-[255px] bg-white  h-[200px]">
-                <ul className="mt-6 mr-3">
-                  티켓 번호 : {v.tokenId}
-                  <div className="mt-6 ml-5 px-5">
-                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
-                      <span className="mr-[-2px]">
-                        <CiMicrophoneOn />
-                      </span>
-                      <span className="mr-[10px]">IU</span>
-                    </ul>
-                    <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
-                      <span>
-                        <CiLocationOn />
-                      </span>
-                      <span className="text-xs ">잠실종합운동장</span>
-                    </ul>
-                    <ul className="text-sm flex items-center font-light gap-1">
-                      <span className="ml-[1px]">
-                        <CiCalendar />
-                      </span>
-                      <span className="text-xs mt-[1px]">
-                        2024.02.29 - 2024.03.02
-                      </span>
-                    </ul>
-                  </div>
-                </ul>
-                <ul className="mt-3 flex items-center justify-center">
-                  {isEntered ? (
-                    <button
-                      key={v.tokenId}
-                      className={
-                        "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
-                      }
-                      onClick={onClickPostMint}
-                    >
-                      컬렉션 보관
-                    </button>
-                  ) : (
-                    <button
-                      key={v.tokenId}
-                      className={
-                        "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
-                      }
-                      onClick={onClickEnter}
-                    >
-                      공연 입장
-                    </button>
-                  )}
-                </ul>
-              </div>
-            </button>
-            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
-          </div>
-        ))}
+        {metadataArray.map((v, i) => {
+          return (
+            <div key={i} className="header">
+              <button className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex ">
+                <img
+                  src={v.image}
+                  alt={v.name}
+                  className="w-[145px] object-cover"
+                />
+                <div className="w-[255px] bg-white  h-[200px]">
+                  <ul className="mt-6 mr-3">
+                    티켓 번호 : {v.tokenId}
+                    <div className="mt-6 ml-5 px-5">
+                      <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+                        <span className="mr-[-2px]">
+                          <CiMicrophoneOn />
+                        </span>
+                        <span className="mr-[10px]">IU</span>
+                      </ul>
+                      <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                        <span>
+                          <CiLocationOn />
+                        </span>
+                        <span className="text-xs ">잠실종합운동장</span>
+                      </ul>
+                      <ul className="text-sm flex items-center font-light gap-1">
+                        <span className="ml-[1px]">
+                          <CiCalendar />
+                        </span>
+                        <span className="text-xs mt-[1px]">
+                          2024.02.29 - 2024.03.02
+                        </span>
+                      </ul>
+                    </div>
+                  </ul>
+                  <ul className="mt-3 flex items-center justify-center">
+                    {isEntered ? (
+                      <EnterConcert
+                        tokenId={v.tokenId}
+                        preEventContract={preEventContract}
+                        mintAccount={mintAccount}
+                        account={account}
+                        privateKey={privateKey}
+                        web3={web3}
+                        setIsLoading={setIsLoading}
+                        isLoading={isLoading}
+                      />
+                    ) : (
+                      <ToCollection
+                        tokenId={v.tokenId}
+                        postEventContract={postEventContract}
+                        mintAccount={mintAccount}
+                        account={account}
+                        web3={web3}
+                        privateKey={privateKey}
+                        setIsLoading={setIsLoading}
+                        setIsModalOpen={setIsModalOpen}
+                        setMetadataArray={setMetadataArray}
+                        metadataArray={metadataArray}
+                        getMyNft={getMyNft}
+                        isLoading={isLoading}
+                      />
+                    )}
+                  </ul>
+                </div>
+              </button>
+              <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
+            </div>
+          );
+        })}
       </div>
+      {isLoading && (
+        <div className="flex items-center justify-start text-3xl flex-col mt-20">
+          <ul>
+            <ImSpinner8 className="animate-spin w-16 h-16" />
+          </ul>
+          <ul className="mt-2">Loading...</ul>
+        </div>
+      )}
     </div>
   );
 };

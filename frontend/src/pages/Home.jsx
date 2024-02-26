@@ -9,7 +9,7 @@ const Home = () => {
         <TicketBanner />
       </div>
       <div className="mt-[162px] border-t-2 w-[370px] mx-auto border-black"></div>
-      <ul className="flex items-center mt-4 mx-6  text-[16px] ">
+      <ul className="flex items-center mt-4 mx-12  text-[12px] ">
         <Link
           to="/ticketing/1"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
@@ -39,7 +39,7 @@ const Home = () => {
           Hype Boy
         </Link>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-2 text-[16px]  ">
+      <ul className="flex items-center mt-4 mx-auto px-6 text-[12px]  ">
         <Link
           to="ticketing/4"
           className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
@@ -77,7 +77,7 @@ const Home = () => {
           aespa
         </Link>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto text-[16px] ">
+      <ul className="flex items-center mt-4 mx-auto text-[12px] ">
         <Link
           to="ticketing/6"
           className="hashtag hover:bg-[#fb16f3] hover:text-white duration-150"
@@ -88,7 +88,7 @@ const Home = () => {
           BLACKPINK IN YOUR AREA
         </Link>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-3 text-[16px]">
+      <ul className="flex items-center mt-4 mx-auto px-9 text-[12px]">
         <Link
           to="ticketing/5"
           className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"
@@ -126,7 +126,7 @@ const Home = () => {
           Drama
         </Link>
       </ul>
-      <ul className="flex items-center mt-4 mx-auto px-4 text-[16px]">
+      <ul className="flex items-center mt-4 mx-auto px-8 text-[12px]">
         <Link
           to="ticketing/3"
           className="hashtag hover:bg-[#FBAE16] hover:text-white duration-150"

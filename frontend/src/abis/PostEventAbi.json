@@ -13,9 +13,7 @@
     "inputs": [
       { "internalType": "string", "name": "_name", "type": "string" },
       { "internalType": "string", "name": "_symbol", "type": "string" },
-      { "internalType": "string", "name": "_commonURI", "type": "string" },
-      { "internalType": "string", "name": "_rareURI", "type": "string" },
-      { "internalType": "string", "name": "_uniqueURI", "type": "string" }
+      { "internalType": "string", "name": "_metadataURI", "type": "string" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -94,7 +92,8 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_addr", "type": "address" }
+      { "internalType": "address", "name": "_addr", "type": "address" },
+      { "internalType": "uint256", "name": "_tokenId", "type": "uint256" }
     ],
     "name": "mintTicket",
     "outputs": [],

@@ -1,12 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  useNavigate,
-  useLocation,
-  useOutletContext,
-  Link,
-} from "react-router-dom";
+import { useNavigate, useOutletContext, Link } from "react-router-dom";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
@@ -30,11 +25,12 @@ const PaymentSuccess = ({ toggleOpen }) => {
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
   const web3 = new Web3(window.ethereum);
+  const account = localStorage.getItem("backupAccount");
   const preEventContract = new web3.eth.Contract(
     preEventAbi,
     PRE_EVENT_CONTRACT
   );
-  const account = localStorage.getItem("backupAccount");
+
   // console.log("Mint/account(2): ", account);
   // console.log("Mint/web3(2): ", web3);
 
@@ -57,7 +53,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
       const tx = {
         from: mintAccount.address,
         to: PRE_EVENT_CONTRACT,
-        gas: 150254n,
+        gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods.mintTicket(account).encodeABI(),
         // value: "0x0",

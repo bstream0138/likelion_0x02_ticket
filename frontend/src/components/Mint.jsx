@@ -22,7 +22,7 @@ const Mint = () => {
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
   const web3 = new Web3(window.ethereum);
-  const account = localStorage.getItem("backupAccount");
+  const account = localStorage.getItem("account");
   // console.log("Mint/account(2): ", account);
   // console.log("Mint/web3(2): ", web3);
 

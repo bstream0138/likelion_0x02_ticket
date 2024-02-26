@@ -22,23 +22,6 @@ const Account = ({ setIsModal }) => {
   // 1. 0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee;
   // 2. 0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f;
 
-  useEffect(() => {
-    if (!account) return;
-
-    //나의 어카운트로 지정한 어카운트의 잔액정보 불러오기
-    const myBalance = async () => {
-      try {
-        const balanceWei = await web3.eth.getBalance(account);
-        const balanceEther = web3.utils.fromWei(balanceWei, "ether");
-        setGetBalance(balanceEther);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    myBalance();
-  }, [account, web3]);
-
   //남은 잔액 보내기
   const sendEth = async (e) => {
     e.preventDefault();
@@ -48,17 +31,12 @@ const Account = ({ setIsModal }) => {
 
     const amountToWei = web3.utils.toWei(testAmount.toString(), "ether");
     const gasPrice = await web3.eth.getGasPrice();
-    const estimatedGas = await web3.eth.estimateGas({
-      from: account,
-      to: testTo,
-      value: amountToWei,
-    });
 
     const tx = {
       from: account,
       to: testTo,
       value: amountToWei,
-      gas: estimatedGas,
+      gas: 300000n,
       gasPrice: gasPrice,
     };
 
@@ -71,7 +49,6 @@ const Account = ({ setIsModal }) => {
       // });
 
       // console.log(`Transaction successful : ${receipt}`);
-      await updateBalance();
 
       const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
@@ -86,21 +63,6 @@ const Account = ({ setIsModal }) => {
     } catch (error) {
       console.error(error);
       setIsLoading(false);
-    }
-  };
-
-  //잔액정보를 새로 불러와서 sendEth에서 써야 오류 안일어남
-  const updateBalance = async () => {
-    if (!account) return;
-
-    setIsLoading(true);
-
-    try {
-      const balanceWei = await web3.eth.getBalance(account);
-      const balanceEther = web3.utils.fromWei(balanceWei, "ether");
-      setGetBalance(balanceEther);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -154,15 +116,32 @@ const Account = ({ setIsModal }) => {
     }
   };
 
+  useEffect(() => {
+    if (!account) return;
+
+    //나의 어카운트로 지정한 어카운트의 잔액정보 불러오기
+    const myBalance = async () => {
+      try {
+        const balanceWei = await web3.eth.getBalance(account);
+        const balanceEther = web3.utils.fromWei(balanceWei, "ether");
+        setGetBalance(balanceEther);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    myBalance();
+  }, [account, web3]);
+
   return (
     <>
-      <div className="w-[400px] h-[400px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black ">
+      <div className="w-[350px] h-[350px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black ">
         <button className="fixed right-2" onClick={() => setIsModal(false)}>
           x
         </button>
         <div className="mt-6 px-4">
           <ul>
-            <li>Address : {account}</li>
+            <li className="truncate">Address : {account}</li>
             <li>Balance : {getBalance}</li>
           </ul>
           <ul className="flex gap-2 mt-4">
@@ -260,7 +239,7 @@ const Account = ({ setIsModal }) => {
           )}
         </div>
       </div>
-      <div className="bg-black w-[405px] ml-2 h-[405px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-40"></div>
+      <div className="bg-black w-[355px] ml-2 h-[355px] mt-2 fixed left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 -z-40"></div>
     </>
   );
 };
