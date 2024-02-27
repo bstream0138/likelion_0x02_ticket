@@ -1,30 +1,35 @@
 import axios from "axios";
-import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import { useState } from "react";
+import postEventAbi from "../abis/PostEventAbi.json";
 
 const ToCollection = ({
+  collectionAddress,
   tokenId,
-  postEventContract,
-  mintAccount,
   account,
   web3,
-  privateKey,
-  metadataArray,
-  setMetadataArray,
+  adminKey,
   isEntered,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onClickPostMint = async () => {
     try {
-      if (!postEventContract || !account || !mintAccount) return;
+      if (!account) return;
 
       setIsLoading(true);
 
+      const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
+
+      // collection에 민팅할 CA
+      const postEventContract = new web3.eth.Contract(
+        postEventAbi,
+        collectionAddress
+    );
+
       const tx = {
-        from: mintAccount.address,
-        to: POST_EVENT_CONTRACT,
+        from: adminAccount.address,
+        to: collectionAddress,
         gas: 300000n,
         // gasPrice: gasPrice,
         data: postEventContract.methods
@@ -47,7 +52,7 @@ const ToCollection = ({
           console.error(error);
         });
 
-      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+      const signedTx = await web3.eth.accounts.signTransaction(tx, adminKey);
 
       const receipt = await web3.eth.sendSignedTransaction(
         signedTx.rawTransaction
@@ -57,16 +62,6 @@ const ToCollection = ({
       setIsLoading(false);
       alert("Collection에서 티켓을 확인해주세요");
 
-      const metadataURI = await postEventContract.methods
-        .tokenURI(Number(tokenId))
-        .call();
-
-      const response = await axios.get(metadataURI);
-
-      // setMetadata(response.data);
-      setMetadataArray([response.data, ...metadataArray]);
-
-      console.log("metadata:", response.data);
     } catch (error) {
       console.error(error);
       setIsLoading(false);

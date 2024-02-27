@@ -4,28 +4,22 @@ import ToCollection from "./ToCollection";
 
 const PreTicketModal = ({
   tokenId,
-  postEventContract,
-  mintAccount,
+  ticketAddress,
+  collectionAddress,
   account,
   web3,
-  privateKey,
-  setIsModalOpen,
-  setMetadataArray,
-  metadataArray,
-  getMyNft,
-  isEntered,
-  preEventContract,
+  adminKey,
+  isEntered
 }) => {
   return (
     <ul className="mt-4 gap-1  flex items-center justify-center ">
       <li>
         <EnterConcert
           key={tokenId}
+          ticketAddress = {ticketAddress}
           tokenId={tokenId}
-          preEventContract={preEventContract}
-          mintAccount={mintAccount}
           account={account}
-          privateKey={privateKey}
+          adminKey={adminKey}
           web3={web3}
           isEntered={isEntered}
         />
@@ -33,16 +27,11 @@ const PreTicketModal = ({
       <li>
         <ToCollection
           key={tokenId}
+          collectionAddress = {collectionAddress}
           tokenId={tokenId}
-          postEventContract={postEventContract}
-          mintAccount={mintAccount}
           account={account}
           web3={web3}
-          privateKey={privateKey}
-          setIsModalOpen={setIsModalOpen}
-          setMetadataArray={setMetadataArray}
-          metadataArray={metadataArray}
-          getMyNft={getMyNft}
+          adminKey={adminKey}
           isEntered={isEntered}
         />
       </li>

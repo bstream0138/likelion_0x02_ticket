@@ -4,6 +4,7 @@ import MenuBar from "./MenuBar";
 
 import { sample_concert } from "../sample/sample_concert";
 import Header from "./Header";
+import { PiMapPinLight } from "react-icons/pi";
 
 const Layout = () => {
   const [account, setAccount] = useState("");

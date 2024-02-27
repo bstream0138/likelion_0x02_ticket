@@ -9,6 +9,7 @@ const PurchasedModal = ({
   purchasedRefunded,
   purchasedDate,
   purchasedContent,
+  purchasedTicketAddress
 }) => {
   return (
     <div className="bg-black bg-opacity-10 w-full h-full fixed left-0 top-0 z-10 ">
@@ -20,6 +21,7 @@ const PurchasedModal = ({
               purchasedID={purchasedID}
               purchasedMinted={purchasedMinted}
               purchasedRefunded={purchasedRefunded}
+              purchasedTicketAddress={purchasedTicketAddress}
             />
             <Refund
               purchasedID={purchasedID}

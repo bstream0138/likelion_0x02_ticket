@@ -5,18 +5,14 @@ import PreTicketModal from "./PreTicketModal";
 
 const PreTicket = ({
   tokenId,
-  image,
   name,
-  postEventContract,
-  mintAccount,
+  image,
+  isEntered,  
+  ticketAddress,
+  collectionAddress,
   account,
   web3,
-  privateKey,
-  setMetadataArray,
-  metadataArray,
-  getMyNft,
-  isEntered,
-  preEventContract,
+  privateKey
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,16 +39,12 @@ const PreTicket = ({
               <PreTicketModal
                 key={tokenId}
                 tokenId={tokenId}
-                postEventContract={postEventContract}
-                mintAccount={mintAccount}
                 account={account}
+                ticketAddress = {ticketAddress}
+                collectionAddress = {collectionAddress}
                 web3={web3}
                 privateKey={privateKey}
-                setMetadataArray={setMetadataArray}
-                metadataArray={metadataArray}
-                getMyNft={getMyNft}
                 isEntered={isEntered}
-                preEventContract={preEventContract}
               />
             </ul>
           )}

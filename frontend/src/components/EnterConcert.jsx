@@ -1,26 +1,33 @@
 import { useState } from "react";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+import preEventAbi from "../abis/PreEventAbi.json";
+
+import Web3 from "web3"; 
 
 const EnterConcert = ({
+  ticketAddress,
   tokenId,
-  preEventContract,
-  mintAccount,
   account,
+  adminKey,
   web3,
-  privateKey,
   isEntered,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const onClickEnter = async () => {
     try {
-      if (!preEventContract) return;
-
       setIsLoading(true);
 
+      const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
+
+      // NFT Ticket Address
+      const preEventContract = new web3.eth.Contract(
+        preEventAbi,
+        ticketAddress
+    );
+
       const tx = {
-        from: mintAccount.address,
-        to: PRE_EVENT_CONTRACT,
+        from: adminAccount.address,
+        to: ticketAddress,
         gas: 300000n,
         data: preEventContract.methods.enter(tokenId).encodeABI(),
         maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
@@ -41,7 +48,7 @@ const EnterConcert = ({
           console.error(error);
         });
 
-      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+      const signedTx = await web3.eth.accounts.signTransaction(tx, adminKey);
 
       const receipt = await web3.eth.sendSignedTransaction(
         signedTx.rawTransaction

@@ -5,16 +5,13 @@ import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
 
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
-
 const PurchasedMintModal = ({
   purchasedID,
   purchasedMinted,
   purchasedRefunded,
+  purchasedTicketAddress
 }) => {
   const { account } = useOutletContext();
-  const [metadataArray, setMetadataArray] = useState([]);
-  // const [metadata, setMetadata] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPurchasedModalOpen, setIsPurchasedModalOpen] = useState(false);
@@ -29,11 +26,12 @@ const PurchasedMintModal = ({
 
   const preEventContract = new web3.eth.Contract(
     preEventAbi,
-    PRE_EVENT_CONTRACT
+    purchasedTicketAddress
   );
 
+  console.log('[1]purchasedTicketAddress: ',purchasedTicketAddress);
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-  // console.log(mintAccount);
+  console.log('mintAccount: ',mintAccount);
 
   console.log("PurchasedMintModal/purchase: ", purchasedID);
 
@@ -44,16 +42,11 @@ const PurchasedMintModal = ({
 
       setIsLoading(true);
 
-      // const gasPrice = await web3.eth.getGasPrice();
-      const balance = await preEventContract.methods
-        .balanceOf(mintAccount.address)
-        .call();
-      // const tokenId = Number(balance);
-      // const nonce = await web3.eth.getTransactionCount(account, "latest");
+      console.log('[2]purchasedTicketAddress: ',purchasedTicketAddress);
 
       const tx = {
         from: mintAccount.address,
-        to: PRE_EVENT_CONTRACT,
+        to: purchasedTicketAddress,
         gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods.mintTicket(account).encodeABI(),
@@ -82,8 +75,6 @@ const PurchasedMintModal = ({
       console.log("tx receipt:", receipt);
 
       // Minting 성공했으므로, DB의 구매내역에서 isMinted 값 갱신
-      //app.post('/api/refund', (req, res) => {
-      //const {purchaseID} = req.body;
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/mint`,
@@ -100,20 +91,6 @@ const PurchasedMintModal = ({
       setIsModalOpen(true);
       setIsLoading(false);
 
-      const tokenId = await preEventContract.methods
-        .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
-        .call();
-
-      const metadataURI = await preEventContract.methods
-        .tokenURI(Number(tokenId))
-        .call();
-
-      const response = await axios.get(metadataURI);
-
-      // setMetadata(response.data);
-      setMetadataArray([response.data, ...metadataArray]);
-
-      // console.log("metadata:", response.data);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
