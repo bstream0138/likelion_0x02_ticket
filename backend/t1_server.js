@@ -107,6 +107,8 @@ app.get('/api/purchase_list', async (req, res) => {
 app.post('/api/purchase', async (req, res) => {
     console.log('/api/purchase')
     const { customerID, concertID} = req.body;
+    console.log('/api/purchase/customerID: ', customerID);
+    console.log('/api/purchase/concertID: ', concertID);
     const purchaseDate = new Date(new Date().getTime()+(9*60*60*1000)).toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
     
     try {
@@ -121,6 +123,8 @@ app.post('/api/purchase', async (req, res) => {
         
         // 새로 생성된 구매 정보의 ID를 얻습니다.
         const insertedId = result.insertId;
+
+        console.log('/api/purchase/insertedId: ', insertedId);
 
         // 삽입된 구매 정보에 대한 상세 정보 조회
         const getPurchaedQuery = `
