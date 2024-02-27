@@ -129,6 +129,7 @@ const My = () => {
                       purchasedDate={purchase.PURCHASE_DATE}
                       purchasedMinted={purchase.IS_MINTED}
                       purchasedRefunded={purchase.IS_REFUNDED}
+                      purchasedTicketAddress={purchase.TICKET_ADDR}
                     />
                   )}
                 </>

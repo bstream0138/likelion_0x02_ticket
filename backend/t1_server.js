@@ -79,14 +79,19 @@ app.get('/api/purchase_list', async (req, res) => {
                         SELECT 
                             p.ID AS ID, 
                             c.IMAGE AS IMAGE, 
-                            c.CONTENT AS CONTENT, 
+                            c.TITLE AS TITLE,
+                            c.CONTENT AS CONTENT,
+                            c.LOCATION AS LOCATION,
                             c.DATE AS CONCERT_DATE,
                             p.DATE AS PURCHASE_DATE,
+                            c.TICKET_ADDR,
+                            c.COLLECTION_ADDR,
                             p.IS_REFUNDED,
                             p.IS_MINTED
                         FROM PURCHASE p
                         JOIN CONCERT c ON p.CONCERT_ID = c.ID
-                        WHERE p.CUSTOMER_ID = ?;
+                        WHERE p.CUSTOMER_ID = ?
+                        ORDER BY p.DATE;
                     `;
         const [rows, fields] = await mariaDB.query(_query, [customerID]);
         res.json(rows);

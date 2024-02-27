@@ -11,71 +11,49 @@ import {
 import postEventAbi from "../abis/PostEventAbi.json";
 import preEventAbi from "../abis/PreEventAbi.json";
 import PreTicket from "./PreTicket";
-// import MyTicketCardModal from "./MyTicketCardModal";
+
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
 
 const MyTicketCard = () => {
+  const { concert } = useOutletContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [purchasedList, setPurchasedList] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [concertData, setConcertData] = useState([]);
   const [isEntered, setIsEntered] = useState(false);
+  const [myNFTArray, setMyNFTArray] = useState([]);
 
-  // const isModalOpen = () => {
-  //   setIsModal(!isModal);
-  // };
 
-  const privateKey = process.env.REACT_APP_PRIVATE_KEY;
-
+  const adminKey = process.env.REACT_APP_PRIVATE_KEY;
   const web3 = new Web3(window.ethereum);
-  const postEventContract = new web3.eth.Contract(
-    postEventAbi,
-    POST_EVENT_CONTRACT
-  );
-  const preEventContract = new web3.eth.Contract(
-    preEventAbi,
-    PRE_EVENT_CONTRACT
-  );
   const account = localStorage.getItem("account");
-  // console.log("Mint/account(2): ", account);
-  // console.log("Mint/web3(2): ", web3);
-
-  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-
-  const getPurchased = async () => {
-    const customerID = localStorage.getItem("customerID");
-    if (!customerID) return;
-
-    try {
-      const response = await fetch(
-        `http://localhost:3001/purchase_list?customerID=${customerID}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPurchasedList(data);
-        console.log("getPurchased: ", data);
-      } else {
-        throw new Error("Failed to fetch purchase list");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const getMyNft = async () => {
-    try {
-      if (!preEventContract) return;
+    let totalNFT = 0;
+    setIsLoading(true);
+    console.log('MyTicketCard.jsx/getMyNft:',concert);
+    for(let j=0; j < concert.length; j++ ){
+      const ticketAddress = concert[j].TICKET_ADDR;
+      const collectionAddress = concert[j].TICKET_ADDR;
+
+      const preEventContract = new web3.eth.Contract(
+          preEventAbi,
+          ticketAddress
+      );
+
+      if (!preEventContract) continue;
 
       // 내가 가진 티켓 개수
       const balance = await preEventContract.methods.balanceOf(account).call();
-
+      
       let temp = [];
-      if (balance > 0) {
-        setIsLoading(true);
-        setIsEmpty(false);
+      if (Number(balance) > 0) {
+        totalNFT += Number(balance);
+        console.log('totalNFT:', totalNFT);
+
         for (let i = 0; i < Number(balance); i++) {
           const tokenId = await preEventContract.methods
             .tokenOfOwnerByIndex(account, i)
@@ -99,33 +77,32 @@ const MyTicketCard = () => {
 
             const response = await axios.get(metadataURI);
             // const purchase = purchasedList.find((p) => p.ID === tokenId);
+            console.log('MyTicketCard/getMyNft/response: ', response);
 
             temp.push({
               ...response.data,
               tokenId: Number(tokenId),
               isEntered: checkEnter,
+              ticketAddress: ticketAddress,
+              collectionAddress: collectionAddress,
             });
           }
         }
 
         setMetadataArray([...temp]);
-        setIsLoading(false);
+        console.log(metadataArray);
+        
       }
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
+    //end of for
     }
+    setIsLoading(false);
+    if( totalNFT === 0 ) setIsEmpty(true);
   };
 
   useEffect(() => {
-    if (!preEventContract) return;
     getMyNft();
   }, []);
 
-  useEffect(() => {
-    if (purchasedList) return;
-    getPurchased();
-  }, [purchasedList]);
 
   return (
     <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
@@ -150,14 +127,11 @@ const MyTicketCard = () => {
               name={v.name}
               image={v.image}
               isEntered={v.isEntered}
-              preEventContract={preEventContract}
-              postEventContract={postEventContract}
-              mintAccount={mintAccount}
+              ticketAddress={v.ticketAddress}
+              collectionAddress={v.collectionAddress}
               account={account}
               web3={web3}
-              privateKey={privateKey}
-              setMetadataArray={setMetadataArray}
-              metadataArray={metadataArray}
+              adminKey={adminKey}
             />
           );
         })}
