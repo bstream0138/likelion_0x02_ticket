@@ -86,7 +86,8 @@ app.get('/api/purchase_list', async (req, res) => {
                             p.IS_MINTED
                         FROM PURCHASE p
                         JOIN CONCERT c ON p.CONCERT_ID = c.ID
-                        WHERE p.CUSTOMER_ID = ?;
+                        WHERE p.CUSTOMER_ID = ?
+                        ORDER BY p.DATE;
                     `;
         const [rows, fields] = await mariaDB.query(_query, [customerID]);
         res.json(rows);
