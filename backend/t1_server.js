@@ -123,7 +123,7 @@ app.post('/api/purchase', async (req, res) => {
         
         // 새로 생성된 구매 정보의 ID를 얻습니다.
         console.log('/api/purchase/result: ', result);
-        const resultSetHeader = result[0].insertId;
+        const resultSetHeader = result[0];
         const insertedId = resultSetHeader.insertId;
 
         console.log('/api/purchase/insertedId: ', insertedId);
