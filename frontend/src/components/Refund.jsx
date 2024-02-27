@@ -32,10 +32,6 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
       setIsLoading(true);
 
       if (purchasedMinted) {
-        // NFT가 민팅된 경우, 환불
-        // await preEventContract.methods
-        //   .cancel(purchasedID)
-        //   .send({ from: account });
         const tx = {
           from: mintAccount.address,
           to: PRE_EVENT_CONTRACT,
@@ -74,7 +70,8 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
         // NFT가 민팅되지 않은 경우, 환불
         //app.post('/api/refund', (req, res) => {
         //const {purchaseID} = req.body;
-        const updatePurchaseRefundInfo = async () => {
+        console.log("ID?", purchasedID);
+        const updatePurchaseRefundInfo = async (purchasedID) => {
           try {
             const response = await axios.post(
               `${process.env.REACT_APP_BACKEND_URL}/refund`,
@@ -89,7 +86,7 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
           }
         };
 
-        updatePurchaseRefundInfo();
+        updatePurchaseRefundInfo(purchasedID);
       }
 
       alert("환불이 완료되었습니다.");

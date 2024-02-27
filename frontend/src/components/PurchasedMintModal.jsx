@@ -9,7 +9,7 @@ const PurchasedMintModal = ({
   purchasedID,
   purchasedMinted,
   purchasedRefunded,
-  purchasedTicketAddress
+  purchasedTicketAddress,
 }) => {
   const { account } = useOutletContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +29,12 @@ const PurchasedMintModal = ({
     purchasedTicketAddress
   );
 
-  console.log('[1]purchasedTicketAddress: ',purchasedTicketAddress);
-  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-  console.log('mintAccount: ',mintAccount);
+  console.log("Refunded?", purchasedRefunded);
+  console.log("Minted?", purchasedMinted);
 
+  console.log("[1]purchasedTicketAddress: ", purchasedTicketAddress);
+  const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
+  console.log("mintAccount: ", mintAccount);
   console.log("PurchasedMintModal/purchase: ", purchasedID);
 
   //purchase 구매내역에서의 모달 기능
@@ -42,7 +44,7 @@ const PurchasedMintModal = ({
 
       setIsLoading(true);
 
-      console.log('[2]purchasedTicketAddress: ',purchasedTicketAddress);
+      console.log("[2]purchasedTicketAddress: ", purchasedTicketAddress);
 
       const tx = {
         from: mintAccount.address,
@@ -90,7 +92,6 @@ const PurchasedMintModal = ({
 
       setIsModalOpen(true);
       setIsLoading(false);
-
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -204,7 +205,7 @@ const PurchasedMintModal = ({
           )}
         </>
       ) : (
-        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+        <button className="flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10 ">
           민팅하기
         </button>
       )}

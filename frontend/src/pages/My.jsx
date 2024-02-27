@@ -44,8 +44,8 @@ const My = () => {
   const onClickModal = () => {
     setIsModal(!isModal);
   };
-  const onClickModalPurchased = (purchase) => {
-    setIsModalPurchased(purchase);
+  const onClickModalPurchased = (idx) => {
+    setIsModalPurchased(idx);
   };
 
   const onClcikCloseModalPurchased = () => {
@@ -94,7 +94,7 @@ const My = () => {
         </ul>
         <div>
           {isModal && (
-            <ul className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0  ">
+            <ul className="bg-black bg-opacity-40 z-10 w-full h-full fixed left-0 top-0  ">
               <li className="">
                 <Account setIsModal={setIsModal} />
               </li>
@@ -107,20 +107,20 @@ const My = () => {
             <Purchased />
           </ul>
           <ul className="flex flex-col gap-2 border-t-2 border-black py-[2px]">
-            {purchasedList.map((purchase) => {
+            {purchasedList.map((purchase, idx) => {
               return (
                 <>
                   <button
-                    key={purchase.ID}
+                    key={idx}
                     className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
-                    onClick={(purchase) => onClickModalPurchased(purchase)}
+                    onClick={() => onClickModalPurchased(idx)}
                   >
                     <span className="truncate w-1/3 ml-8">
                       {purchase.CONTENT}
                     </span>
                     <span className="w-2/3">{purchase.PURCHASE_DATE}</span>
                   </button>
-                  {isModalPurchased && (
+                  {isModalPurchased === idx && (
                     <PurchasedModal
                       onClcikCloseModalPurchased={onClcikCloseModalPurchased}
                       isModalPurchased={isModalPurchased}
