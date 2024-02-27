@@ -7,12 +7,12 @@ const PreTicket = ({
   tokenId,
   name,
   image,
-  isEntered,  
+  isEntered,
   ticketAddress,
   collectionAddress,
   account,
   web3,
-  privateKey
+  adminKey,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,10 +40,10 @@ const PreTicket = ({
                 key={tokenId}
                 tokenId={tokenId}
                 account={account}
-                ticketAddress = {ticketAddress}
-                collectionAddress = {collectionAddress}
+                ticketAddress={ticketAddress}
+                collectionAddress={collectionAddress}
                 web3={web3}
-                privateKey={privateKey}
+                adminKey={adminKey}
                 isEntered={isEntered}
               />
             </ul>

@@ -205,7 +205,7 @@ const PurchasedMintModal = ({
           )}
         </>
       ) : (
-        <button className="flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10 ">
+        <button className="cursor-not-allowed flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-[#bcbcbc] text-[#bcbcbc] py-1 px-[6px] rounded-md text-3xl    duration-10 ">
           민팅하기
         </button>
       )}

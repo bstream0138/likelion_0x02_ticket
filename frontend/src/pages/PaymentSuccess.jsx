@@ -109,6 +109,8 @@ const PaymentSuccess = ({ toggleOpen }) => {
     const customerID = localStorage.getItem("customerID");
     const concertID = localStorage.getItem("concertID");
 
+    console.log("customerID:", customerID);
+    console.log("concertID:", concertID);
     const insertPurchase = async () => {
       try {
         const response = await axios.post(

@@ -9,14 +9,14 @@ const PreTicketModal = ({
   account,
   web3,
   adminKey,
-  isEntered
+  isEntered,
 }) => {
   return (
     <ul className="mt-4 gap-1  flex items-center justify-center ">
       <li>
         <EnterConcert
           key={tokenId}
-          ticketAddress = {ticketAddress}
+          ticketAddress={ticketAddress}
           tokenId={tokenId}
           account={account}
           adminKey={adminKey}
@@ -27,7 +27,8 @@ const PreTicketModal = ({
       <li>
         <ToCollection
           key={tokenId}
-          collectionAddress = {collectionAddress}
+          collectionAddress={collectionAddress}
+          ticketAddress={ticketAddress}
           tokenId={tokenId}
           account={account}
           web3={web3}

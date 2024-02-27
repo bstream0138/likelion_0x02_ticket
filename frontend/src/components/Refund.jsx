@@ -101,7 +101,7 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
   return (
     <div>
       {purchasedRefunded ? (
-        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+        <button className="ccursor-not-allowed flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-[#bcbcbc] text-[#bcbcbc] py-1 px-[6px] rounded-md text-3xl    duration-10">
           환불하기
         </button>
       ) : (

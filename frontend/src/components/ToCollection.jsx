@@ -2,9 +2,11 @@ import axios from "axios";
 import { ImSpinner8 } from "react-icons/im";
 import { useState } from "react";
 import postEventAbi from "../abis/PostEventAbi.json";
+import preEvnetAbi from "../abis/PreEventAbi.json";
 
 const ToCollection = ({
   collectionAddress,
+  ticketAddress,
   tokenId,
   account,
   web3,
@@ -25,7 +27,12 @@ const ToCollection = ({
       const postEventContract = new web3.eth.Contract(
         postEventAbi,
         collectionAddress
-    );
+      );
+
+      const preEventContract = new web3.eth.Contract(
+        preEvnetAbi,
+        ticketAddress
+      );
 
       const tx = {
         from: adminAccount.address,
@@ -57,11 +64,15 @@ const ToCollection = ({
       const receipt = await web3.eth.sendSignedTransaction(
         signedTx.rawTransaction
       );
+
+      await preEventContract.methods
+        .burnTicket(tokenId)
+        .send({ from: account.address, gas: 300000, gasPrice: 3000000 });
+
       console.log("tx receipt:", receipt);
 
       setIsLoading(false);
       alert("Collection에서 티켓을 확인해주세요");
-
     } catch (error) {
       console.error(error);
       setIsLoading(false);
