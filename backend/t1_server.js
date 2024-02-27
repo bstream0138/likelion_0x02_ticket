@@ -113,8 +113,39 @@ app.post('/api/purchase', async (req, res) => {
                         VALUES      (?, ?, ?, 0, 0)
                         `;
         
-        const [rows, fields] = await mariaDB.query(_query, [customerID, concertID, purchaseDate]);
-        res.json({'MSG': 'Success', 'ID': this.lastID});    // 마지막 ID = 새로 생성된 구매 정보 반환
+        // MariaDB를 사용하여 쿼리 실행
+        const result = await mariaDB.query(_query, [customerID, concertID, purchaseDate]);
+        
+        // 새로 생성된 구매 정보의 ID를 얻습니다.
+        const insertedId = result.insertId;
+
+        // 삽입된 구매 정보에 대한 상세 정보 조회
+        const getPurchaedQuery = `
+            SELECT p.ID AS ID, 
+                c.IMAGE AS IMAGE, 
+                c.TITLE AS TITLE,
+                c.CONTENT AS CONTENT,
+                c.LOCATION AS LOCATION,
+                c.DATE AS CONCERT_DATE,
+                p.DATE AS PURCHASE_DATE,
+                c.TICKET_ADDR,
+                c.COLLECTION_ADDR,
+                p.IS_REFUNDED,
+                p.IS_MINTED 
+            FROM PURCHASE p
+            JOIN CONCERT c ON p.CONCERT_ID = c.ID
+            WHERE p.ID = ?
+        `;
+        
+        // 상세 정보 조회 쿼리 실행
+        const [purchase] = await mariaDB.query(getPurchaedQuery, [insertedId]);
+        
+        // 조회된 상세 정보를 클라이언트에 반환
+        if (purchase.length > 0) {
+            res.json({'MSG': 'Success', 'purchase': purchase[0]});
+        } else {
+            res.status(404).json({'error': 'Purchase Info not found for the inserted ID'});
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({'error': err.message});
