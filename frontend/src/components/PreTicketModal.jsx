@@ -10,6 +10,7 @@ const PreTicketModal = ({
   web3,
   adminKey,
   isEntered,
+  getMyNft,
 }) => {
   return (
     <ul className="mt-4 gap-1  flex items-center justify-center ">
@@ -22,6 +23,7 @@ const PreTicketModal = ({
           adminKey={adminKey}
           web3={web3}
           isEntered={isEntered}
+          getMyNft={getMyNft}
         />
       </li>
       <li>
@@ -34,6 +36,7 @@ const PreTicketModal = ({
           web3={web3}
           adminKey={adminKey}
           isEntered={isEntered}
+          getMyNft={getMyNft}
         />
       </li>
     </ul>

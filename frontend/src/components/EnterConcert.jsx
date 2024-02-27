@@ -11,6 +11,7 @@ const EnterConcert = ({
   adminKey,
   web3,
   isEntered,
+  getMyNft,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const onClickEnter = async () => {
@@ -56,6 +57,7 @@ const EnterConcert = ({
       );
       console.log("tx receipt:", receipt);
       setIsLoading(false);
+      getMyNft();
       alert("행복한 하루 되세요!");
     } catch (error) {
       console.error(error);

@@ -13,6 +13,7 @@ const PreTicket = ({
   account,
   web3,
   adminKey,
+  getMyNft,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -45,6 +46,7 @@ const PreTicket = ({
                 web3={web3}
                 adminKey={adminKey}
                 isEntered={isEntered}
+                getMyNft={getMyNft}
               />
             </ul>
           )}

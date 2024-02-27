@@ -2,65 +2,47 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import Refund from "./Refund";
-import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
+import { CiMicrophoneOn } from "react-icons/ci";
 import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
 import PostEventAbi from "../abis/PostEventAbi.json";
-import { POST_EVENT_CONTRACT } from "../abis/contractAddress";
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
 
 const CollectionCard = () => {
   const [isModal, setIsModal] = useState(false);
-  const { account } = useOutletContext();
+  const { account, concert } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
   // const [purchasedList, setPurchasedList] = useState([]);
 
   const _web3 = new Web3(window.ethereum);
-  const postEventContract = new _web3.eth.Contract(
-    PostEventAbi,
-    POST_EVENT_CONTRACT
-  );
+
   //모달
   const isModalOpen = () => {
     setIsModal(!isModal);
   };
 
-  // const getPurchased = async () => {
-  //   const customerID = localStorage.getItem("customerID");
-  //   if (!customerID) return;
-
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:3001/purchase_list?customerID=${customerID}`
-  //     );
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setPurchasedList(data);
-  //       console.log("getPurchased: ", data);
-  //     } else {
-  //       throw new Error("Failed to fetch purchase list");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  //고객이 가진 NFT티켓 불러오기
   const getMyNft = async () => {
-    try {
-      if (!postEventContract) return;
+    let totalNFT = 0;
+    setIsLoading(true);
+    let temp = [];
+    for (let j = 0; j < concert.length; j++) {
+      const collectionAddress = concert[j].COLLECTION_ADDR;
 
-      // 내가 가진 티켓 개수
+      const postEventContract = new _web3.eth.Contract(
+        PostEventAbi,
+        collectionAddress
+      );
+      if (!postEventContract) return;
       const balance = await postEventContract.methods.balanceOf(account).call();
 
-      let temp = [];
-      if (balance > 0) {
-        setIsLoading(true);
-        setIsEmpty(false);
+      if (Number(balance) > 0) {
+        totalNFT += Number(balance);
+        console.log("totalNFT:", totalNFT);
+
         for (let i = 0; i < Number(balance); i++) {
           const tokenId = await postEventContract.methods
             .tokenOfOwnerByIndex(account, i)
@@ -72,28 +54,24 @@ const CollectionCard = () => {
 
           const response = await axios.get(metadataURI);
           // const purchase = purchasedList.find((p) => p.ID === tokenId);
+          console.log("MyTicketCard/getMyNft/response: ", response);
 
-          temp.push({ ...response.data, tokenId: Number(tokenId) });
-          console.log(response.data);
+          temp.push({
+            ...response.data,
+            tokenId: Number(tokenId),
+            collectionAddress: collectionAddress,
+          });
         }
-        setMetadataArray(temp);
-        setIsLoading(false);
       }
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
     }
+    //end of for
+
+    setMetadataArray(temp);
+    setIsLoading(false);
+    if (totalNFT === 0) setIsEmpty(true);
   };
 
-  // useEffect(() => {
-  //   if (purchasedList) return;
-  //   getPurchased();
-  // }, [purchasedList]);
-
   useEffect(() => {
-    if (!postEventContract) return;
-
     getMyNft();
   }, []);
 

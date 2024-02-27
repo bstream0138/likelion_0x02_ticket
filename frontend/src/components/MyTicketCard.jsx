@@ -4,14 +4,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
-import {
-  POST_EVENT_CONTRACT,
-  PRE_EVENT_CONTRACT,
-} from "../abis/contractAddress";
-import postEventAbi from "../abis/PostEventAbi.json";
+
 import preEventAbi from "../abis/PreEventAbi.json";
 import PreTicket from "./PreTicket";
-
 
 //Ticket 페이지에서의 MyTicketCard 화면
 //내가 민팅한 NFT표 보관
@@ -26,7 +21,6 @@ const MyTicketCard = () => {
   const [isEntered, setIsEntered] = useState(false);
   const [myNFTArray, setMyNFTArray] = useState([]);
 
-
   const adminKey = process.env.REACT_APP_PRIVATE_KEY;
   const web3 = new Web3(window.ethereum);
   const account = localStorage.getItem("account");
@@ -34,25 +28,26 @@ const MyTicketCard = () => {
   const getMyNft = async () => {
     let totalNFT = 0;
     setIsLoading(true);
-    console.log('MyTicketCard.jsx/getMyNft:',concert);
-    for(let j=0; j < concert.length; j++ ){
+    console.log("MyTicketCard.jsx/getMyNft:", concert);
+
+    let temp = [];
+    for (let j = 0; j < concert.length; j++) {
       const ticketAddress = concert[j].TICKET_ADDR;
       const collectionAddress = concert[j].TICKET_ADDR;
 
       const preEventContract = new web3.eth.Contract(
-          preEventAbi,
-          ticketAddress
+        preEventAbi,
+        ticketAddress
       );
 
       if (!preEventContract) continue;
 
       // 내가 가진 티켓 개수
       const balance = await preEventContract.methods.balanceOf(account).call();
-      
-      let temp = [];
+
       if (Number(balance) > 0) {
         totalNFT += Number(balance);
-        console.log('totalNFT:', totalNFT);
+        console.log("totalNFT:", totalNFT);
 
         for (let i = 0; i < Number(balance); i++) {
           const tokenId = await preEventContract.methods
@@ -77,7 +72,7 @@ const MyTicketCard = () => {
 
             const response = await axios.get(metadataURI);
             // const purchase = purchasedList.find((p) => p.ID === tokenId);
-            console.log('MyTicketCard/getMyNft/response: ', response);
+            console.log("MyTicketCard/getMyNft/response: ", response);
 
             temp.push({
               ...response.data,
@@ -89,20 +84,19 @@ const MyTicketCard = () => {
           }
         }
 
-        setMetadataArray([...temp]);
-        console.log(metadataArray);
-        
+        // setMetadataArray([...temp]);
+        console.log("for (", j, ") : ", metadataArray);
       }
-    //end of for
+      //end of for
     }
+    setMetadataArray(temp);
     setIsLoading(false);
-    if( totalNFT === 0 ) setIsEmpty(true);
+    if (totalNFT === 0) setIsEmpty(true);
   };
 
   useEffect(() => {
     getMyNft();
   }, []);
-
 
   return (
     <div className="min-w-screen min-h-screen md:[450px] h-[90vh]">
@@ -132,6 +126,7 @@ const MyTicketCard = () => {
               account={account}
               web3={web3}
               adminKey={adminKey}
+              getMyNft={getMyNft}
             />
           );
         })}

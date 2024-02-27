@@ -15,7 +15,7 @@ const casting = [
   { img: "/itzycasting.png" },
   { img: "/njcasting.png" },
   { img: "/phscasting.png" },
-  { img: "/bpcastinng.png" },
+  { img: "/bpcasting.png" },
 ];
 
 const Ticketing = () => {
