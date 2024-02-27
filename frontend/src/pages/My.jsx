@@ -13,8 +13,7 @@ const My = () => {
   const navigate = useNavigate();
   const [hoverLogout, setHoverLogout] = useState(false);
   const [isModal, setIsModal] = useState(false);
-  const [isModalPurchased, setIsModalPurchased] = useState(false);
-
+  const [isModalPurchased, setIsModalPurchased] = useState(null);
   const [purchasedList, setPurchasedList] = useState([]);
 
   //Purchased 리스트 작성예정
@@ -45,8 +44,12 @@ const My = () => {
   const onClickModal = () => {
     setIsModal(!isModal);
   };
-  const onClickModalPurchased = () => {
-    setIsModalPurchased(!isModalPurchased);
+  const onClickModalPurchased = (purchase) => {
+    setIsModalPurchased(purchase);
+  };
+
+  const onClcikCloseModalPurchased = () => {
+    setIsModalPurchased(null);
   };
 
   //로그아웃
@@ -110,7 +113,7 @@ const My = () => {
                   <button
                     key={purchase.ID}
                     className="flex py-2 hover:bg-[#919191] hover:text-white duration-100 "
-                    onClick={onClickModalPurchased}
+                    onClick={(purchase) => onClickModalPurchased(purchase)}
                   >
                     <span className="truncate w-1/3 ml-8">
                       {purchase.CONTENT}
@@ -119,10 +122,11 @@ const My = () => {
                   </button>
                   {isModalPurchased && (
                     <PurchasedModal
-                      setIsModalPurchased={setIsModalPurchased}
+                      onClcikCloseModalPurchased={onClcikCloseModalPurchased}
                       isModalPurchased={isModalPurchased}
-                      key={Purchased.ID}
                       purchasedID={purchase.ID}
+                      purchasedContent={purchase.CONTENT}
+                      purchasedDate={purchase.PURCHASE_DATE}
                       purchasedMinted={purchase.IS_MINTED}
                       purchasedRefunded={purchase.IS_REFUNDED}
                     />

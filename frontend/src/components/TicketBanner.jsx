@@ -42,13 +42,13 @@ const TicketBanner = () => {
             to={`/ticketing/${index}`}
             className="h-[280px] w-[350px] "
           >
-            <div className="  bg-white hover:bg-[#b1b1b1]  border-black border-2">
+            <div className="  bg-white hover:bg-[#b1b1b1] duration-150  border-black border-2">
               <img
                 className="w-[350px] h-[280px] object-cover"
                 src={v.IMAGE}
                 alt="a"
               />
-              <ul className="mx-4 ">
+              <ul className="mx-4 h-[120px]">
                 <li className="text-3xl mt-1">{v.TITLE}</li>
                 <li className="flex items-center gap-1">
                   <CiMicrophoneOn />
@@ -63,7 +63,7 @@ const TicketBanner = () => {
           </Link>
         ))}
       </Slider>
-      <div className="bg-black w-[355px] h-[373px] fixed top-[6px] left-[3px] content -z-20"></div>
+      <div className="bg-black w-[355px] h-[411px] fixed top-[6px] left-[3px] content -z-20"></div>
       <div className="mt-4 self-center flex gap-3">
         <button
           onMouseEnter={() => setHoverPrev(true)}

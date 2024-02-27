@@ -2,7 +2,7 @@ import { PiWalletBold } from "react-icons/pi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Header = ({ account }) => {
+const Header = ({ account, userInfo }) => {
   const [hoverMove, setHoverMove] = useState(false);
 
   return (
@@ -16,10 +16,16 @@ const Header = ({ account }) => {
           />
         </Link>
         {account ? (
-          <div className="flex text-sm mr-12">
-            <PiWalletBold className="text-sm mt-[1px]" /> :{" "}
-            {account.substring(0, 7)}
-            ...{account.substring(account.length - 5)}
+          <div className="flex text-sm mr-14">
+            <img
+              className="w-14 rounded-full mb-1"
+              src={userInfo.userImage}
+              alt="KakaoImage"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/metamask_emblem.png";
+              }}
+            />
           </div>
         ) : (
           <Link

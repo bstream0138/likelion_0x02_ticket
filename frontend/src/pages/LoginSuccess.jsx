@@ -13,7 +13,8 @@ import { CreateAddress } from "../components/CreateAddress";
 // 회원 정보 처리 후, App에서 사용할 각종 context 정보 처리
 
 const LoginSuccess = () => {
-  const { setAccount, setWeb3, setPreEventContract } = useOutletContext();
+  const { setAccount, setWeb3, setPreEventContract, userInfo, setUserInfo } =
+    useOutletContext();
   const [kakaoImage, setKakaoImage] = useState();
   const [kakaoId, setKakaoId] = useState();
   const [kakaoName, setKakaoName] = useState();
@@ -33,12 +34,11 @@ const LoginSuccess = () => {
         const userID = queryParams.get("userID");
         const userName = queryParams.get("userName");
         const userImage = queryParams.get("userImage");
-<<<<<<< HEAD
-=======
-        setKakaoName(userName);
-        setKakaoId(userID);
-        setKakaoImage(userImage);
->>>>>>> origin/main
+        setUserInfo({
+          userID: userID,
+          userName: userName,
+          userImage: userImage,
+        });
 
         if (userID && userName) {
           CreateAddress(userID, userName)
@@ -140,12 +140,13 @@ const LoginSuccess = () => {
       </p>
       <ul className="flex flex-col items-center justify-center mt-10 ">
         <img
-          src={kakaoImage}
+          src={userInfo.userImage}
           alt="profileImage"
           className="w-20 rounded-full border-2 shadow-xl"
         />
         <li className="mt-2 text-xl">
-          <span className="font-semibold">{kakaoName}</span> 님 환영합니다!
+          <span className="font-semibold">{userInfo.userName}</span> 님
+          환영합니다!
         </li>
       </ul>
     </div>
