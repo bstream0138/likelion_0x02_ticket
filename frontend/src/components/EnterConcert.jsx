@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 
-import Web3 from "web3"; 
+import Web3 from "web3";
 
 const EnterConcert = ({
   ticketAddress,
@@ -18,12 +18,13 @@ const EnterConcert = ({
       setIsLoading(true);
 
       const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
+      console.log(adminKey);
 
       // NFT Ticket Address
       const preEventContract = new web3.eth.Contract(
         preEventAbi,
         ticketAddress
-    );
+      );
 
       const tx = {
         from: adminAccount.address,

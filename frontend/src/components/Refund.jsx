@@ -32,10 +32,6 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
       setIsLoading(true);
 
       if (purchasedMinted) {
-        // NFT가 민팅된 경우, 환불
-        // await preEventContract.methods
-        //   .cancel(purchasedID)
-        //   .send({ from: account });
         const tx = {
           from: mintAccount.address,
           to: PRE_EVENT_CONTRACT,
@@ -74,7 +70,8 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
         // NFT가 민팅되지 않은 경우, 환불
         //app.post('/api/refund', (req, res) => {
         //const {purchaseID} = req.body;
-        const updatePurchaseRefundInfo = async () => {
+        console.log("ID?", purchasedID);
+        const updatePurchaseRefundInfo = async (purchasedID) => {
           try {
             const response = await axios.post(
               `${process.env.REACT_APP_BACKEND_URL}/refund`,
@@ -89,7 +86,7 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
           }
         };
 
-        updatePurchaseRefundInfo();
+        updatePurchaseRefundInfo(purchasedID);
       }
 
       alert("환불이 완료되었습니다.");
@@ -104,7 +101,7 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
   return (
     <div>
       {purchasedRefunded ? (
-        <button className="cursor-not-allowed border-2 border-[#bcbcbc] rounded-md px-2 text-2xl text-[#bcbcbc]  py-2 flex items-center justify-center ">
+        <button className="ccursor-not-allowed flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-[#bcbcbc] text-[#bcbcbc] py-1 px-[6px] rounded-md text-3xl    duration-10">
           환불하기
         </button>
       ) : (
