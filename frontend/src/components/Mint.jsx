@@ -1,8 +1,9 @@
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 import Web3 from "web3";
 
@@ -27,6 +28,8 @@ const Mint = () => {
   // console.log("Mint/web3(2): ", web3);
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
+
+  
 
   const onClickMint = async () => {
     try {

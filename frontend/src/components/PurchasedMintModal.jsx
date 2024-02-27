@@ -1,10 +1,11 @@
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
+
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 const PurchasedMintModal = ({
   purchasedID,

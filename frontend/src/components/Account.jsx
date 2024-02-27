@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
+
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 const Account = ({ setIsModal }) => {
   const { account, web3, preEventContract } = useOutletContext();

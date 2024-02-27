@@ -18,7 +18,6 @@ import PaymentCancel from "./pages/PaymentCancel";
 import Layout from "./components/Layout";
 import My from "./pages/My";
 import LoginPage from "./pages/LoginPage";
-import AdminFilter from "./pages/AdminFilter";
 
 const App = () => {
   return (
@@ -37,8 +36,6 @@ const App = () => {
           <Route path="/payment_success" element={<PaymentSuccess />} />
           <Route path="/payment_fail" element={<PaymentCancel />} />
           <Route path="/payment_cancel" element={<PaymentCancel />} />
-          
-          <Route path="/adminfilter" element={<AdminFilter />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -2,12 +2,13 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useOutletContext, Link } from "react-router-dom";
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 
 import Mint from "../components/Mint";
 import Web3 from "web3";
+
+import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 const PaymentSuccess = ({ toggleOpen }) => {
   const { setAccount, setWeb3 } = useOutletContext();
@@ -126,9 +127,6 @@ const PaymentSuccess = ({ toggleOpen }) => {
         console.error("[ERR] PaymentSuccess/insertPurchase: ", error);
       }
     };
-
-    // console.log("PaymentSuccess/useEffect/customerID: ", customerID);
-    // console.log("PaymentSuccess/useEffect/concertID: ", concertID);
 
     if (customerID && concertID) {
       insertPurchase();
