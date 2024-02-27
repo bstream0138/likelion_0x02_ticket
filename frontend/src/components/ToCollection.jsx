@@ -12,6 +12,7 @@ const ToCollection = ({
   web3,
   adminKey,
   isEntered,
+  getMyNft,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,6 +36,7 @@ const ToCollection = ({
         from: adminAccount.address,
         to: collectionAddress,
         gas: 300000n,
+        // nonce: 311,
         // gasPrice: gasPrice,
         data: postEventContract.methods
           .mintTicket(account, tokenId)
@@ -47,15 +49,6 @@ const ToCollection = ({
 
       console.log("tx:", tx);
 
-      web3.eth
-        .estimateGas(tx)
-        .then((gasAmount) => {
-          console.log("Estiamte Gas:", gasAmount);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
       const signedTx = await web3.eth.accounts.signTransaction(tx, adminKey);
 
       const receipt = await web3.eth.sendSignedTransaction(
@@ -67,11 +60,12 @@ const ToCollection = ({
       //   .mintTicket(account, tokenId)
       //   .send({ from: adminAccount.address, gas: 300000, gasPrice: 3000000 });
 
-      await preEventContract.methods
-        .burnTicket(tokenId)
-        .send({ from: adminAccount.addrees, gas: 300000, gasPrice: 3000000 });
+      // await preEventContract.methods
+      //   .burnTicket(tokenId)
+      //   .send({ from: adminAccount.addrees, gas: 300000, gasPrice: 3000000 });
 
       setIsLoading(false);
+      getMyNft();
       alert("Collection에서 티켓을 확인해주세요");
     } catch (error) {
       console.error(error);
