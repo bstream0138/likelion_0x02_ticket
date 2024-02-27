@@ -11,7 +11,7 @@ const PurchasedModal = ({
   purchasedRefunded,
 }) => {
   return (
-    <div className="bg-black bg-opacity-30 w-full h-full fixed left-0 top-0 ">
+    <div className="bg-black bg-opacity-10 w-full h-full fixed left-0 top-0 z-10 ">
       <div className="flex-col gap-2 w-[320px] h-[320px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-30">
         <button
           className="fixed top-0 right-2"

@@ -6,8 +6,8 @@ const Header = ({ account }) => {
   const [hoverMove, setHoverMove] = useState(false);
 
   return (
-    <div className="sticky poppins top-0 z-10 ">
-      <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 ">
+    <div className="sticky poppins top-0 z-10 min-w-screen md:w-[450px] mx-auto ">
+      <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 min-w-screen md:w-[450px] mx-auto header">
         <Link to="/">
           <img
             src="logo.png"
@@ -36,7 +36,11 @@ const Header = ({ account }) => {
           </Link>
         )}
       </div>
-      <img src="ticket-head.png" alt="" className=" w-[447px]" />
+      <img
+        src="ticket-head.png"
+        alt=""
+        className="min-w-screen md:w-[450px] content"
+      />
     </div>
   );
 };
