@@ -12,6 +12,7 @@ const ToCollection = ({
   web3,
   adminKey,
   isEntered,
+  getMyNft,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,7 +32,7 @@ const ToCollection = ({
 
       setIsLoading(true);
 
-      const tx = {
+      const tx_post = {
         from: adminAccount.address,
         to: collectionAddress,
         gas: 300000n,
@@ -45,10 +46,10 @@ const ToCollection = ({
         type: "0x02",
       };
 
-      console.log("tx:", tx);
+      console.log("tx_post:", tx_post);
 
       web3.eth
-        .estimateGas(tx)
+        .estimateGas(tx_post)
         .then((gasAmount) => {
           console.log("Estiamte Gas:", gasAmount);
         })
@@ -56,22 +57,51 @@ const ToCollection = ({
           console.error(error);
         });
 
-      const signedTx = await web3.eth.accounts.signTransaction(tx, adminKey);
-
-      const receipt = await web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
+      const signedTx_post = await web3.eth.accounts.signTransaction(
+        tx_post,
+        adminKey
       );
-      console.log(receipt);
 
-      // await postEventContract.methods
-      //   .mintTicket(account, tokenId)
-      //   .send({ from: adminAccount.address, gas: 300000, gasPrice: 3000000 });
+      const receipt_post = await web3.eth.sendSignedTransaction(
+        signedTx_post.rawTransaction
+      );
+      console.log(receipt_post);
 
-      await preEventContract.methods
-        .burnTicket(tokenId)
-        .send({ from: adminAccount.addrees, gas: 300000, gasPrice: 3000000 });
+      const tx_pre = {
+        from: adminAccount.address,
+        to: ticketAddress,
+        gas: 300000n,
+        // gasPrice: gasPrice,
+        data: preEventContract.methods.burnTicket(tokenId).encodeABI(),
+        // value: "0x0",
+        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+        maxFeePerGas: web3.utils.toWei("120", "gwei"),
+        type: "0x02",
+      };
+
+      console.log("tx_pre:", tx_pre);
+
+      web3.eth
+        .estimateGas(tx_pre)
+        .then((gasAmount) => {
+          console.log("Estiamte Gas:", gasAmount);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      const signedTx_pre = await web3.eth.accounts.signTransaction(
+        tx_pre,
+        adminKey
+      );
+
+      const receipt_pre = await web3.eth.sendSignedTransaction(
+        signedTx_pre.rawTransaction
+      );
+      console.log(receipt_pre);
 
       setIsLoading(false);
+      getMyNft();
       alert("Collection에서 티켓을 확인해주세요");
     } catch (error) {
       console.error(error);

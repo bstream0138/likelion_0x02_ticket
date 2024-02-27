@@ -33,7 +33,7 @@ const MyTicketCard = () => {
     let temp = [];
     for (let j = 0; j < concert.length; j++) {
       const ticketAddress = concert[j].TICKET_ADDR;
-      const collectionAddress = concert[j].TICKET_ADDR;
+      const collectionAddress = concert[j].COLLECTION_ADDR;
 
       const preEventContract = new web3.eth.Contract(
         preEventAbi,
@@ -120,6 +120,8 @@ const MyTicketCard = () => {
               tokenId={v.tokenId}
               name={v.name}
               image={v.image}
+              location={v.attributes[1].value}
+              date={v.attributes[2].value}
               isEntered={v.isEntered}
               ticketAddress={v.ticketAddress}
               collectionAddress={v.collectionAddress}
