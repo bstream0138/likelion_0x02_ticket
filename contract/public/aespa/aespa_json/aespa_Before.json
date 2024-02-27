@@ -1,5 +1,19 @@
 {
   "name": "aespa",
-  "description": "Spicy poster(Before)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmW9BicM9NCo2st69T5JyVfzGcLQVwB2E56emxyRbMbQSn/aespa_Before.jpg"
+  "description": "SYNK : HYPER LINE before poster",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmYAiET6EgjofQCricH68u5D3aqNQdkY6MED3sDQXCAs5c/aespa_Before.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "SYNK : HYPER LINE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "경희대학교 평화의전당"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.6.7"
+    }
+  ]
 }

@@ -1,5 +1,19 @@
 {
   "name": "IU",
   "description": "This ticket is canceled",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmQvJmMQJzy1VJrrJpVgimwujwF7DgS8usmk3RVGwY8f3d/IU_Canceled.png"
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmdC72URw2ATb9bFKNPZwpxynjG9gAeuXdTS1ojdojHTt5/IU_Canceled.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "The Golden Hour : 오렌지 태양 아래"
+    },
+    {
+      "trait_type": "Location",
+      "value": "KSPO DOME(올림픽 체조경기장)"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.4.21"
+    }
+  ]
 }

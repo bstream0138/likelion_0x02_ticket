@@ -1,5 +1,19 @@
 {
   "name": "BlackPink",
-  "description": "The special photo of ROSE at this concert (BORN PINK common collection)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmTUuutcoVi3nq9fAidGGCnGkfkEhVgxc6io6sbokTsXRH/BlackPink_Common.jpg"
+  "description": "The special photo of ROSE at BORN PINK WORLD TOUR (Common collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmVyx9WkLDyobLdyN6WgKyr4Qe43n3mrV1LAhExSzPtMoW/BlackPink_Common.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "BORN PINK WORLD TOUR"
+    },
+    {
+      "trait_type": "Location",
+      "value": "고척스카이돔"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.5.5"
+    }
+  ]
 }

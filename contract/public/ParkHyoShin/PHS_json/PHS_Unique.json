@@ -1,5 +1,19 @@
 {
   "name": "Park Hyo Shin",
-  "description": "The special discount coupon of his musical: The Man Who Laughs (Park Hyo Shin Unique collection)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmP17ZZ6gWzYUHGnUdJ7NVYNm4YV5ZevUdyYw8PanU8WD6/PHS_Unique.jpeg"
+  "description": "The special discount coupon of musical: The Man Who Laughs (Unique collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmcvkhMsYMCyg1addHCWK1oWhb4KWkaJYvdacDXfvao7Rb/PHS_Unique.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "마법에 걸린 숲"
+    },
+    {
+      "trait_type": "Location",
+      "value": "연세대 대강당"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.3.17"
+    }
+  ]
 }

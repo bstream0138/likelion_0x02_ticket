@@ -1,5 +1,19 @@
 {
   "name": "NewJeans",
-  "description": "Ditto poster(After)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/Qmd821xFqdPyBLa1bVcqZ25aviwYASXs9vir9JbvimrQbE/NewJeans_After.jpg"
+  "description": "NEWJEANS after poster",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmegWDWcyMpuRYvQpuw9iSHLKFFBACBUgKKC8AMxhFBkFW/NewJeans_After.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "NEWJEANS"
+    },
+    {
+      "trait_type": "Location",
+      "value": "제주 국제컨벤션센터 탐라홀"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.3.31"
+    }
+  ]
 }

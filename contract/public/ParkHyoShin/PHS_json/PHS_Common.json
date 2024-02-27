@@ -1,5 +1,19 @@
 {
   "name": "Park Hyo Shin",
-  "description": "The special photo at this concert (Park Hyo Shin common collection)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmP17ZZ6gWzYUHGnUdJ7NVYNm4YV5ZevUdyYw8PanU8WD6/PHS_Common.jpeg"
+  "description": "The special photo at 마법에 걸린 숲 (Common collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmcvkhMsYMCyg1addHCWK1oWhb4KWkaJYvdacDXfvao7Rb/PHS_Common.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "마법에 걸린 숲"
+    },
+    {
+      "trait_type": "Location",
+      "value": "연세대 대강당"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.3.17"
+    }
+  ]
 }

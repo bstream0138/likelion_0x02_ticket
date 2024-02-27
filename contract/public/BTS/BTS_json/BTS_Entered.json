@@ -1,5 +1,19 @@
 {
   "name": "BTS",
   "description": "This ticket is used",
-  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/Qmf5YVmd4FxMEEXtP6Lip8wByMBv48FGSyt15jXXNf8zwK/BTS_Entered.png"
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmTswAcwLcVuNSAq86vVPU4BiYJRDENZYdGskoYwvja6GL/BTS_Entered.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "BTS PERMISSION TO DANCE ON STAGE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "서울올림픽주경기장"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.5.12"
+    }
+  ]
 }
