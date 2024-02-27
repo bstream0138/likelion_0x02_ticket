@@ -47,6 +47,7 @@ app.post('/api/payReady', payController.kakaoPayReady);
 
 //
 app.post('/api/login', async (req, res) => {
+    console.log('/api/login')
     const { loginFrom, account } = req.body;
     console.log('t1_server.js/login:', req.body);
 
@@ -69,6 +70,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.get('/api/purchase_list', async (req, res) => {
+    console.log('/api/purchase_list')
     const customerID = req.query.customerID;
     if (!customerID) {
         return res.status(400).send('Customer ID is required');
@@ -103,6 +105,7 @@ app.get('/api/purchase_list', async (req, res) => {
 });
 
 app.post('/api/purchase', async (req, res) => {
+    console.log('/api/purchase')
     const { customerID, concertID} = req.body;
     const purchaseDate = new Date(new Date().getTime()+(9*60*60*1000)).toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
     
@@ -139,6 +142,7 @@ app.post('/api/purchase', async (req, res) => {
         
         // 상세 정보 조회 쿼리 실행
         const [purchase] = await mariaDB.query(getPurchaedQuery, [insertedId]);
+        console.log('/api/purchase/result -> ',purchase[0]);
         
         // 조회된 상세 정보를 클라이언트에 반환
         if (purchase.length > 0) {
@@ -154,6 +158,7 @@ app.post('/api/purchase', async (req, res) => {
 
 
 app.post('/api/store_kinfo', async (req, res) => {
+    console.log('/api/store_kinfo')
     const {loginFrom, userID, userName, privateKey, address} = req.body;
 
     try {
@@ -180,6 +185,7 @@ app.post('/api/store_kinfo', async (req, res) => {
 });
 
 app.post('/api/refund', async (req, res) => {
+    console.log('/api/refund')
     const {purchaseID} = req.body;
 
     if (!purchaseID) {
@@ -198,6 +204,7 @@ app.post('/api/refund', async (req, res) => {
 });
 
 app.post('/api/mint', async (req, res) => {
+    console.log('/api/mint')
     const {purchaseID} = req.body;
 
     if (!purchaseID) {
