@@ -7,6 +7,8 @@ const PreTicket = ({
   tokenId,
   name,
   image,
+  location,
+  date,
   isEntered,
   ticketAddress,
   collectionAddress,
@@ -53,25 +55,23 @@ const PreTicket = ({
           <ul className="mt-6 mr-3">
             티켓 번호 : {tokenId}
             <div className="mt-6 ml-5 px-5">
-              <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px]  ">
+              <ul className="text-md font-extrabold flex items-center gap-1 mt-[2px]">
                 <span className="mr-[-2px]">
                   <CiMicrophoneOn />
                 </span>
-                <span className="mr-[10px]">IU</span>
+                <span className="mr-[10px]">{name}</span>
               </ul>
               <ul className="text-sm mt-[2px] mb-[1px] ml-[0.5px] flex items-center gap-1">
                 <span>
                   <CiLocationOn />
                 </span>
-                <span className="text-xs ">잠실종합운동장</span>
+                <span className="text-xs ">{location}</span>
               </ul>
               <ul className="text-sm flex items-center font-light gap-1">
                 <span className="ml-[1px]">
                   <CiCalendar />
                 </span>
-                <span className="text-xs mt-[1px]">
-                  2024.02.29 - 2024.03.02
-                </span>
+                <span className="text-xs mt-[1px]">{date}</span>
               </ul>
             </div>
           </ul>

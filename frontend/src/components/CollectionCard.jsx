@@ -16,9 +16,8 @@ const CollectionCard = () => {
   const [metadataArray, setMetadataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
-  // const [purchasedList, setPurchasedList] = useState([]);
 
-  const _web3 = new Web3(window.ethereum);
+  const web3 = new Web3(window.ethereum);
 
   //모달
   const isModalOpen = () => {
@@ -32,11 +31,13 @@ const CollectionCard = () => {
     for (let j = 0; j < concert.length; j++) {
       const collectionAddress = concert[j].COLLECTION_ADDR;
 
-      const postEventContract = new _web3.eth.Contract(
+      const postEventContract = new web3.eth.Contract(
         PostEventAbi,
         collectionAddress
       );
-      if (!postEventContract) return;
+
+      if (!postEventContract) continue;
+
       const balance = await postEventContract.methods.balanceOf(account).call();
 
       if (Number(balance) > 0) {
@@ -54,7 +55,7 @@ const CollectionCard = () => {
 
           const response = await axios.get(metadataURI);
           // const purchase = purchasedList.find((p) => p.ID === tokenId);
-          console.log("MyTicketCard/getMyNft/response: ", response);
+          console.log("CollectionCard/getMyNft/response: ", response);
 
           temp.push({
             ...response.data,
@@ -110,7 +111,7 @@ const CollectionCard = () => {
                       <span className="mr-[-2px]">
                         <CiMicrophoneOn />
                       </span>
-                      <span className="mr-[10px] mt-[3px] ">IU</span>
+                      <span className="mr-[10px] mt-[3px] ">{v.name}</span>
                     </ul>
                     <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
                       <span>{v.description}</span>
