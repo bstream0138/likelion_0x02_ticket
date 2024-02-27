@@ -1,5 +1,19 @@
 {
   "name": "ITZY",
-  "description": "The special photo of Yuna (ITZY rare collection)",
-  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmThCAPuJjdVNUsU3NYY8eCY9JkAU4N1QcBXSoGH4LGZ6A/ITZY_Rare.jpg"
+  "description": "The special photo of Yuna (Rare collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmaJfU6ahcJNpizdikZPZZHYMN9V3onGDqPoGpMMieCGVY/ITZY_Rare.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "WORLD TOUR - BORN TO BE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "잠실실내체육관"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.5.25"
+    }
+  ]
 }

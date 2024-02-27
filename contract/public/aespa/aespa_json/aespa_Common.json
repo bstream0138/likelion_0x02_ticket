@@ -1,5 +1,19 @@
 {
   "name": "aespa",
-  "description": "The special photo of Winter at this concert (Spicy common collection)",
-  "image": "https://silver-absent-owl-491.mypinata.cloud/ipfs/QmW9BicM9NCo2st69T5JyVfzGcLQVwB2E56emxyRbMbQSn/aespa_Common.jpg"
+  "description": "The special photo of Winter at SYNK : HYPER LINE (Common collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmYAiET6EgjofQCricH68u5D3aqNQdkY6MED3sDQXCAs5c/aespa_Common.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "SYNK : HYPER LINE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "경희대학교 평화의전당"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.6.7"
+    }
+  ]
 }

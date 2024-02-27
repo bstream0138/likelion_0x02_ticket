@@ -1,5 +1,19 @@
 {
   "name": "ITZY",
-  "description": "The sepcial coupon of the album: Checkmate (ITZY Unique collection)",
-  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmThCAPuJjdVNUsU3NYY8eCY9JkAU4N1QcBXSoGH4LGZ6A/ITZY_Unique.jpeg"
+  "description": "The sepcial coupon of new album: Checkmate (Unique collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmaJfU6ahcJNpizdikZPZZHYMN9V3onGDqPoGpMMieCGVY/ITZY_Unique.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "WORLD TOUR - BORN TO BE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "잠실실내체육관"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.5.25"
+    }
+  ]
 }

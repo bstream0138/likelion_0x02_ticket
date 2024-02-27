@@ -1,5 +1,19 @@
 {
   "name": "ITZY",
-  "description": "The special photo of Ryujin (ITZY common collection)",
-  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmThCAPuJjdVNUsU3NYY8eCY9JkAU4N1QcBXSoGH4LGZ6A/ITZY_Common.jpg"
+  "description": "The special photo of Ryujin (Common collection)",
+  "image": "https://red-holy-whippet-722.mypinata.cloud/ipfs/QmaJfU6ahcJNpizdikZPZZHYMN9V3onGDqPoGpMMieCGVY/ITZY_Common.jpg",
+  "attributes": [
+    {
+      "trait_type": "Title",
+      "value": "WORLD TOUR - BORN TO BE"
+    },
+    {
+      "trait_type": "Location",
+      "value": "잠실실내체육관"
+    },
+    {
+      "trait_type": "Date",
+      "value": "2024.5.25"
+    }
+  ]
 }
