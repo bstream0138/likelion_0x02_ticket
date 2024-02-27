@@ -8,9 +8,7 @@ import preEventAbi from "../abis/PreEventAbi.json";
 import Mint from "../components/Mint";
 import Web3 from "web3";
 
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
-
-const PaymentSuccess = ({ toggleOpen }) => {
+const PaymentSuccess = () => {
   const { setAccount, setWeb3 } = useOutletContext();
   const [metadataArray, setMetadataArray] = useState([]);
   // const [metadata, setMetadata] = useState("");
@@ -21,16 +19,13 @@ const PaymentSuccess = ({ toggleOpen }) => {
   const navigate = useNavigate();
   const [hoverToHome, setHoverToHome] = useState(false);
   const [hoverViewTicket, setHoverViewTicket] = useState(false);
+  const [ticketAddress, setTicketAddress] = useState();
 
   //민트기능 이동
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
   const web3 = new Web3(window.ethereum);
   const account = localStorage.getItem("backupAccount");
-  const preEventContract = new web3.eth.Contract(
-    preEventAbi,
-    PRE_EVENT_CONTRACT
-  );
 
   // console.log("Mint/account(2): ", account);
   // console.log("Mint/web3(2): ", web3);
@@ -40,20 +35,21 @@ const PaymentSuccess = ({ toggleOpen }) => {
   const onClickMint = async (e) => {
     try {
       e.preventDefault();
-      if (!preEventContract || !account || !mintAccount) return;
+      if (!account) return;
+
+      const preEventContract = new web3.eth.Contract(
+        preEventAbi,
+        ticketAddress
+      );
+      console.log("프리이벤트컨트랙트:", preEventContract);
 
       setIsLoading(true);
 
       // const gasPrice = await web3.eth.getGasPrice();
-      const balance = await preEventContract.methods
-        .balanceOf(mintAccount.address)
-        .call();
-      // const tokenId = Number(balance);
-      // const nonce = await web3.eth.getTransactionCount(account, "latest");
 
       const tx = {
         from: mintAccount.address,
-        to: PRE_EVENT_CONTRACT,
+        to: ticketAddress,
         gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods.mintTicket(account).encodeABI(),
@@ -62,7 +58,7 @@ const PaymentSuccess = ({ toggleOpen }) => {
         maxFeePerGas: web3.utils.toWei("120", "gwei"),
         type: "0x02",
       };
-
+      console.log("티켓어드레스:", ticketAddress);
       console.log("tx:", tx);
 
       web3.eth
@@ -83,21 +79,6 @@ const PaymentSuccess = ({ toggleOpen }) => {
 
       setIsModalOpen(true);
       setIsLoading(false);
-
-      const tokenId = await preEventContract.methods
-        .tokenOfOwnerByIndex(mintAccount.address, Number(balance) - 1)
-        .call();
-
-      const metadataURI = await preEventContract.methods
-        .tokenURI(Number(tokenId))
-        .call();
-
-      const response = await axios.get(metadataURI);
-
-      // setMetadata(response.data);
-      setMetadataArray([response.data, ...metadataArray]);
-
-      console.log("metadata:", response.data);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -123,6 +104,8 @@ const PaymentSuccess = ({ toggleOpen }) => {
 
         if (response.data) {
           console.log("Purchase added: ", response.data);
+          setTicketAddress(response.data.purchase.TICKET_ADDR);
+          console.log("컨트랙트주소:", response.data.purchase.TICKET_ADDR);
           localStorage.removeItem("concertID");
         }
       } catch (error) {

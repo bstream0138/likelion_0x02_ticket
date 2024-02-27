@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ImSpinner8 } from "react-icons/im";
 import { useState } from "react";
-import postEventAbi from "../abis/PostEventAbi.json";
-import preEvnetAbi from "../abis/PreEventAbi.json";
+import PostEventAbi from "../abis/PostEventAbi.json";
+import PreEventAbi from "../abis/PreEventAbi.json";
 
 const ToCollection = ({
   collectionAddress,
@@ -15,24 +15,21 @@ const ToCollection = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
+
+  // collection에 민팅할 CA
+  const postEventContract = new web3.eth.Contract(
+    PostEventAbi,
+    collectionAddress
+  );
+
+  const preEventContract = new web3.eth.Contract(PreEventAbi, ticketAddress);
+
   const onClickPostMint = async () => {
     try {
       if (!account) return;
 
       setIsLoading(true);
-
-      const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
-
-      // collection에 민팅할 CA
-      const postEventContract = new web3.eth.Contract(
-        postEventAbi,
-        collectionAddress
-      );
-
-      const preEventContract = new web3.eth.Contract(
-        preEvnetAbi,
-        ticketAddress
-      );
 
       const tx = {
         from: adminAccount.address,
@@ -64,12 +61,15 @@ const ToCollection = ({
       const receipt = await web3.eth.sendSignedTransaction(
         signedTx.rawTransaction
       );
+      console.log(receipt);
+
+      // await postEventContract.methods
+      //   .mintTicket(account, tokenId)
+      //   .send({ from: adminAccount.address, gas: 300000, gasPrice: 3000000 });
 
       await preEventContract.methods
         .burnTicket(tokenId)
-        .send({ from: account.address, gas: 300000, gasPrice: 3000000 });
-
-      console.log("tx receipt:", receipt);
+        .send({ from: adminAccount.addrees, gas: 300000, gasPrice: 3000000 });
 
       setIsLoading(false);
       alert("Collection에서 티켓을 확인해주세요");
