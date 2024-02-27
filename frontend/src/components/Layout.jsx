@@ -2,12 +2,6 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MenuBar from "./MenuBar";
 
-/*
-import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
-import PreEventAbi from "../abis/PreEventAbi.json";
-import Web3 from "web3";
-*/
-
 import { sample_concert } from "../sample/sample_concert";
 import Header from "./Header";
 
@@ -18,11 +12,12 @@ const Layout = () => {
 
   // concert 정보
   const [concert, setConcert] = useState([]);
-
-  // 사용자의 실행환경이 PC인지 모바일인지 확인
-  const checkIsMobile = () => {
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  };
+  // user 정보
+  const [userInfo, setUserInfo] = useState({
+    userID: 0,
+    userName: "",
+    userImage: "",
+  });
 
   useEffect(() => {
     //localStorage 초기화
@@ -57,7 +52,7 @@ const Layout = () => {
   return (
     <>
       <div className="border-2 min-w-screen min-h-screen mx-auto md:w-[450px] border-black">
-        <Header account={account} />
+        <Header account={account} userInfo={userInfo} />
         <Outlet
           context={{
             account,
@@ -67,6 +62,8 @@ const Layout = () => {
             web3,
             setWeb3,
             concert,
+            setUserInfo,
+            userInfo,
           }}
         />
         <MenuBar />

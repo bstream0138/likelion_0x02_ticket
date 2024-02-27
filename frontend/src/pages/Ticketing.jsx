@@ -8,6 +8,16 @@ import {
 import Payment from "../components/Payment";
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 
+const casting = [
+  { img: "/btscasting.png" },
+  { img: "/iucasting.png" },
+  { img: "/apcasting.png" },
+  { img: "/itzycasting.png" },
+  { img: "/njcasting.png" },
+  { img: "/phscasting.png" },
+  { img: "/bpcastinng.png" },
+];
+
 const Ticketing = () => {
   const { index } = useParams();
   const { account, concert } = useOutletContext();
@@ -15,6 +25,7 @@ const Ticketing = () => {
   const [isModal, setIsModal] = useState(false);
   const [concertInfo, setConcertInfo] = useState(null);
   const [hoverTicketing, setHoverTicketing] = useState(false);
+  const [castingInfo, setCastingInfo] = useState();
   const location = useLocation();
 
   useEffect(() => {
@@ -34,8 +45,9 @@ const Ticketing = () => {
   useEffect(() => {
     const idx = parseInt(index, 10);
 
-    if (!isNaN(idx) && concert[idx]) {
+    if ((!isNaN(idx) && concert[idx]) || casting[idx]) {
       setConcertInfo(concert[idx]);
+      setCastingInfo(casting[idx]);
     } else {
       navigate("/");
     }
@@ -63,32 +75,34 @@ const Ticketing = () => {
               <div className="w-[153px] h-[209px] fixed bg-black -top-[124px] left-[32px] content -z-30 rounded-md"></div>
             </div>
             <div className="flex justify-end  w-[340px] mx-auto ">
-              <ul className=" pt-4 flex  ">
+              <ul className=" pt-4 flex mr-1 ">
                 <button
                   className={
                     hoverTicketing
-                      ? "flex items-center mt-[3px] justify-end border-2 border-black py-1 px-[10px] rounded-full text-4xl duration-100"
-                      : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full text-4xl duration-100"
+                      ? "flex items-center mt-[3px] justify-end border-2 border-black py-1 px-[10px] rounded-full text-4xl hover:bg-[#FBAE16] hover:text-white duration-100"
+                      : "flex items-center justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full text-4xl hover:text-white hover:bg-[#FBAE16] duration-100"
                   }
                   onClick={toggleOpen}
                   onMouseEnter={() => setHoverTicketing(true)}
                   onMouseLeave={() => setHoverTicketing(false)}
                 >
-                  Ticketing
+                  예매하기
                 </button>
               </ul>
             </div>
           </div>
 
           <div className="mt-10 px-5 ml-3">
-            <ul className="text-3xl border-black">{concertInfo.TITLE}</ul>
+            <ul className="text-3xl border-black border-b-2 pb-1">
+              {concertInfo.TITLE}
+            </ul>
             <ul className="text-xl font-normal flex items-center gap-[1px] mt-3">
               <CiMicrophoneOn />
               {concertInfo.CONTENT}
             </ul>
             <ul className="text-sm flex items-center mt-2 ml-[1px] gap-1">
               <CiLocationOn />
-              잠실종합운동장
+              {concertInfo.LOCATION}
             </ul>
             <ul className="text-sm flex items-center gap-1 mt-1 ml-[2px]">
               <CiCalendar />
@@ -96,10 +110,14 @@ const Ticketing = () => {
             </ul>
           </div>
 
-          <div className="px-5 text-2xl font-bold mt-3 ml-3">CASTING</div>
-          <ul className="w-[100px] h-[100px] object-contain ml-9 ">
-            <img className="w-[100px]" src="../iucasting.png" alt="iu" />
-          </ul>
+          <div className="px-5 text-2xl font-bold mt-6 ml-3">CASTING</div>
+          {castingInfo ? (
+            <ul className="w-[100px] h-[100px] object-contain ml-8 mt-4 ">
+              <img className="w-[100px]" src={castingInfo.img} alt="iu" />
+            </ul>
+          ) : (
+            <ul>Loading...</ul>
+          )}
           {isModal && (
             <Payment
               toggleOpen={toggleOpen}
@@ -109,7 +127,7 @@ const Ticketing = () => {
           )}
         </div>
       ) : (
-        <div>잠시만요</div>
+        <div>Loading...</div>
       )}
     </div>
   );

@@ -132,8 +132,8 @@ const PurchasedMintModal = ({
             onClick={onClickPurchsedModalOpen}
             className={
               hoverMint
-                ? "flex items-center mt-[12px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
-                : "flex items-center mt-[9px] justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-3xl  hover:bg-[#038BD5] hover:text-white ] duration-10"
+                ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10"
             }
             onMouseEnter={() => setHoverMint(true)}
             onMouseLeave={() => setHoverMint(false)}

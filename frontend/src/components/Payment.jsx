@@ -75,7 +75,7 @@ const Payment = ({ toggleOpen, account, concertInfo }) => {
             </div>
             <div className="flex justify-between py-2 mb-2">
               <div className="font-bold">가격:</div>
-              <div>{concertInfo.PRICE}원</div>
+              <div>{concertInfo.PRICE.toLocaleString("ko-KR")}원</div>
             </div>
           </div>
         </div>

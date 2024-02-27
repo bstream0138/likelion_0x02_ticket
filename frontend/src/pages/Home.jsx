@@ -8,8 +8,8 @@ const Home = () => {
       <div className="w-[350px] h-[280px] mx-auto rounded-md mt-12">
         <TicketBanner />
       </div>
-      <div className="mt-[162px] border-t-2 w-[370px] mx-auto border-black"></div>
-      <ul className="flex items-center mt-4 mx-12  text-[12px] ">
+      <div className="mt-[192px] border-t-2 w-[370px] mx-auto border-black"></div>
+      <ul className="flex items-center mt-4 mx-[52px]  text-[12px] ">
         <Link
           to="/ticketing/1"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"

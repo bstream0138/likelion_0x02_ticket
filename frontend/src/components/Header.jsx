@@ -2,12 +2,12 @@ import { PiWalletBold } from "react-icons/pi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Header = ({ account }) => {
+const Header = ({ account, userInfo }) => {
   const [hoverMove, setHoverMove] = useState(false);
 
   return (
-    <div className="sticky poppins top-0 z-10 ">
-      <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 ">
+    <div className="sticky poppins top-0 z-10 min-w-screen md:w-[450px] mx-auto ">
+      <div className="flex items-center justify-between text-2xl font-bold h-[80px] pt-8 bg-[#038BD5] py-5 min-w-screen md:w-[450px] mx-auto header">
         <Link to="/">
           <img
             src="logo.png"
@@ -16,10 +16,16 @@ const Header = ({ account }) => {
           />
         </Link>
         {account ? (
-          <div className="flex text-sm mr-12">
-            <PiWalletBold className="text-sm mt-[1px]" /> :{" "}
-            {account.substring(0, 7)}
-            ...{account.substring(account.length - 5)}
+          <div className="flex text-sm mr-14">
+            <img
+              className="w-14 rounded-full mb-1"
+              src={userInfo.userImage}
+              alt="KakaoImage"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/metamask_emblem.png";
+              }}
+            />
           </div>
         ) : (
           <Link
@@ -36,7 +42,11 @@ const Header = ({ account }) => {
           </Link>
         )}
       </div>
-      <img src="ticket-head.png" alt="" className=" w-[447px]" />
+      <img
+        src="ticket-head.png"
+        alt=""
+        className="min-w-screen md:w-[450px] content"
+      />
     </div>
   );
 };
