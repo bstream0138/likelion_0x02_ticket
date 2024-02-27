@@ -99,7 +99,7 @@ app.get('/api/purchase_list', async (req, res) => {
 
 app.post('/api/purchase', async (req, res) => {
     const { customerID, concertID} = req.body;
-    const purchaseDate = new Date().toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
+    const purchaseDate = new Date(new Date().getTime()+(9*60*60*1000)).toISOString().slice(0,19).replace('T', ' '); // YYYY-MM-DD HH:MM:SS format
     
     try {
         const _query =  `
