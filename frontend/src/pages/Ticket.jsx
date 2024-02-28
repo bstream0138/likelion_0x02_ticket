@@ -32,22 +32,22 @@ const Ticket = () => {
         <button
           className={
             isSelect === "A"
-              ? " bg-[#0073DC] text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
-              : "flex items-center hover:bg-[#0073DC] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
+              ? " bg-[#0073DC] text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[24px] rounded-full duration-100 whitespace-pre-wrap"
+              : "flex items-center hover:bg-[#0073DC] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1 px-[24px] rounded-full duration-100 whitespace-pre-wrap"
           }
           onClick={() => setIsSelect("A")}
         >
-          My Ticket
+          {`티    켓`}
         </button>
         <button
           onClick={() => setIsSelect("B")}
           className={
             isSelect === "B"
-              ? " bg-[#0073DC] text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[10px] rounded-full duration-100"
-              : "flex items-center hover:bg-[#0073DC] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1 px-[10px] rounded-full duration-100"
+              ? "whitespace-pre-wrap sig-yellow text-white flex items-center justify-end border-2 mt-[2px] border-black py-1 px-[16px] rounded-full duration-100"
+              : "whitespace-pre-wrap flex items-center hover:bg-[#FBAE16] hover:text-white  justify-end border-2 border-b-[5px] border-black  py-1  px-[16px] rounded-full duration-100"
           }
         >
-          Collection
+          {`선  물  함`}
         </button>
       </ul>
       {isSelect === "A" && <MyTicketCard />}

@@ -83,17 +83,17 @@ const CollectionCard = () => {
         {isEmpty && (
           <div>
             <div className="flex items-center justify-center text-3xl mt-4">
-              수집 된 티켓이 없습니다
+              보관중인 선물이 없습니다
             </div>
             <div className=" whitespace-pre-wrap text-sm font-normal flex justify-center mt-2">
-              {`공연이 끝난 후 My Ticket의 티켓을 Collection에 추가해주세요`}
+              {`공연이 끝난 티켓을 선물로 교환하세요`}
             </div>
           </div>
         )}
         {metadataArray.map((v, i) => (
           <div key={i} className="header poppins">
             <button
-              className="w-[380px] h-[200px] border-2 border-black mx-auto overflow-hidden flex "
+              className="w-[380px] h-[197px] border-2 border-black mx-auto overflow-hidden flex "
               onClick={isModalOpen}
             >
               <div className="bg-white w-[145px] h-full">
@@ -103,24 +103,60 @@ const CollectionCard = () => {
                   className="w-[145px] object-cover "
                 />
               </div>
-              <div className="w-[255px] bg-white hover:bg-[#b3b3b3] duration-150 hover:text-white h-[200px]">
-                <ul className="mt-10 mr-3">
-                  티켓 번호 : {v.tokenId}
-                  <div className="mt-5 ml-2 px-5">
-                    <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px] justify-center mr-1 ">
-                      <span className="mr-[-2px]">
-                        <CiMicrophoneOn />
-                      </span>
-                      <span className="mr-[10px] mt-[3px] ">{v.name}</span>
-                    </ul>
-                    <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
-                      <span>{v.description}</span>
-                    </ul>
-                  </div>
-                </ul>
-              </div>
+              {v.tokenId % 6 === 0 ? (
+                <div className="w-[255px] bg-gradient-to-t  from-[#ad5ce3] via-[#ec38bc] to-[#fdeff9] duration-150 hover:text-white h-[200px]">
+                  <ul className="mt-10 mr-3">
+                    선물 번호 : {v.tokenId}
+                    <div className="mt-5 ml-2 px-5">
+                      <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px] justify-center mr-1 ">
+                        <span className="mr-[-2px]">
+                          <CiMicrophoneOn />
+                        </span>
+                        <span className="mr-[10px] mt-[3px] ">{v.name}</span>
+                      </ul>
+                      <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                        <span>{v.description}</span>
+                      </ul>
+                    </div>
+                  </ul>
+                </div>
+              ) : v.tokenId % 6 === 3 || v.tokenId % 6 === 5 ? (
+                <div className="w-[255px] bg-gradient-to-t from-white  to-blue-200  duration-150 hover:text-white h-[200px]">
+                  <ul className="mt-10 mr-3">
+                    선물 번호 : {v.tokenId}
+                    <div className="mt-5 ml-2 px-5">
+                      <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px] justify-center mr-1 ">
+                        <span className="mr-[-2px]">
+                          <CiMicrophoneOn />
+                        </span>
+                        <span className="mr-[10px] mt-[3px] ">{v.name}</span>
+                      </ul>
+                      <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                        <span>{v.description}</span>
+                      </ul>
+                    </div>
+                  </ul>
+                </div>
+              ) : (
+                <div className="w-[255px] bg-white  duration-150 hover:bg-[#a1a1a1] h-[200px]">
+                  <ul className="mt-10 mr-3">
+                    선물 번호 : {v.tokenId}
+                    <div className="mt-5 ml-2 px-5">
+                      <ul className="text-md font-extrabold flex items-center gap-1  mt-[2px] justify-center mr-1 ">
+                        <span className="mr-[-2px]">
+                          <CiMicrophoneOn />
+                        </span>
+                        <span className="mr-[10px] mt-[3px] ">{v.name}</span>
+                      </ul>
+                      <ul className="text-xs mt-[10px] mb-[1px] ml-[0.5px] flex items-center gap-1">
+                        <span>{v.description}</span>
+                      </ul>
+                    </div>
+                  </ul>
+                </div>
+              )}
             </button>
-            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>
+            <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[199px]"></div>
           </div>
         ))}
       </div>

@@ -33,3 +33,19 @@
 .hashtag {
   @apply flex items-center text-center px-2 py-1 mx-auto border-2 border-black rounded-full border-b-4 border-r-4;
 }
+
+.sig-blue {
+  @apply text-white bg-[#038BD5];
+}
+
+.sig-blue-h {
+  @apply text-white bg-[#0215AB];
+}
+
+.sig-yellow {
+  @apply text-white bg-[#FBAE16];
+}
+
+.sig-yellow-h {
+  @apply text-white bg-[#F96900];
+}

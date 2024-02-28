@@ -87,9 +87,9 @@ const My = () => {
           </button>
           <button
             onClick={onClickModal}
-            className="mt-[18px] mr-2 text-xl hover:underline hover:text-[#034ECC] duration-100"
+            className="mt-[18px] mr-6 text-xl hover:underline hover:text-[#034ECC] duration-100"
           >
-            Show Wallet&Send
+            계정 정보
           </button>
         </ul>
         <div>
@@ -100,8 +100,8 @@ const My = () => {
               </li>
             </ul>
           )}
-          <div className="mt-4 text-2xl font-semibold text-white py-1 pl-1 rounded-t-md bg-[#034ECC]">
-            Purchased
+          <div className="mt-4 text-2xl font-semibold text-white py-1 pl-1 rounded-t-md pl-2 bg-[#034ECC]">
+            구매내역
           </div>
           <ul className="flex flex-col gap-2 py-[2px]">
             <Purchased />

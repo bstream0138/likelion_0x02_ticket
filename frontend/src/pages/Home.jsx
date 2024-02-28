@@ -155,7 +155,7 @@ const Home = () => {
           V
         </Link>
         <Link
-          to="ticketing/3"
+          to="ticketing/5"
           className="hashtag hover:bg-[#038BD5] hover:text-white duration-150"
         >
           <span className="mb-1">

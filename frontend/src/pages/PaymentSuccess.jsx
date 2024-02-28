@@ -133,13 +133,15 @@ const PaymentSuccess = () => {
             alt=""
           />
           <ul className="md:w-[450px] min-w-screen  h-[120px] flex items-center justify-center mx-auto bg-[#038BD5]">
-            <p className="text-4xl">결제 성공 !!</p>
+            <p className="text-4xl">예매 완료</p>
           </ul>
           <div className="md:w-[450px] min-w-screen h-[290px] mx-auto bg-[#038BD5]">
             <ul className="flex items-center justify-center h-full gap-4 flex-col">
-              <div className="text-center whitespace-pre-wrap">{`구매후 민팅을 진행하시겠습니까?`}</div>
+              <div className="text-center whitespace-pre-wrap">
+                티켓을 수령하시겠습니까?
+              </div>
               <div className="text-xs text-center">
-                민팅은 MY메뉴의 구매내역에서도 가능합니다
+                티켓 수령은 MY메뉴의 구매내역에서도 가능합니다
               </div>
               <div className="flex gap-4 items-center justify-center">
                 <button
@@ -152,7 +154,7 @@ const PaymentSuccess = () => {
                   onMouseEnter={() => setHoverMint(true)}
                   onMouseLeave={() => setHoverMint(false)}
                 >
-                  민팅하기
+                  수령하기
                 </button>
                 <button
                   className={
@@ -173,37 +175,38 @@ const PaymentSuccess = () => {
                     <li>
                       <ImSpinner8 className="animate-spin h-10 w-10" />
                     </li>
-                    <li className="mt-2">민팅을 진행중...</li>
+                    <li className="mt-2">티켓 배송중...</li>
                   </ul>
                 )}
                 {isModalOpen && (
                   <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
-                    <ul className="flex-col gap-2 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
-                      <li>민팅이 완료되었습니다!</li>
+                    <ul className="flex-col gap-1 w-[300px] h-[300px]  bg-white left-1/2 -translate-x-1/2 top-1/3 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-50">
+                      <li>배송이 완료되었습니다!</li>
+                      <li className="">바로 확인할까요?</li>
                       <li className="flex gap-3 mt-3">
                         <Link
                           to="/ticket"
                           className={
                             hoverViewTicket
-                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold "
+                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold sig-blue-h duration-100"
+                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold sig-blue "
                           }
                           onMouseEnter={() => setHoverViewTicket(true)}
                           onMouseLeave={() => setHoverViewTicket(false)}
                         >
-                          티켓보기
+                          좋아요
                         </Link>
                         <Link
                           to="/"
                           className={
                             hoverToHome
-                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold"
+                              ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold sig-yellow-h duration-100 "
+                              : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold sig-yellow"
                           }
                           onMouseEnter={() => setHoverToHome(true)}
                           onMouseLeave={() => setHoverToHome(false)}
                         >
-                          홈으로
+                          아니요
                         </Link>
                       </li>
                     </ul>

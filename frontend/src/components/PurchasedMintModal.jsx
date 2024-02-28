@@ -107,18 +107,33 @@ const PurchasedMintModal = ({
     <div>
       {!purchasedMinted && !purchasedRefunded ? (
         <>
-          <button
-            onClick={onClickPurchsedModalOpen}
-            className={
-              hoverMint
-                ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
-                : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10"
-            }
-            onMouseEnter={() => setHoverMint(true)}
-            onMouseLeave={() => setHoverMint(false)}
-          >
-            민팅하기
-          </button>
+          {isLoading ? (
+            <button
+              className={
+                hoverMint
+                  ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                  : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10"
+              }
+              onMouseEnter={() => setHoverMint(true)}
+              onMouseLeave={() => setHoverMint(false)}
+            >
+              <ImSpinner8 className="animate-spin h-10 w-10" />
+            </button>
+          ) : (
+            <button
+              onClick={onClickMint}
+              className={
+                hoverMint
+                  ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 hover:bg-[#038BD5] hover:text-white ]   "
+                  : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl bg-[#038BD5] text-white  duration-10"
+              }
+              onMouseEnter={() => setHoverMint(true)}
+              onMouseLeave={() => setHoverMint(false)}
+            >
+              수령하기
+            </button>
+          )}
+
           {isPurchasedModalOpen && (
             <div className="bg-black bg-opacity-40 w-full h-full fixed left-0 top-0 ">
               <div className="w-[300px] h-[300px] fixed  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 border-2 border-black bg-white  ">
@@ -166,14 +181,14 @@ const PurchasedMintModal = ({
                           >
                             x
                           </button>
-                          <li>민팅이 완료되었습니다!</li>
+                          <li>배송이 완료되었습니다!</li>
                           <li className="flex gap-3 mt-3">
                             <Link
                               to="/ticket"
                               className={
                                 hoverViewTicket
-                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold "
+                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold sig-blue-h "
+                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold sig-blue "
                               }
                               onMouseEnter={() => setHoverViewTicket(true)}
                               onMouseLeave={() => setHoverViewTicket(false)}
@@ -184,8 +199,8 @@ const PurchasedMintModal = ({
                               to="/"
                               className={
                                 hoverToHome
-                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold "
-                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold"
+                                  ? "flex items-center mt-[3px] ml-[3px] justify-end border-2 border-black py-1 px-[6px] rounded-md text-md font-semibold sig-yellow-h"
+                                  : "flex items-center justify-end border-2 border-b-[5px] border-r-[5px] border-black  py-1 px-[6px] rounded-md text-md font-semibold sig-yellow"
                               }
                               onMouseEnter={() => setHoverToHome(true)}
                               onMouseLeave={() => setHoverToHome(false)}

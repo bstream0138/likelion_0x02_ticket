@@ -109,8 +109,8 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
           <button
             className={
               hoverRefund
-                ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 text-white bg-[#8a8a8a] "
-                : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl text-white bg-[#8a8a8a]  duration-100"
+                ? "flex items-center justify-center mt-[12px] ml-[3px] border-2 w-full border-black py-1 px-[6px] rounded-md text-3xl  duration-100 sig-yellow-h "
+                : "flex items-center justify-center mt-[9px]  border-2 border-b-[5px] border-r-[5px] w-full border-black  py-1 px-[6px] rounded-md text-3xl sig-yellow  duration-100"
             }
             onMouseEnter={() => setHoverRefund(true)}
             onMouseLeave={() => setHoverRefund(false)}

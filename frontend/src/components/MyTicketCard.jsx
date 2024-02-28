@@ -113,11 +113,14 @@ const MyTicketCard = () => {
         {isEmpty && (
           <div>
             <div className="flex items-center justify-center text-3xl mt-4">
-              발급 된 티켓이 없습니다
+              아직 받은 티켓이 없습니다
             </div>
-            <div className=" whitespace-pre-wrap text-sm font-normal flex justify-center mt-2">
-              {`티켓 구매후 민팅을 진행해주세요 티켓구매가 완료된 상태이시면
-                     구매내역을 확인후 민팅해주세요`}
+            <div className="flex-col items-center gap-1 text-sm font-normal flex justify-center mt-2">
+              <ul>예매완료 후 티켓을 수령하세요</ul>
+              <ul>
+                아직 수령하지 않으셨다면 MY의 구매내역에서 티켓을 수령할 수
+                있습니다
+              </ul>
             </div>
           </div>
         )}

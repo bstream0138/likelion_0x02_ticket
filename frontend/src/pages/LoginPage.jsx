@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("");
+  const [showMetamask, setShowMetamask] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,44 +60,52 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  min-w-screen  md:w-[450px] mx-auto space-y-4">
-      <div className="text-center">
+    <div className="flex flex-col items-center justify-start min-h-screen  min-w-screen  md:w-[450px] mx-auto space-y-4">
+      <img
+        src="/happyticket.webp"
+        alt="HappyTicket"
+        onDoubleClick={() => setShowMetamask(!showMetamask)}
+        className="mt-10"
+      />
+      <div className="flex flex-col items-center justify-center">
         <a
           href={KAKAO_AUTH_URL}
-          className="flex inline-block w-48 bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg"
+          className="flex inline-block w-48 bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg mt-10"
         >
           <img src="/kakao_emblem.png" alt="M" className="w-6 h-6 mr-2" />
           Kakao
         </a>
       </div>
-      <div className="text-center">
-        <button
-          onClick={connectMetamask}
-          className="flex inline-block w-48 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg"
-        >
-          <img src="/metamask_emblem.png" alt="M" className="w-6 h-6 mr-2" />
-          Metamask
-        </button>
-        {accounts.length > 0 && (
-          <>
-            <select onChange={handleAccountSelection}>
-              {accounts.map((account, index) => (
-                <option key={index} value={account}>
-                  {`${account.substring(0, 7).toUpperCase()}...${account
-                    .substring(account.length - 5)
-                    .toUpperCase()}`}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={confirmSelection}
-              className="text-sm bg-gray-300 px-1"
-            >
-              확인
-            </button>
-          </>
-        )}
-      </div>
+      {showMetamask && (
+        <div className="text-center">
+          <button
+            onClick={connectMetamask}
+            className="flex inline-block w-48 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg"
+          >
+            <img src="/metamask_emblem.png" alt="M" className="w-6 h-6 mr-2" />
+            Metamask
+          </button>
+          {accounts.length > 0 && (
+            <>
+              <select onChange={handleAccountSelection}>
+                {accounts.map((account, index) => (
+                  <option key={index} value={account}>
+                    {`${account.substring(0, 7).toUpperCase()}...${account
+                      .substring(account.length - 5)
+                      .toUpperCase()}`}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={confirmSelection}
+                className="text-sm bg-gray-300 px-1"
+              >
+                확인
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

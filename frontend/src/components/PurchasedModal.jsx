@@ -9,13 +9,16 @@ const PurchasedModal = ({
   purchasedRefunded,
   purchasedDate,
   purchasedContent,
-  purchasedTicketAddress
+  purchasedTicketAddress,
 }) => {
   return (
     <div className="bg-black bg-opacity-10 w-full h-full fixed left-0 top-0 z-10 ">
       <div className="flex-col gap-2 w-[320px] h-[320px]  bg-white left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 fixed border-2 border-black flex items-center justify-center z-30">
         <ul className="flex flex-col w-[250px] h-full justify-end ">
-          <li className="text-center border-b-2 border-black"></li>
+          <ul className="text-center flex-col border-b-2 flex border-black gap-2 justify-center items-center mt-10 h-full">
+            <li className="text-xl font-bold">{purchasedContent}</li>
+            <li className="pt-6 ">{purchasedDate}</li>
+          </ul>
           <li className="">
             <PurchasedMintModal
               purchasedID={purchasedID}

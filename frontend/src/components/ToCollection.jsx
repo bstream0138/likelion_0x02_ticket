@@ -11,7 +11,6 @@ const ToCollection = ({
   account,
   web3,
   adminKey,
-  isEntered,
   getMyNft,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,38 +66,38 @@ const ToCollection = ({
       );
       console.log(receipt_post);
 
-      const tx_pre = {
-        from: adminAccount.address,
-        to: ticketAddress,
-        gas: 300000n,
-        // gasPrice: gasPrice,
-        data: preEventContract.methods.burnTicket(tokenId).encodeABI(),
-        // value: "0x0",
-        maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-        maxFeePerGas: web3.utils.toWei("120", "gwei"),
-        type: "0x02",
-      };
+      // const tx_pre = {
+      //   from: adminAccount.address,
+      //   to: ticketAddress,
+      //   gas: 300000n,
+      //   // gasPrice: gasPrice,
+      //   data: preEventContract.methods.burnTicket(tokenId).encodeABI(),
+      //   // value: "0x0",
+      //   maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+      //   maxFeePerGas: web3.utils.toWei("120", "gwei"),
+      //   type: "0x02",
+      // };
 
-      console.log("tx_pre:", tx_pre);
+      // console.log("tx_pre:", tx_pre);
 
-      web3.eth
-        .estimateGas(tx_pre)
-        .then((gasAmount) => {
-          console.log("Estiamte Gas:", gasAmount);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      // web3.eth
+      //   .estimateGas(tx_pre)
+      //   .then((gasAmount) => {
+      //     console.log("Estiamte Gas:", gasAmount);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
 
-      const signedTx_pre = await web3.eth.accounts.signTransaction(
-        tx_pre,
-        adminKey
-      );
+      // const signedTx_pre = await web3.eth.accounts.signTransaction(
+      //   tx_pre,
+      //   adminKey
+      // );
 
-      const receipt_pre = await web3.eth.sendSignedTransaction(
-        signedTx_pre.rawTransaction
-      );
-      console.log(receipt_pre);
+      // const receipt_pre = await web3.eth.sendSignedTransaction(
+      //   signedTx_pre.rawTransaction
+      // );
+      // console.log(receipt_pre);
 
       setIsLoading(false);
       getMyNft();
@@ -122,13 +121,11 @@ const ToCollection = ({
         <button
           key={tokenId}
           className={
-            isEntered
-              ? "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
-              : "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px]  focus:bg-[#038BD5]  py-1 px-[6px] rounded-md text-md font-semibold duration-150 cursor-not-allowed border-[#919191] text-[#919191]"
+            "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black hover:bg-[#F96900]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 sig-yellow "
           }
           onClick={onClickPostMint}
         >
-          컬렉션 보관
+          선물 받기
         </button>
       )}
     </>

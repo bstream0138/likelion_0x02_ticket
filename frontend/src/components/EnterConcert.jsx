@@ -10,7 +10,6 @@ const EnterConcert = ({
   account,
   adminKey,
   web3,
-  isEntered,
   getMyNft,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,9 +77,7 @@ const EnterConcert = ({
         <button
           key={tokenId}
           className={
-            isEntered
-              ? "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px]  focus:bg-[#038BD5]  py-1 px-[6px] rounded-md text-md font-semibold duration-150 cursor-not-allowed border-[#919191] text-[#919191]"
-              : "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 "
+            "flex items-center justify-end text-sm border-2 border-b-[5px] border-r-[5px] border-black focus:bg-[#038BD5]  focus:text-white py-1 px-[6px] rounded-md text-md font-semibold duration-150 sig-blue hover:bg-[#0215AB] "
           }
           onClick={() => onClickEnter(tokenId)}
         >
