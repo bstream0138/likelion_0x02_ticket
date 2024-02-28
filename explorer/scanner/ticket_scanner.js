@@ -21,11 +21,23 @@ const contract = new web3.eth.Contract(closedEventAbi, contractAddress);
 const fromBlock = 5358554; // 관심 있는 활동을 시작하는 블록 번호
 const toBlock =   5358561; // 최신 블록까지 조회
 
+// UTC 시간을 로컬 시간으로 변환하는 함수
+function convertUTCDateToLocalDate(date) {
+    var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+    newDate.setHours(hours - offset);
+    return newDate;   
+}
+
 // 이벤트에서 정보 추출
 async function extractEventData(event) {
     // UnixTimestamp와 DateTime 변환
     const blockTimestamp = await web3.eth.getBlock(event.blockNumber).then(block => block.timestamp);
-    const dateTime = new Date(Number(blockTimestamp) * 1000).toISOString();
+    let dateTime = new Date(Number(blockTimestamp) * 1000);
+    dateTime = convertUTCDateToLocalDate(dateTime);
+    let formattedDateTime = dateTime.toISOString().replace('T', ' ').slice(0, 19);
+
 
     // 이벤트 데이터 추출
     const extractedData = {
@@ -33,7 +45,7 @@ async function extractEventData(event) {
         txHash: event.transactionHash,
         blockNumber: Number(event.blockNumber),
         unixTimestamp: Number(blockTimestamp),
-        dateTime: dateTime,
+        dateTime: formattedDateTime,
         from: event.returnValues.from,
         to: event.returnValues.to,
         tokenId: event.returnValues.tokenId.toString(),
