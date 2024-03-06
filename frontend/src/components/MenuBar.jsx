@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { IoHomeSharp, IoPerson, IoTicketOutline } from "react-icons/io5";
 
+// 하단 메뉴바 홈화면,티켓(티켓,선물함)화면 마이페이지 화면 이동.
 const MenuBar = () => {
   return (
     <div className="sticky bottom-0 min-w-screen mx-auto md:w-[450px] poppins text-xl z-20">

@@ -1,7 +1,7 @@
-import { PiWalletBold } from "react-icons/pi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+// 헤더 부분 로고와 로그인기능
 const Header = ({ account, userInfo }) => {
   const [hoverMove, setHoverMove] = useState(false);
 

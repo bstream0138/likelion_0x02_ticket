@@ -4,6 +4,7 @@ import { useState } from "react";
 import PostEventAbi from "../abis/PostEventAbi.json";
 import PreEventAbi from "../abis/PreEventAbi.json";
 
+//선물받기 기능 컴포넌트
 const ToCollection = ({
   collectionAddress,
   ticketAddress,
@@ -15,6 +16,7 @@ const ToCollection = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  //어드민 어카운트 가스비 대납을위해 필요
   const adminAccount = web3.eth.accounts.privateKeyToAccount(adminKey);
 
   // collection에 민팅할 CA
@@ -23,8 +25,7 @@ const ToCollection = ({
     collectionAddress
   );
 
-  const preEventContract = new web3.eth.Contract(PreEventAbi, ticketAddress);
-
+  //선물받기 버튼 함수 / 버튼 클릭시 postEventContract 민팅 => 선물함에 이벤트 티켓 부여
   const onClickPostMint = async () => {
     try {
       if (!account) return;
@@ -65,39 +66,6 @@ const ToCollection = ({
         signedTx_post.rawTransaction
       );
       console.log(receipt_post);
-
-      // const tx_pre = {
-      //   from: adminAccount.address,
-      //   to: ticketAddress,
-      //   gas: 300000n,
-      //   // gasPrice: gasPrice,
-      //   data: preEventContract.methods.burnTicket(tokenId).encodeABI(),
-      //   // value: "0x0",
-      //   maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
-      //   maxFeePerGas: web3.utils.toWei("120", "gwei"),
-      //   type: "0x02",
-      // };
-
-      // console.log("tx_pre:", tx_pre);
-
-      // web3.eth
-      //   .estimateGas(tx_pre)
-      //   .then((gasAmount) => {
-      //     console.log("Estiamte Gas:", gasAmount);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-
-      // const signedTx_pre = await web3.eth.accounts.signTransaction(
-      //   tx_pre,
-      //   adminKey
-      // );
-
-      // const receipt_pre = await web3.eth.sendSignedTransaction(
-      //   signedTx_pre.rawTransaction
-      // );
-      // console.log(receipt_pre);
 
       setIsLoading(false);
       getMyNft();

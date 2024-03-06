@@ -4,8 +4,8 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 
 import Web3 from "web3";
 import PreEventAbi from "../abis/PreEventAbi.json";
-import { CreateAddress } from "../components/CreateAddress";
 
+import { CreateAddress } from "../components/CreateAddress";
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
 // App은 2가지 Login 방식 지원: (1) Kakao Login (2) Metamask Login

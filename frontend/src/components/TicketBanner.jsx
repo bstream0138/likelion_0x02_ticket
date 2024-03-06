@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { CiCalendar, CiMicrophoneOn } from "react-icons/ci";
 
+//홈 화면에서 예매페이지로 이동되는 공연정보 이미지
 const TicketBanner = () => {
   const [hoverPrev, setHoverPrev] = useState(false);
   const [hoverNext, setHoverNext] = useState(false);
@@ -23,7 +24,6 @@ const TicketBanner = () => {
   };
 
   const { concert } = useOutletContext();
-  // console.log(concert);
 
   const onClickNext = () => {
     slideRef.current.slickNext();

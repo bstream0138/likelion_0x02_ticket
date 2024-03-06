@@ -1,10 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import MenuBar from "./MenuBar";
 
 import { sample_concert } from "../sample/sample_concert";
 import Header from "./Header";
-import { PiMapPinLight } from "react-icons/pi";
+import MenuBar from "./MenuBar";
 
 const Layout = () => {
   const [account, setAccount] = useState("");
@@ -21,9 +20,6 @@ const Layout = () => {
   });
 
   useEffect(() => {
-    //localStorage 초기화
-    //localStorage.clear();
-
     // DB CONCERT 테이블에서 공연 정보 가져오기
     const fetchConcert = async () => {
       console.log("Get concert data from DB...");

@@ -2,6 +2,7 @@ import React from "react";
 import EnterConcert from "./EnterConcert";
 import ToCollection from "./ToCollection";
 
+//각각의 카드 안의 공연 입장 버튼과 선물 받기 버튼 컴포넌트를 나눠줌.
 const PreTicketModal = ({
   tokenId,
   ticketAddress,

@@ -1,6 +1,7 @@
 import Web3 from "web3";
 
 // 지갑주소 만들기
+// 카카오로그인후 카카오 계정의 userID 에 salt를 저해 개인키 생성후 지갑주고 생성 , 보안 강화를 위해 솔트나 그외에 피드백 필요
 export function CreateAddress(base1, base2) {
   return new Promise((resolve, reject) => {
     try {

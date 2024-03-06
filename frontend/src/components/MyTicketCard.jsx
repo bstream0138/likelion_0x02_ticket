@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
 
 import preEventAbi from "../abis/PreEventAbi.json";
 import PreTicket from "./PreTicket";
 
-//Ticket 페이지에서의 MyTicketCard 화면
-//내가 민팅한 NFT표 보관
+import { ImSpinner8 } from "react-icons/im";
 
+//Ticket 페이지에서의 MyTicketCard 화면
+//내가 민팅한 모든 공연의 NFT표 보관
 const MyTicketCard = () => {
   const { concert } = useOutletContext();
   const [isModalOpen, setIsModalOpen] = useState(false);

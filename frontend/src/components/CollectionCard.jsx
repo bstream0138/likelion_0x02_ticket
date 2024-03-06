@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
+
 import axios from "axios";
-import { CiMicrophoneOn } from "react-icons/ci";
-import { ImSpinner8 } from "react-icons/im";
 import Web3 from "web3";
 import PostEventAbi from "../abis/PostEventAbi.json";
 
-//Ticket 페이지에서의 MyTicketCard 화면
-//내가 민팅한 NFT표 보관
+import { CiMicrophoneOn } from "react-icons/ci";
+import { ImSpinner8 } from "react-icons/im";
 
+//Ticket 페이지에서의 선물함 화면 // 종료된 모든 공연의 티켓 보관
 const CollectionCard = () => {
   const [isModal, setIsModal] = useState(false);
   const { account, concert } = useOutletContext();
@@ -19,11 +19,11 @@ const CollectionCard = () => {
 
   const web3 = new Web3(window.ethereum);
 
-  //모달
   const isModalOpen = () => {
     setIsModal(!isModal);
   };
 
+  //공연입장후 선물함으로 이동(postEventContract로 민팅)하여 보관된 고객 지갑주소의 NFT 티켓을 불러오는 함수
   const getMyNft = async () => {
     let totalNFT = 0;
     setIsLoading(true);
@@ -72,6 +72,7 @@ const CollectionCard = () => {
     if (totalNFT === 0) setIsEmpty(true);
   };
 
+  //위의 NFT카드 불러오기함수 렌더링
   useEffect(() => {
     getMyNft();
   }, []);

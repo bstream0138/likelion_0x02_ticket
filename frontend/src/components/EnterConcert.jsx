@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { ImSpinner8 } from "react-icons/im";
+
 import preEventAbi from "../abis/PreEventAbi.json";
 
-import Web3 from "web3";
+import { ImSpinner8 } from "react-icons/im";
 
-const EnterConcert = ({
-  ticketAddress,
-  tokenId,
-  account,
-  adminKey,
-  web3,
-  getMyNft,
-}) => {
+//공연 입장 기능 컴포넌트
+const EnterConcert = ({ ticketAddress, tokenId, adminKey, web3, getMyNft }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  //공연 입장 함수 ,공연 입장 클릭시 enter 함수 실행 isEntered => true
   const onClickEnter = async () => {
     try {
       setIsLoading(true);
@@ -35,8 +31,6 @@ const EnterConcert = ({
         maxFeePerGas: web3.utils.toWei("120", "gwei"),
         type: "0x02",
       };
-
-      // await preEventContract.methods.enter(Number(tokenId)).call();
 
       console.log("tx:", tx);
 

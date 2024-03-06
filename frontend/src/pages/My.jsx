@@ -8,6 +8,7 @@ import PurchasedModal from "../components/PurchasedModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// 메뉴바의 MY 페이지
 const My = () => {
   const { account, setAccount, preEventContract } = useOutletContext();
   const navigate = useNavigate();

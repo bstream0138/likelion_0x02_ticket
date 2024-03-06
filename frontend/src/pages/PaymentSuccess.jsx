@@ -5,7 +5,6 @@ import { useNavigate, useOutletContext, Link } from "react-router-dom";
 import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 
-import Mint from "../components/Mint";
 import Web3 from "web3";
 
 const PaymentSuccess = () => {
@@ -32,6 +31,7 @@ const PaymentSuccess = () => {
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
 
+  //결제 성공페이지의 민팅 기능
   const onClickMint = async (e) => {
     try {
       e.preventDefault();

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+
 import TicketBanner from "../components/TicketBanner";
+
 import { PiHashBold } from "react-icons/pi";
 
+//해당 해시태그 클릭시 해당 공연 예매페이지 이동 수정필요
 const Home = () => {
   return (
     <div className="min-w-screen md:[450px] min-h-screen mx-auto  poppins overflow-y-auto">

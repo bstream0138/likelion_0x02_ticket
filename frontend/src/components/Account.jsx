@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+
 import { ImSpinner8 } from "react-icons/im";
 
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
@@ -8,9 +9,8 @@ const Account = ({ setIsModal }) => {
   const { account, web3, preEventContract } = useOutletContext();
 
   const [getBalance, setGetBalance] = useState(0);
-  const [showInfo, setShowInfo] = useState(false);
   const [isSelect, setIsSelect] = useState("A");
-  const [testTo, setTestTo] = useState("");
+  const [accountTo, setaccountTo] = useState("");
   const [tokenIdTo, setTokenIdTo] = useState();
   const [testAmount, setTestAmount] = useState(0);
   const [hoverNftSend, setHoverNftSend] = useState(false);
@@ -18,15 +18,16 @@ const Account = ({ setIsModal }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   //유저가 생성한 비공개키 넣기
+  //Send ETH 와 Send NFT 를 위해 서명에 필요한 개인키 정보
   const privateKey =
     "0x2cef6d0d87fab4ee4048e178dca810c36e72360b3f2650179b8606f827d4acfe";
   // 1. 0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee;
   // 2. 0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f;
 
-  //남은 잔액 보내기
+  //고객의 이더 내보내기 함수.
   const sendEth = async (e) => {
     e.preventDefault();
-    if (!testTo || !testAmount) return;
+    if (!accountTo || !testAmount) return;
 
     setIsLoading(true);
 
@@ -35,7 +36,7 @@ const Account = ({ setIsModal }) => {
 
     const tx = {
       from: account,
-      to: testTo,
+      to: accountTo,
       value: amountToWei,
       gas: 300000n,
       gasPrice: gasPrice,
@@ -44,7 +45,7 @@ const Account = ({ setIsModal }) => {
     try {
       // const receipt = await web3.eth.sendTransaction({
       //   from: account,
-      //   to: testTo,
+      //   to: accountTo,
       //   value: amountToWei,
       //   gas: estimatedGas,
       // });
@@ -67,11 +68,11 @@ const Account = ({ setIsModal }) => {
     }
   };
 
-  //NFT 내보내기
+  //NFT 내보내기 함수.
   const transferNFT = async (e) => {
     try {
       e.preventDefault();
-      if (!account || !testTo || tokenIdTo === undefined) return;
+      if (!account || !accountTo || tokenIdTo === undefined) return;
       setIsLoading(true);
 
       // const nonce = await web3.eth.getTransactionCount(account, "latest");
@@ -84,7 +85,7 @@ const Account = ({ setIsModal }) => {
         gas: 300000n,
         // gasPrice: gasPrice,
         data: preEventContract.methods
-          .transferFrom(account, testTo, tokenId)
+          .transferFrom(account, accountTo, tokenId)
           .encodeABI(),
         // value: "0x0",
         maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
@@ -173,8 +174,8 @@ const Account = ({ setIsModal }) => {
               <ul className="flex flex-col gap-2 ">
                 <input
                   className="input-style"
-                  value={testTo}
-                  onChange={(e) => setTestTo(e.target.value)}
+                  value={accountTo}
+                  onChange={(e) => setaccountTo(e.target.value)}
                   type="text"
                   placeholder="Address"
                 />
@@ -204,8 +205,8 @@ const Account = ({ setIsModal }) => {
               <ul className="flex flex-col gap-2 ">
                 <input
                   className="input-style"
-                  value={testTo}
-                  onChange={(e) => setTestTo(e.target.value)}
+                  value={accountTo}
+                  onChange={(e) => setaccountTo(e.target.value)}
                   type="text"
                   placeholder="Address"
                 />

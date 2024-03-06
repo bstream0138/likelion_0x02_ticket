@@ -1,7 +1,7 @@
 import PurchasedMintModal from "./PurchasedMintModal";
 import Refund from "./Refund";
 
-//마이 페이지에서의 모달 환불과 민팅 버튼
+//마이 페이지에서의 구매내역 클릭시 모달 환불과 민팅 버튼
 const PurchasedModal = ({
   onClcikCloseModalPurchased,
   purchasedID,

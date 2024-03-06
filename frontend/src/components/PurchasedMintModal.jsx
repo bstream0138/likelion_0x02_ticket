@@ -5,6 +5,7 @@ import { ImSpinner8 } from "react-icons/im";
 import preEventAbi from "../abis/PreEventAbi.json";
 import Web3 from "web3";
 
+// PurchasedModal => 민트 버튼 클릭시 민팅후 모달(티켓보기와 나중에보기 버튼)
 const PurchasedMintModal = ({
   purchasedID,
   purchasedMinted,
@@ -16,7 +17,6 @@ const PurchasedMintModal = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPurchasedModalOpen, setIsPurchasedModalOpen] = useState(false);
   const [hoverMint, setHoverMint] = useState(false);
-  const navigate = useNavigate();
   const [hoverToHome, setHoverToHome] = useState(false);
   const [hoverViewTicket, setHoverViewTicket] = useState(false);
 
@@ -29,13 +29,13 @@ const PurchasedMintModal = ({
     purchasedTicketAddress
   );
 
+  // 환불이 되었는지 민팅이 되었는지 잘 타고 들어오는지 확인 필요
   console.log("Refunded?", purchasedRefunded);
   console.log("Minted?", purchasedMinted);
+  console.log("PurchasedMintModal/purchase: ", purchasedID);
 
-  console.log("[1]purchasedTicketAddress: ", purchasedTicketAddress);
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
   console.log("mintAccount: ", mintAccount);
-  console.log("PurchasedMintModal/purchase: ", purchasedID);
 
   //purchase 구매내역에서의 모달 기능
   const onClickMint = async () => {
@@ -98,10 +98,10 @@ const PurchasedMintModal = ({
     }
   };
 
-  //purchase my페이지에서의 모달에서 민팅 성공후 모달
-  const onClickPurchsedModalOpen = () => {
-    setIsPurchasedModalOpen(!isPurchasedModalOpen);
-  };
+  //purchase my페이지에서의 모달에서 민팅 성공후 모달 현재 수정 필요
+  // const onClickPurchsedModalOpen = () => {
+  //   setIsPurchasedModalOpen(!isPurchasedModalOpen);
+  // };
 
   return (
     <div>

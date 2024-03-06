@@ -6,6 +6,7 @@ import Web3 from "web3";
 
 import { PRE_EVENT_CONTRACT } from "../abis/contractAddress";
 
+// My페이지의 구매내역에서 환불 버튼의 컴포넌트
 const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
   const { preEventContract } = useOutletContext();
   const [refundModal, setRefundModal] = useState(false);
@@ -24,7 +25,6 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
   const mintAccount = web3.eth.accounts.privateKeyToAccount(privateKey);
-  // console.log(mintAccount);
 
   //환불 기능 canceled 로 푸쉬후 환불된 NFT인지 확인
   const onClickRefund = async () => {

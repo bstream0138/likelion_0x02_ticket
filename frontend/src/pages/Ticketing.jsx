@@ -5,9 +5,12 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
+
 import Payment from "../components/Payment";
+
 import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 
+// 예매페이지의 캐스팅 이미지
 const casting = [
   { img: "/btscasting.png" },
   { img: "/iucasting.png" },
@@ -28,6 +31,7 @@ const Ticketing = () => {
   const [castingInfo, setCastingInfo] = useState();
   const location = useLocation();
 
+  //예매페이지로 이동시 항상 top으로
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);

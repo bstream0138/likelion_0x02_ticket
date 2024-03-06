@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
-import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
 import PreTicketModal from "./PreTicketModal";
 
+import { CiCalendar, CiLocationOn, CiMicrophoneOn } from "react-icons/ci";
+
+//Ticket => 티켓의 각각의 티켓 컴포넌트
 const PreTicket = ({
   tokenId,
   name,
@@ -17,12 +18,6 @@ const PreTicket = ({
   adminKey,
   getMyNft,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const onClickModalOpen = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
   return (
     <div className="header">
       <button
@@ -31,14 +26,7 @@ const PreTicket = ({
       >
         <img src={image} alt={name} className="w-[145px] object-cover" />
         <div className="w-[255px] bg-white  h-[200px]">
-          {/* {isModalOpen && ( */}
           <ul className="w-[200px] h-[45px] bg-white fixed bottom-6 right-1/12 ml-2 z-20 content">
-            {/* <button
-              onClick={() => setIsModalOpen(false)}
-              className="fixed content right-1 top-0"
-            >
-              x
-            </button> */}
             <PreTicketModal
               key={tokenId}
               tokenId={tokenId}
@@ -51,7 +39,6 @@ const PreTicket = ({
               getMyNft={getMyNft}
             />
           </ul>
-          {/* )} */}
           <ul className="mt-6 mr-3">
             티켓 번호 : {tokenId}
             <div className="mt-6 ml-5 px-5">
@@ -75,9 +62,6 @@ const PreTicket = ({
               </ul>
             </div>
           </ul>
-          {/* <button onClick={onClickModalOpen} className="mt-4 hover:underline">
-            티켓정보변경
-          </button> */}
         </div>
       </button>
       <div className=" mt-[4px] ml-[4px] bg-black left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 content -z-30 w-[380px] h-[200px]"></div>

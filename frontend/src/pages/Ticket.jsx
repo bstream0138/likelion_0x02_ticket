@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
-import MyTicketCard from "../components/MyTicketCard";
-import CollectionCard from "../components/CollectionCard";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
+import MyTicketCard from "../components/MyTicketCard";
+import CollectionCard from "../components/CollectionCard";
+
+// 메뉴바의 Ticket 페이지
 const Ticket = () => {
   const { account } = useOutletContext();
   const navigate = useNavigate();
 
   const [isSelect, setIsSelect] = useState("A");
-  const [hoverTicket, setHoverTicket] = useState(false);
-  const [hoverCollection, setHoverCollection] = useState(false);
-
-  // useEffect(() => {
-  //   if (!preEventContract) {
-  //     // console.log("contract :", preEventContract);
-  //     return;
-  //   }
-  // }, [preEventContract]);
 
   //로그인 안됬을시 로그인 페이지로
   useEffect(() => {
