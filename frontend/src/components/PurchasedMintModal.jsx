@@ -22,7 +22,7 @@ const PurchasedMintModal = ({
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
 
   const preEventContract = new web3.eth.Contract(
     preEventAbi,
