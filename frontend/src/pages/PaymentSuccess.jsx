@@ -117,7 +117,7 @@ const PaymentSuccess = () => {
       insertPurchase();
     }
 
-    const _web3 = new Web3(window.ethereum);
+    const _web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
     setWeb3(_web3);
     const _account = localStorage.getItem("backupAccount");
     setAccount(_account);
