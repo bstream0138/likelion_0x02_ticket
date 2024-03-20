@@ -17,7 +17,7 @@ const CollectionCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
 
   const isModalOpen = () => {
     setIsModal(!isModal);
