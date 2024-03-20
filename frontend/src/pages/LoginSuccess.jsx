@@ -118,7 +118,7 @@ const LoginSuccess = () => {
 
     fetchUserInfo();
 
-    const web3 = new Web3(window.ethereum);
+    const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
     setWeb3(web3);
     // console.log("LoginSuccess.jsx/useEffect/web3: ", web3);
 
