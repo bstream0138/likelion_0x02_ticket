@@ -19,7 +19,7 @@ const Refund = ({ purchasedID, purchasedMinted, purchasedRefunded }) => {
     setRefundModal(!refundModal);
   };
 
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
   // const account = localStorage.getItem("backupAccount");
 
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
