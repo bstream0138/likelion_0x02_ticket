@@ -19,10 +19,7 @@ const Account = ({ setIsModal }) => {
 
   //유저가 생성한 비공개키 넣기
   //Send ETH 와 Send NFT 를 위해 서명에 필요한 개인키 정보
-  const privateKey =
-    "0x2cef6d0d87fab4ee4048e178dca810c36e72360b3f2650179b8606f827d4acfe";
-  // 1. 0x141f916c68756d7413fd0c65c14e7b6b37f431791433bbb129a5ea88a8ac01ee;
-  // 2. 0x2c38ba44c25f06c1acf4dd1a5b9d24f5e768312552f247565a0c9c18dc05a04f;
+  const privateKey = "";
 
   //고객의 이더 내보내기 함수.
   const sendEth = async (e) => {
