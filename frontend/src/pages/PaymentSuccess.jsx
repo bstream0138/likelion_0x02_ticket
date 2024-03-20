@@ -23,7 +23,7 @@ const PaymentSuccess = () => {
   //민트기능 이동
   const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
   const account = localStorage.getItem("backupAccount");
 
   // console.log("Mint/account(2): ", account);
