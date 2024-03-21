@@ -22,7 +22,7 @@ const MyTicketCard = () => {
   const [myNFTArray, setMyNFTArray] = useState([]);
 
   const adminKey = process.env.REACT_APP_PRIVATE_KEY;
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(process.env.REACT_APP_INFURA_SEPOLIA);
   const account = localStorage.getItem("account");
 
   const getMyNft = async () => {
