@@ -1,5 +1,5 @@
 ## 시연 영상
 
 <p align="center">
-<img src="https://github.com/bstream0138/likelion_0x02_ticket/assets/95029317/9a9d3781-30a5-46e9-b3f2-53939bff17e4">
+<img src="https://github.com/bstream0138/likelion_0x02_ticket/assets/95029317/c9401718-0026-405c-bd41-2b8599e1268c" width="240" height="628">
 </p>
